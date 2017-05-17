@@ -83,7 +83,6 @@
 }
 .article-field{
     height: inherit;
-    padding: 30px;
     float: left;
 }
 #article-container{
@@ -157,7 +156,6 @@
 /*Article List Buttons*/
 #list-buttons{
     order:1;
-    /*height: 30px;*/
     padding: 10px;
     width: 100%;
     display: flex;
@@ -191,7 +189,7 @@
     height: 30px;
     vertical-align: middle;
     display: inline-block;
-    margin: 5px 5%;
+    margin: 5px;
     transition: font-size ease .2s;
 }
 .list-button:hover{
@@ -215,6 +213,7 @@
 
 /*Article Tab*/
 #article-tab{
+    padding-left:20px;
     width: calc(100% - 20vw);
 }
 
@@ -268,7 +267,7 @@
     height: inherit;
     width:80%;
     float:left;
-    padding-right: 30px;
+    padding-right: 20px;
 }
 #article-title-button{
     order:2;
@@ -310,7 +309,6 @@
     flex-direction: column;
     align-items: flex-end;
     width:20%;
-    padding-left: 30px;
 }
 #toolbar-container {
     order: 1;
@@ -350,17 +348,16 @@
 .project-list {
     display: none;
     position: absolute;
-
     min-width: 100%;
     z-index: 1;
 }
-.project-dropdown:hover #project-list {
+.project-dropdown:hover .project-list {
     display: block;
 }
 .selected-project{
     font-size: 20px;
-    padding: 10px 0;
-    border: 3px solid white;
+    padding: 15px 0;
+    background: rgba(0,0,0,0.5);
 }
 .project-list-element{
     font-size: 16px;
@@ -386,19 +383,20 @@
     vertical-align: middle;
 }
 .citation-button{
-    border: 2px solid white;
     text-align: center;
     font-size: 20px;
     height: 40px;
+    width:60px;
     padding: 5px 10px;
     vertical-align: middle;
     display: inline-block;
-    margin: 5px 5%;
-    transition: border ease .2s;
+    margin: 5px 5px;
+    background: rgba(0,0,0,0.5);
+    transition: width ease .2s;
 }
 .citation-button:hover{
-    border: 4px solid white;
-    transition: border ease .2s;
+    width:70px;
+    transition: width ease .2s;
 }
 
 /*Notes Panel*/
@@ -407,7 +405,7 @@
     width: 100%;
     color:white;
     margin: 10px 0;
-    border: 2px solid white;
+    background:rgba(0,0,0,0.5);
 }
 #notes-panel{
     overflow: hidden;
@@ -421,14 +419,14 @@
 #intro-break{
     color: white;
     width: 70vw;
-    padding: 20px 0;
+    padding: 0;
 }
 #intro-container{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
-    padding: 0 15vw;
+    padding: 0 30px;
 }
 .intro-panel{
     margin: 30px;
