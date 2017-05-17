@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dawn</title>
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Fjalla+One" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.css">
+    <link rel="stylesheet" href="css/square-loading-pane.css">
+    <link href="https://cdn.quilljs.com/1.2.4/quill.bubble.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/search.css">
+
+    <script type="text/javascript" src="js/jquery.js" defer></script>
+    <script type="text/javascript" src="js/highlight.js" defer></script>
+    <script type="text/javascript" src="js/bootstrap.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js" defer></script>
+    <script type="text/javascript" src="js/progressbar.min.js" defer></script>
+    <script type="text/javascript" src="js/ScrollTrigger.min.js" defer></script>
+    <script src="https://cdn.quilljs.com/1.2.4/quill.min.js" type="text/javascript" defer></script>
+
+    <script type="text/javascript" src = "js/firebase.js" defer></script>
+    <script type="text/javascript" src="js/search.js" defer></script>
+</head>
+<body>
+    <img id="background-design" src="img/pattern.png">
+    <div class="icons" id="logo-icon" style="display: none;">
+        <img class="small-icon" src="img/dawn.png">
+    </div>
+
+
+    <div class="click icons" id = "account-icon" style="display: none;">
+        <img class="small-icon" src="img/account.png">
+    </div>
+    <div class="click icons" id = "account-logout" style="display: none;">
+        <img class="small-icon" src="img/logout.png">
+    </div>
+
+    <div id="title-container">
+        <h1 id="title-text">dawn</h1>
+    </div>
+    <div id="search-container" style="display: none">
+        <input id="search-bar" class = "form-control" type="text" name="search-term" placeholder="type something" autocomplete="off" autofocus>
+    </div>
+
+    <div id="loading-view" class="view">
+        <div class="main-container">
+            <div class="main-content">
+                <div class="cssload-thecube" style="display: none;">
+                    <div class="cssload-cube cssload-c1"></div>
+                    <div class="cssload-cube cssload-c2"></div>
+                    <div class="cssload-cube cssload-c4"></div>
+                    <div class="cssload-cube cssload-c3"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="introduction-view" class="view">
+        <div class="main-container">
+            <div class="main-content">
+                <h2 id="catchphrase">a researcher's search engine</h2>
+                <hr id="intro-break"/>
+                <div id="intro-container">
+                    <div class="intro-panel" data-scroll>
+                        <img class="intro-image" src="img/keywords.png">
+                        <h3 class="intro-key">Key Words</h3>
+                        <h4 class="intro-desc">Generates important key words for each article, highlighting them in the text for easy reading.</h4>
+                    </div>
+                    <div class="intro-panel" data-scroll>
+                        <img class="intro-image" src="img/notes.png">
+                        <h3 class="intro-key">Notes</h3>
+                        <h4 class="intro-desc">Saves notes to each project, enabling you to take notes while searching through articles.</h4>
+                    </div>
+                    <div class="intro-panel" data-scroll>
+                        <img class="intro-image" src="img/citation.png">
+                        <h3 class="intro-key">Citations</h3>
+                        <h4 class="intro-desc">Automatically cites documents for you, exporting a bibliography in MLA & APA formatting.</h4>
+                    </div>
+                    <div class="intro-panel" data-scroll>
+                        <img class="intro-image" src="img/search.png">
+                        <h3 class="intro-key">Search</h3>
+                        <h4 class="intro-desc">Offers concept searching and allows you to find important concepts related to the search term.</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="article-view" class="view" style="display: none">
+        <div id="article-list-container" class="article-field">
+            <div id="list-buttons">
+                <div class="list-button glyphicon glyphicon-sort-by-alphabet click">
+                </div>
+                <div class="list-button glyphicon glyphicon-sort-by-alphabet-alt click">
+                </div>
+                <div class="list-button glyphicon glyphicon-sort-by-order click">
+                </div>
+                <div class="list-button glyphicon glyphicon-sort-by-order-alt click">
+                </div>
+            </div>
+            <div id="article-list">
+                <div class="article click">
+                    <div class="article-name-container article-list-elements">
+                        <h3 class="article-name ">
+                            Article Name
+                        </h3>
+                        <div class="article-journal">N</div>
+                    </div>
+                    <h4 class="article-desc article-list-elements">
+                        Article Desc
+                    </h4>
+                    <div class="article-keywords article-list-elements">
+                        <h4 class="mini-keyword">agent orange</h4>
+                        <h4 class="mini-keyword">orange</h4>
+                    </div>
+                    <div class="article-reliability"></div>
+                </div>
+                <div class="article click">
+                    <div class="article-name-container article-list-elements">
+                        <h3 class="article-name ">
+                            Article Name
+                        </h3>
+                        <div class="article-journal">N</div>
+                    </div>
+                    <h4 class="article-desc article-list-elements">
+                        Article Desc
+                    </h4>
+                    <div class="article-keywords article-list-elements">
+                        <h4 class="mini-keyword">agent orange</h4>
+                        <h4 class="mini-keyword">orange</h4>
+                    </div>
+                    <div class="article-reliability"></div>
+                </div>
+                <div class="article click">
+                    <div class="article-name-container article-list-elements">
+                        <h3 class="article-name ">
+                            Article Name
+                        </h3>
+                        <div class="article-journal">N</div>
+                    </div>
+                    <h4 class="article-desc article-list-elements">
+                        Article Desc
+                    </h4>
+                    <div class="article-keywords article-list-elements">
+                        <h4 class="mini-keyword">agent orange</h4>
+                        <h4 class="mini-keyword">orange</h4>
+                    </div>
+                    <div class="article-reliability"></div>
+                </div>
+                <div class="article click">
+                    <div class="article-name-container article-list-elements">
+                        <h3 class="article-name ">
+                            Article Name
+                        </h3>
+                        <div class="article-journal">N</div>
+                    </div>
+                    <h4 class="article-desc article-list-elements">
+                        Article Desc
+                    </h4>
+                    <div class="article-keywords article-list-elements">
+                        <h4 class="mini-keyword">agent orange</h4>
+                        <h4 class="mini-keyword">orange</h4>
+                    </div>
+                    <div class="article-reliability"></div>
+                </div>
+                <div class="article click">
+                    <div class="article-name-container article-list-elements">
+                        <h3 class="article-name ">
+                            Article Name
+                        </h3>
+                        <div class="article-journal">N</div>
+                    </div>
+                    <h4 class="article-desc article-list-elements">
+                        Article Desc
+                    </h4>
+                    <div class="article-keywords article-list-elements">
+                        <h4 class="mini-keyword">agent orange</h4>
+                        <h4 class="mini-keyword">orange</h4>
+                    </div>
+                    <div class="article-reliability"></div>
+                </div>
+            </div>
+            <div id="list-navigation">
+                <div class="list-nav glyphicon glyphicon-chevron-left click">
+                </div>
+                <div id="list-nav-page">2/3</div>
+                <div class="list-nav glyphicon glyphicon-chevron-right click">
+                </div>
+            </div>
+        </div>
+        <div id="article-tab" class="article-field" style="display: none">
+            <div id="article-content">
+                <h2 class="article-title">Wow you opened an article</h2>
+                <div class="article-info-container">
+                    <h2 class="article-author">Joe Smith</h2>
+                    <h2 class="article-date">1/1/2017</h2>
+                </div>
+                <p class="article-text">
+                    In The Great Gatsby, blue is used quite frequency to create a feel for a specific scene or individual. In Nick’s description of Doctor T. J. Eckleburg, he states that the eyes on the billboard are blue and gigantic, building a tone of omniscience. These eyes, often seen as the eyes of God, are given the color to describe a depressing atmosphere over New York. It foreshadows the awful effects that occur to Gatsby, Wilson, providing a tone of dread. Without blue, the entire landscape of Wilson’s workshop and the city becomes less dreary. In addition, Fitzgerald uses blue to provide a depressing tone to the story after Myrtle’s death, enhancing the sadness and emptiness Nick feels, caught in these events. However, Fitzgerald also uses blue to describe Wilson’s eyes when Tom and Nick pull up at his shop. This can be an indication of Wilson’s loyalty to Tom, as Fitzgerald often refers to one’s eyes to describe a specific character. Throughout the story, Wilson is seen to interact with Tom as if he is a friend, despite Tom’s affair with his wife. Even after Daisy kills Myrtle, Tom is the one attempting to console Wilson. This use of blue is repeated when Cody gives Gatsby a blue coat as a gift, since Gatsby was always loyal to him. Although there isn’t much backstory about Gatsby’s experiences with Dan Cody, the splash of blue enhances the sense of Gatsby and Cody’s loyalty and friendship. Without the addition of color, there is a lack of feeling between the two friends, and Gatsby’s loss of his inheritance is less meaningful. Fitzgerald also uses blue to describe tranquility and peace. When Nick gazes out the window in New York during Tom and Myrtle’s party, the description of the blue sky helps the audience see Nick as mesmerized to the city life, breathing in the new environment. It enhances the haziness in the smoky apartment, and allows the audience to feel Nick’s wonder.
+                </p>
+            </div>
+            <div id = "article-toolbox">
+                <div id="toolbar-container">
+                    <div id="keywords" class="toolbar">
+                        <h4 class="list-keyword">gatsby</h4>
+                        <h4 class="list-keyword">nick</h4>
+                        <h4 class="list-keyword">blue</h4>
+                    </div>
+                    <div id="bibliography" class="toolbar"  style="display: none">
+                        <div class="project-dropdown">
+                            <h3 class="selected-project click">Mouse over me &#9660;</h3>
+                            <div class="project-list">
+                                <h3 class="project-list-element click">Hello World!</h3>
+                                <h3 class="project-list-element click">Hello World!</h3>
+                                <h3 class="project-list-element click">Hello World!</h3>
+                                <h3 class="project-list-element click">Hello World!</h3>
+                            </div>
+                        </div>
+                        <div id="citation-buttons">
+                            <div class="citation-button click">APA</div>
+                            <div class="citation-button click">MLA</div>
+                        </div>
+                        <div id="citation">
+                            <h4>Dean, Cornelia. "Executive on a Mission: Saving the Planet." The New York Times, 22 May 2007, www.nytimes.com/2007/05/22/science/earth/22ander.html?_r=0. Accessed 12 May 2016.</h4>
+                        </div>
+                        <div id="works-cited">
+
+                        </div>
+                    </div>
+                    <div id="notes" class="toolbar"  style="display: none">
+                        <div class="project-dropdown">
+                            <h3 class="selected-project click">Mouse over me &#9660;</h3>
+                            <div class="project-list">
+                                <h3 class="project-list-element click">Hello World!</h3>
+                                <h3 class="project-list-element click">Hello World!</h3>
+                                <h3 class="project-list-element click">Hello World!</h3>
+                                <h3 class="project-list-element click">Hello World!</h3>
+                            </div>
+                        </div>
+                        <div id="notes-container">
+                            <div id="notes-panel"></div>
+                        </div>
+                    </div>
+                    <!--<div id="toolbar">-->
+                    <!--<h4 class="list-keyword">gatsby</h4>-->
+                    <!--<h4 class="list-keyword">nick</h4>-->
+                    <!--<h4 class="list-keyword-selected list-keyword">blue</h4>-->
+                    <!--</div>-->
+
+                    <!--<div class="toolbar" id="bibliography" style="display: none">-->
+                    <!--<h4 class="citation">Douglass, Frederick. <i>Narrative of the Life of Frederick Douglass.</i> N.p.: Dover Publications, 1995. Print.</h4>-->
+                    <!--</div>-->
+                    <!--<div class="toolbar" id="notes-panel" style="display: none">-->
+                    <!--<h4 class="note-pad">Notepad</h4>-->
+                    <!--<textarea id="pad" class="scrollbar style-1"></textarea>-->
+                    <!--</div>-->
+                </div>
+                <div id="toolbar-buttons">
+                    <div class="toolbar-button glyphicon glyphicon-star-empty click" onclick="changeToKeywords()">
+                    </div>
+                    <div class="toolbar-button glyphicon glyphicon-education click" onclick="changeToBibliography()">
+                    </div>
+                    <div class="toolbar-button glyphicon glyphicon-pencil click" onclick="changeToNotes()">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

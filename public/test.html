@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dawn</title>
+    <link href="https://fonts.googleapis.com/css?family=Macondo" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdn.quilljs.com/1.2.4/quill.snow.css" rel="stylesheet">
+    <link href="https://cdn.quilljs.com/1.2.4/quill.bubble.css" rel="stylesheet">
+
+    <script type="text/javascript" src="js/jquery.js" defer></script>
+    <script type="text/javascript" src="js/quill.min.js"></script>
+
+
+    <style>
+        #div1{
+            background-color: blue;
+            height: 100vh;
+            width: 100vw;
+        }
+    </style>
+
+</head>
+<body>
+    <div id="editor">
+        <p>Hello World!</p>
+        <p>Some initial <strong>bold</strong> text</p>
+        <p><br></p>
+    </div>
+
+
+    <!-- Initialize Quill editor -->
+    <script defer>
+        var quill = new Quill('#editor', {
+            theme: 'bubble'
+        });
+    </script>
+</body>
+</html>

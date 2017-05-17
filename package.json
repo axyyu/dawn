@@ -1,0 +1,24 @@
+{
+  "name": "holmes",
+  "version": "1.0.0",
+  "description": "research assistant",
+  "main": "index.js",
+  "scripts": {
+    "start": "index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://w4v3s@github.com/w4v3s/holmes.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/w4v3s/holmes/issues"
+  },
+  "homepage": "https://github.com/w4v3s/holmes#readme",
+  "dependencies": {
+    "express": "^4.15.2",
+    "jquery": "^3.2.1",
+    "request": "^2.81.0"
+  }
+}

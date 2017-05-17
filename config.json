@@ -1,0 +1,18 @@
+{
+    "port" : 8000,
+    "bluemix" : {
+        "url": "https://gateway.watsonplatform.net/natural-language-understanding/api",
+        "username": "b9a28510-fe8e-4605-bc1e-ee8434cec916",
+        "password": "VknWNQ3dtRnJ"
+    },
+
+    "aylien_key" : "c49162c07d76aef113d427c8bf7b5beb",
+    "aylien_app_id" : "f1ebb697",
+    "bing_key1" : "5c2e5368e1df4929b688a0f229ba6fc0",
+    "bing_key2" : "cc0c117b81c54269a7c1af16b35d28d7",
+    "CORE_key" : "53Ictd96ZekQql2yfzgCTLE7mUwpnVsb",
+    "DIFF_key" : "e5d2443849dcf55543df0010a2daf5d6",
+    "ebib_key" : "e8d16813ad492175b055390bd9d62c2b",
+    "scopus_key" : "f5d063cf0af897101eb37b9294d9c731",
+    "haven_key" : "fd599798-df20-48df-95d1-5bdb4a735cb9"
+}

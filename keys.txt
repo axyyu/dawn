@@ -1,0 +1,38 @@
+//API Keys
+// var bluemix = {
+//     "url": "https://gateway.watsonplatform.net/natural-language-understanding/api",
+//     "username": "f40b006b-21d1-4e33-862b-466ab1c87653",
+//     "password": "Kaj1Y4jfaQm1"
+// };
+// var bluemix = {
+//   "url": "https://gateway.watsonplatform.net/natural-language-understanding/api",
+//   "username": "8153d2f9-2710-41c0-b60b-1dcad89ccc77",
+//   "password": "Yw44Q17hJe1q"
+// };
+// var bluemix = {
+//       "url": "https://gateway.watsonplatform.net/natural-language-understanding/api",
+//       "username": "33169e80-2b23-428f-94d1-1bd35558538c",
+//       "password": "IuUo24iXQTxT"
+// }
+// var bluemix = {
+//   "url": "https://gateway.watsonplatform.net/natural-language-understanding/api",
+//   "username": "ef867255-921e-43ad-aa39-cf5def58a21e",
+//   "password": "NWT4zDKV1T3Z"
+// };
+// var bluemix = {
+//     "url": "https://gateway.watsonplatform.net/natural-language-understanding/api",
+//     "username": "4d79f25d-d96b-491b-9731-3b5057567494",
+//     "password": "BfWJHGKW2SB0"
+// };
+// var bluemix={
+//     "url": "https://gateway.watsonplatform.net/natural-language-understanding/api",
+//     "username": "83ddf1e4-dad6-402d-8c5c-253e3334fb14",
+//     "password": "6zk2KRikou1u"
+// };
+// var bluemix= {
+//     "url": "https://gateway.watsonplatform.net/natural-language-understanding/api",
+//     "username": "94aa19db-9f54-4a7d-b1f3-3cbf35505b7d",
+//     "password": "AwiBQax2Ai0R"
+// }
+// var aylien_key = "bd308ed5f3710b40d6e280fafd4d222e";
+// var aylien_app_id = "5ceffad9";
