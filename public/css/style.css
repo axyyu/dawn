@@ -1,6 +1,6 @@
 html{
     width: 100vw;
-    background: linear-gradient(-50deg, #808080, #3fada8);
+    background: linear-gradient(-50deg, #808080, rgb(0, 57, 115));
 }
 body{
     height: 200vh;

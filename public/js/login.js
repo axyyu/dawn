@@ -3,13 +3,8 @@
  */
 
 $(document).ready(function () {
-    $(".login-tab").click(function(){
-        $(".login-tab").removeClass("selected");
-        $(this).addClass("selected");
-        $(".login-bars").hide();
-        $(".error").hide();
-        $("#"+$.trim($(this).text())).fadeIn();
-    });
+    setupTabs();
+    $("#login-view").fadeIn(1000);
     $("#logo-icon").click(function(){
         window.location = 'index.html';
     });
@@ -23,7 +18,15 @@ $(document).ready(function () {
         }
     });
 });
-
+function setupTabs(){
+    $(".login-tab").click(function(){
+        $(".login-tab").removeClass("selected");
+        $(this).addClass("selected");
+        $(".login-bars").hide();
+        $(".error").hide();
+        $("#"+$.trim($(this).text())).fadeIn();
+    });
+}
 function register(){
     $("#register").hide();
     $("#loading-view").fadeIn("fast");

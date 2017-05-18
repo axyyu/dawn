@@ -17,14 +17,16 @@
 	<script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js" defer></script>
 
     <script type="text/javascript" src = "js/firebase.js" defer></script>
+	<script type="text/javascript" src = "js/library.js" defer></script>
     <script type="text/javascript" src = "js/login.js" defer></script>
 </head>
 <body>
+    <img id="background-design" src="img/pattern.png">
 	<div class="click icons" id="logo-icon">
 		<img class="small-icon" src="img/dawn.png">
 	</div>
 
-	<div id="login-view" class="view">
+	<div id="login-view" class="view" style="display: none;">
 		<div class="main-container">
 			<div class="main-content">
 				<div id="login-container">
@@ -95,56 +97,5 @@
 			</div>
 		</div>
 	</div>
-	<img id="background-design" src="img/pattern.png">
-
-	<!--<div class = "tabs">-->
-		<!--<ul>-->
-			<!--<li><a href="#" class="active" id="login-form-link"><h2>Login</h2></a></li>-->
-			<!--<li><a href="#" id="register-form-link"><h2>Register</h2></a></li>-->
-		<!--</ul>-->
-	<!--</div>-->
-	<!--<form>-->
-		<!--<div class="login" >-->
-			<!--<div class="login-screen">-->
-				<!--<div class="login-form">-->
-					<!--<div class="control-group">-->
-						<!--<input type="text" class="login-field" value="" placeholder="Username" id="login-name" name = "login-name" required>-->
-						<!--<label class="login-field-icon fui-user" for="login-name"></label>-->
-					<!--</div>-->
-					<!--<div class="control-group">-->
-						<!--<input type="password" class="login-field" value="" placeholder="Password" id="login-pass" name = "login-pass" required>-->
-						<!--<label class="login-field-icon fui-lock" for="login-pass"></label>-->
-					<!--</div>-->
-					<!--<input class="btn btn-primary btn-large btn-block" type="submit">-->
-					<!--<a class="login-link" href="#"><p style="font-size: 1vw;">Lost Your Password?</p></a>-->
-				<!--</div>-->
-			<!--</div>-->
-		<!--</div>-->
-	<!--</form>-->
-	<!--<form>-->
-		<!--<div class="signUp" id = "hidden">-->
-			<!--<div class = "login-screen">-->
-				<!--<div class = "login-form">-->
-					<!--<div class="control-group">-->
-						<!--<input type="text" class="login-field" value="" placeholder="Username" id="signUp-name" name = "signUp-name" required>-->
-						<!--<label class="login-field-icon fui-user" for="login-name"></label>-->
-					<!--</div>-->
-					<!--<div class="control-group">-->
-						<!--<input type="password" class="login-field" value="" placeholder="Email" id="signUp-pass" name = "signUp-email" required>-->
-						<!--<label class="login-field-icon fui-lock" for="login-pass"></label>-->
-					<!--</div>-->
-					<!--<div class="control-group">-->
-						<!--<input type="password" class="login-field" value="" placeholder="Password" id="signUp-pass" name = "signUp-pass" required>-->
-						<!--<label class="login-field-icon fui-lock" for="login-pass"></label>-->
-					<!--</div>-->
-					<!--<div class="control-group">-->
-						<!--<input type="password" class="login-field" value="" placeholder="Confirm Password" id="signUp-pass" name = "signUp-pass2">-->
-						<!--<label class="login-field-icon fui-lock" for="login-pass"></label>-->
-					<!--</div>-->
-					<!--<input class="btn btn-primary btn-large btn-block" type="submit">-->
-				<!--</div>-->
-			<!--</div>-->
-		<!--</div>-->
-	<!--</form>-->
 </body>
 </html>
