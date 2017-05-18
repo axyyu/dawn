@@ -29,6 +29,10 @@ try {
     throw err;
 }
 
+/*GLOBAL*/
+var ARTICLE_COUNT = 1;
+var KEYWORD_COUNT = 1;
+
 /*Setup*/
 var app = express();
 
@@ -187,10 +191,6 @@ function natureJournal(question, length, callback) {
             callback(null);
         }
     });
-}
-
-function bingResults() {
-
 }
 
 function coreJournalUrls(urlarray, callback) {

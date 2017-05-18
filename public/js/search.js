@@ -8,33 +8,46 @@ var obj;
 var loggedIn = false;
 var uid;
 
-document.addEventListener('DOMContentLoaded', function(){
-    var trigger = new ScrollTrigger({
-        addHeight: true,
-        once: true
-    });
-});
 $(document).ready(function(){
+    initialAnimation();
+    firebaseChange();
+    setupScrollTrigger();
+    setupAccountButtons();
+    setupKeywordSearch();
+    setupSearchBar();
+});
+function initialAnimation(){
+    $("#title-container").animate({
+        top: "-=150px",
+        opacity:1.0
+    }, 1000, function() {
+        $("#account-icon").fadeIn("slow");
+        $("#logo-icon").fadeIn("slow");
+        if(loggedIn){
+            $("#account-logout").fadeIn();
+        }
+        $("#search-container").fadeIn("slow");
+    });
+}
+function firebaseChange(){
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
             uid = user.uid;
             loggedIn = true;
         } else {
             $("#account-logout").fadeOut();
-            // User is signed out.
-            // ...
         }
     });
-
+}
+function setupAccountButtons(){
     $("#account-icon").click(function(){
         if(loggedIn){
-
+            window.location = 'profile.html';
         }
         else{
             window.location = 'login.html';
         }
     });
-
     $("#account-logout").click(function(){
         firebase.auth().signOut().then(function() {
             window.location = 'index.html';
@@ -42,7 +55,8 @@ $(document).ready(function(){
             alert("There was an error signing out.");
         });
     });
-
+}
+function setupKeywordSearch(){
     $(".list-keyword").mousedown(function(e){
         console.log(e);
         if( e.button == 0 ){
@@ -57,18 +71,8 @@ $(document).ready(function(){
             // newSearch(val);
         }
     });
-    $("#title-container").animate({
-        top: "-=150px",
-        opacity:1.0
-    }, 1000, function() {
-        $("#account-icon").fadeIn("slow");
-        $("#logo-icon").fadeIn("slow");
-        if(loggedIn){
-            $("#account-logout").fadeIn();
-        }
-        $("#search-container").fadeIn("slow");
-    });
-
+}
+function setupSearchBar(){
     $("#search-bar").keydown(function(event){
         if(!searchPage){
             shrinkSearchBar();
@@ -79,37 +83,8 @@ $(document).ready(function(){
             search();
         }
     });
-});
-function scrollUp(){
-    $('html, body').animate({
-        scrollTop: $("#search-view").offset().top
-    }, 500);
 }
-function scrollDown(){
-    $('html, body').animate({
-        scrollTop: $("#article-view").offset().top
-    }, 500);
-}
-function enableScrolling(){
-    $("#search-view").click(function(e){
-        if (e.shiftKey) {
-            scrollDown();
-        }
-    });
-    $("#article-view").click(function(e){
-        if (e.shiftKey) {
-            scrollUp();
-        }
-    });
-}
-function setupSecondaryClick(){
-    $(".secondary-question").click(function(){
-        var searchTerm = $(this).text();
-        $("#search-bar").val(searchTerm);
-        $(".secondary-container").fadeOut("slow");
-        getData(searchTerm);
-    })
-}
+
 function shrinkSearchBar(){
     $("#search-bar").animate({
         width: "40vw",
