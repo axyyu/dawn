@@ -127,7 +127,7 @@ function createMap(depth, responseArr, responseNum, text) {
     }
 }
 
-function getCitation(title, publisher, publicationYear, authors, callback) {
+function getCitationMla(title, publisher, publicationYear, authors, callback) {
     var autho = [];
     if (authors != null && authors != 'null' && authors[0] != 'null') {
         for (c = 0; c < authors.length; c++) {
@@ -148,6 +148,48 @@ function getCitation(title, publisher, publicationYear, authors, callback) {
             "key": ebib_key,
             "source": "journal",
             "style": "mla7",
+            "journal": {
+                "title": title
+            },
+            "pubtype": {
+                "main": "pubjournal"
+            },
+            "pubjournal": {
+                "title": publisher,
+                "year": publicationYear
+            },
+            "contributors": autho
+        }
+    }, function(error, res, info) {
+        if (!error && res.statusCode === 200) {
+            callback(info.data);
+        } else {
+            console.log(error);
+            callback(null);
+        }
+    });
+}
+function getCitationApa(title, publisher, publicationYear, authors, callback) {
+    var autho = [];
+    if (authors != null && authors != 'null' && authors[0] != 'null') {
+        for (c = 0; c < authors.length; c++) {
+            autho.push({
+                "function": "author",
+                "first": authors[c].substring(0, authors[c].indexOf(" ")),
+                "middle": authors[c].substring(authors[c].indexOf(" "), authors[c].lastIndexOf(" ")),
+                "last": authors[c].substring(authors[c].lastIndexOf(" "))
+            });
+        }
+    } else {
+        autho.push({});
+    }
+    request({
+        url: "https://api.citation-api.com/2.1/rest/cite",
+        method: "POST",
+        json: {
+            "key": ebib_key,
+            "source": "journal",
+            "style": "apa",
             "journal": {
                 "title": title
             },
@@ -339,9 +381,12 @@ app.post('/search', function(req, response) {
             if (wait == 0) {
                 response.send(entityArray);
             }
-            entityArray.forEach(function(entry) {
+           entityArray.forEach(function(entry) {
                 console.log("entered array");
-                getCitation(entry.title, entry.publisher, entry.publicationDate.substring(0, 4), entry.authors, function(citation) {
+                getCitationMla(entry.title, entry.publisher, entry.publicationDate.substring(0, 4), entry.authors, getCitationApa(entry.title, entry.publisher, entry.publicationDate.substring(0, 4), entry.authors, function(citation) {
+                    console.log("\tgot citation");
+                    entry.bibliography = citation;
+                    getCitationApa(entry.title, entry.publisher, entry.publicationDate.substring(0, 4), entry.authors, getCitationApa(entry.title, entry.publisher, entry.publicationDate.substring(0, 4), entry.authors, function(citation) {
                     console.log("\tgot citation");
                     entry.bibliography = citation;
                     languageAnalysis(entry.abstract, function(s, k, c) {
