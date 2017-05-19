@@ -13,6 +13,7 @@ $(document).ready(function(){
     firebaseChange();
     setupScrollTrigger();
     setupAccountButtons();
+	setupReturnHome();
     setupKeywordSearch();
     setupSearchBar();
 });
@@ -55,6 +56,11 @@ function setupAccountButtons(){
             alert("There was an error signing out.");
         });
     });
+}
+function setupReturnHome(){
+	$("#logo-icon").click(function(){
+		window.location="index.html";
+	});
 }
 function setupKeywordSearch(){
     $(".list-keyword").mousedown(function(e){
