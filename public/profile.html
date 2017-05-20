@@ -76,7 +76,7 @@
                     <div id="project-panels">
                         <div id="project-articles" class="project-content">
                             <h3 id="articles-title" class="content-title">Articles</h3>
-                            <div id="article-list-container">
+                            <div id="article-list-container" class="project-panel-body">
                                 <div id="articles-list">
                                     <div class="article click">
                                         <h3 class="article-name">
@@ -86,7 +86,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="article-container" style="display: none">
+                            <div id="article-container" style="display: none" class="project-panel-body">
                                 <div class="article-title-container">
                                     <h2 class="article-title">Wow you opened an article</h2>
                                     <div class="article-toolbox">
@@ -113,7 +113,16 @@
                         </div>
                         <div id="project-notes" class="project-content">
                             <h3 id="notes-title" class="content-title">Notes</h3>
-                            <div id="notes">
+                            <div id="notes" class="project-panel-body">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Illa tamen simplicia, vestra versuta. Duo Reges: constructio interrete. Dat enim intervalla et relaxat. Primum quid tu dicis breve?
+
+                                Sed quid sentiat, non videtis. Occultum facinus esse potuerit, gaudebit; A mene tu? Sed quae tandem ista ratio est? Optime, inquam. Quo modo?
+
+                                Non est igitur voluptas bonum. Pauca mutat vel plura sane; Quorum altera prosunt, nocent altera.
+
+                                Apparet statim, quae sint officia, quae actiones. Scrupulum, inquam, abeunti; Sedulo, inquam, faciam. Quorum altera prosunt, nocent altera.
+
+                                Praeclare hoc quidem. Qua tu etiam inprudens utebare non numquam. Id Sextilius factum negabat. Prioris generis est docilitas, memoria; Sint ista Graecorum; Sed haec omittamus; Sed fac ista esse non inportuna;
                             </div>
                             <div class="export-button">
                                 <div class="main-container">
@@ -125,10 +134,21 @@
                         </div>
                         <div id="project-settings" class="project-content">
                             <h3 id="settings-title" class="content-title">Settings</h3>
-                            <div id="project-name"></div>
-                            <div id="citation-options">
-                                <div class="citation-option selected">MLA</div>
-                                <div class="citation-option">APA</div>
+                            <div id="project-settings-options" class="project-panel-body">
+                                <div id="project-name-input-container">
+                                    <input id="project-name-input" placeholder="Project name"/>
+                                </div>
+                                <div id="citation-buttons">
+                                    <div class="citation-button click selected">APA</div>
+                                    <div class="citation-button click">MLA</div>
+                                </div>
+                            </div>
+                            <div class="export-button">
+                                <div class="main-container">
+                                    <div class="main-content">
+                                        <div class="export click" onclick="saveSettings()">Save</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

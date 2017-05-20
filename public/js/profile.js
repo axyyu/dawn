@@ -28,3 +28,6 @@ function exportBibliography(){
 function exportNotes() {
 
 }
+function saveSettings() {
+
+}

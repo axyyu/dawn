@@ -309,7 +309,7 @@
 #toolbar-container {
     order: 1;
     width: 100%;
-    height: calc(100% - 48px);
+    height: calc(100% - 50px);
     overflow: auto;
 }
 #toolbar-buttons {

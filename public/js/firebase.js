@@ -16,8 +16,9 @@ firebase.initializeApp(config);
 var structure = {
     uid:[
         {
-            name:"",
+            name:"Project1",
             type:"MLA/APA",
+            recent:"",
             articles:[
                 {
                     title:"",

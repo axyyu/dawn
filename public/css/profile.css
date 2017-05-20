@@ -158,6 +158,10 @@ body{
     text-align: center;
     font-size: 30px;
 }
+.project-panel-body{
+    width: 100%;
+    height: calc(100% - 150px);
+}
 
 /*Project Article List*/
 #project-articles{
@@ -166,8 +170,6 @@ body{
 }
 #article-list-container{
     float: left;
-    width: 100%;
-    height: calc(100% - 150px);
 }
 #articles-list{
     padding: 0 10px;
@@ -193,10 +195,6 @@ body{
 }
 
 /*Article Content*/
-#article-container{
-    width: 100%;
-    height: calc(100% - 150px);
-}
 .article-title-container{
     display: flex;
     flex-direction: row;
@@ -249,6 +247,85 @@ body{
     height: calc(100% - 60px);
     overflow:auto;
 }
+
+/*Project Notes*/
+#project-notes{
+    width: 30%;
+    padding: 0 5px;
+}
+#notes{
+    padding: 0 5px;
+}
+
+/*Settings*/
+#project-settings{
+    width: 30%;
+    padding: 0 5px;
+}
+#project-settings-options{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+#project-name-input{
+    height: 20px;
+    color:white;
+    text-align: center;
+    font-size: 22px;
+    padding:20px;;
+    align-content:center;
+    border-radius: 5px;
+    background: rgba(0,0,0,0.5);
+    border:none;
+    width: 70%;
+}
+#project-name-input::-webkit-input-placeholder {
+    color: lightgrey !important;
+}
+#project-name-input:-moz-placeholder { /* Firefox 18- */
+    color: lightgrey !important;
+}
+#project-name-input::-moz-placeholder {  /* Firefox 19+ */
+    color: lightgrey !important;
+}
+#project-name-input:-ms-input-placeholder {
+    color: lightgrey !important;
+}
+#project-name-input-container{
+    margin-bottom: 5%;
+    width: 100%;
+    text-align: center;
+}
+#citation-buttons{
+    height: 40px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    vertical-align: middle;
+}
+.citation-button{
+    text-align: center;
+    font-size: 20px;
+    height: 40px;
+    width:60px;
+    padding: 5px 10px;
+    vertical-align: middle;
+    display: inline-block;
+    margin: 5px 5px;
+    background: rgba(0,0,0,0.5);
+    transition: width ease .2s;
+}
+.citation-button:hover{
+    width:70px;
+    transition: width ease .2s;
+}
+.selected{
+    font-weight: bold;
+}
+
 
 /*Export Button*/
 .export-button{
