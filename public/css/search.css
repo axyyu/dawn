@@ -469,26 +469,3 @@
     margin-top: 30px;
     opacity: 1.0;
 }
-
-/*Secondary*/
-.secondary-container{
-    position: absolute;
-    margin-top: 110px;
-    text-align: center;
-    width: 100vw;
-}
-.secondary-question{
-    display:inline-block;
-    border: rgba(0,0,0,0.1) 2px solid;
-    font-size: 20px;
-    margin: 0 20px;
-    padding: 15px;
-    border-radius: 5px;
-    color: whitesmoke;
-    background: rgba(0,0,0,0.1);
-    transition: border .5s ease;
-}
-.secondary-question:hover{
-    cursor: pointer;
-    border: rgba(0,0,0,0.8) 2px solid;
-}
