@@ -7,6 +7,8 @@ var searchPage = false;
 var obj;
 var loggedIn = false;
 var uid;
+var idTracker = 0;
+var highlightedSpan = null;
 
 $(document).ready(function(){
     initialAnimation();
@@ -16,19 +18,20 @@ $(document).ready(function(){
 	setupReturnHome();
     setupKeywordSearch();
     setupSearchBar();
+    setupHighlight();
 });
 function initialAnimation(){
     $("#title-container").animate({
         top: "-=150px",
         opacity:1.0
     }, 1000, function() {
-        console.log("Hello?");
         $("#account-icon").fadeIn("slow");
         $("#logo-icon").fadeIn("slow");
         if(loggedIn){
             $("#account-logout").fadeIn();
         }
         $("#search-container").fadeIn("slow");
+        $("#project-container").fadeIn("slow");
     });
 }
 function firebaseChange(){
@@ -92,8 +95,6 @@ function setupSearchBar(){
     });
 }
 function setupHighlight(){
-    var idTracker = 0;
-    var highlightedSpan = null;
     function getSelectedSpanIds() {
         var sel = rangy.getSelection(), ids = [];
         for (var r = 0; r < sel.rangeCount; ++r) {
@@ -213,15 +214,15 @@ function shrinkSearchBar(){
         padding:"30px"
     }, 1000, function() {
     });
-    $("#title-container").fadeOut("medium");
+    $("#project-container").fadeOut("fast");
+    $("#title-container").fadeOut("fast");
 }
 function riseSearchBar(){
     $("#search-container").animate({
         top:"30px",
         "margin-top":"0",
         'border-radius':"5px"
-    }, 1000, function() {
-    });
+    }, 1000);
 }
 function search(){
     $("#background-design").fadeOut("slow");
