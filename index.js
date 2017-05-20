@@ -383,10 +383,10 @@ app.post('/search', function(req, response) {
             }
            entityArray.forEach(function(entry) {
                 console.log("entered array");
-                getCitationMla(entry.title, entry.publisher, entry.publicationDate.substring(0, 4), entry.authors, getCitationApa(entry.title, entry.publisher, entry.publicationDate.substring(0, 4), entry.authors, function(citation) {
+                getCitationMla(entry.title, entry.publisher, entry.publicationDate.substring(0, 4), entry.authors, getCitationApa(entry.title, entry.publisher), entry.publicationDate.substring(0, 4), entry.authors, function(citation) {
                     console.log("\tgot citation");
                     entry.bibliography = citation;
-                    getCitationApa(entry.title, entry.publisher, entry.publicationDate.substring(0, 4), entry.authors, getCitationApa(entry.title, entry.publisher, entry.publicationDate.substring(0, 4), entry.authors, function(citation) {
+                    getCitationApa(entry.title, entry.publisher, entry.publicationDate.substring(0, 4), entry.authors, getCitationApa(entry.title, entry.publisher), entry.publicationDate.substring(0, 4), entry.authors, function(citation) {
                     console.log("\tgot citation");
                     entry.bibliography = citation;
                     languageAnalysis(entry.abstract, function(s, k, c) {
@@ -408,6 +408,7 @@ app.post('/search', function(req, response) {
             });
         });
     });
+});
 });
 
 //Runs app
