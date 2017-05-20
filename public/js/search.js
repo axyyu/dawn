@@ -11,6 +11,9 @@ var idTracker = 0;
 var highlightedSpan = null;
 
 $(document).ready(function(){
+    $("#logo-icon").click(function(){
+        window.location = 'index.html';
+    });
     initialAnimation();
     firebaseChange();
     setupScrollTrigger();
@@ -45,6 +48,9 @@ function firebaseChange(){
     });
 }
 function setupAccountButtons(){
+    $("#logo-icon").click(function(){
+        window.location = 'index.html';
+    });
     $("#account-icon").click(function(){
         if(loggedIn){
             window.location = 'profile.html';
