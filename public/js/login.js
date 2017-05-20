@@ -4,6 +4,30 @@
 
 $(document).ready(function () {
     setupTabs();
+    $("#login-pass").keydown(function(event){
+        if(event.which=="13")
+        {
+            login();
+        }
+    });
+    $("#login-email").keydown(function(event){
+        if(event.which=="13")
+        {
+            login();
+        }
+    });
+    $("#register-pass").keydown(function(event){
+        if(event.which=="13")
+        {
+            register();
+        }
+    });
+    $("#register-email").keydown(function(event){
+        if(event.which=="13")
+        {
+            register();
+        }
+    });
     $("#login-view").fadeIn(1000);
     $("#logo-icon").click(function(){
         window.location = 'index.html';
