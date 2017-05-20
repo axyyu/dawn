@@ -7,7 +7,121 @@ var searchPage = false;
 var obj;
 var loggedIn = false;
 var uid;
+/*Code for the Highlighting Functions*/
+var idTracker = 0;
+var highlightedSpan = null;
+function getSelectedSpanIds() {
+    var sel = rangy.getSelection(), ids = [];
+    for (var r = 0; r < sel.rangeCount; ++r) {
+        var spans = sel.getRangeAt(r).getNodes([1], function(node) {
+            return node.nodeName.toLowerCase() == "span";
+        });
+        for (var i = 0, len = spans.length; i < len; ++i) {
+            ids.push(spans[i].id);
+        }
+    }
+    return ids;
+}
 
+function removespan(span) {
+    var span_contents = span.innerHTML;
+    var span_parent = span.parentNode;
+    var text_node = document.createTextNode(span.innerHTML);
+    span_parent.replaceChild(text_node, span);
+}
+
+$(document).on('click','.highlight',function(e){
+    var selection = window.getSelection().toString();
+    $('#selTxt').val(selection.toString());
+    var x = e.pageX;
+    var y = e.pageY;
+    placeTooltip(x, y);
+    highlightedSpan = this;
+    $("#tooltipDel").show();
+});
+
+var t = '';
+function gText(e) {
+    t = (document.all) ? document.selection.createRange().text : document.getSelection();
+}
+$("#tooltipH").hide();
+$("#tooltipHandD").hide();
+$("#tooltipDel").hide();
+
+document.onmouseup = gText;
+
+$('#article').mouseup(function(e) {
+    console.log(t.toString().trim().split(" ").length);
+    console.log(t.toString().trim().split(" "));
+    if(t.toString().trim().split(" ").length== 1 && t.toString().trim() != "") {
+        var selection = window.getSelection().toString();
+        $('#selTxt').val(selection.toString());
+        var x = e.pageX;
+        var y = e.pageY;
+        placeTooltip(x, y);
+        $("#tooltipHandD").show();
+    }
+    else if(t.toString().trim().split(" ").length > 1) {
+        var selection = window.getSelection().toString();
+        $('#selTxt').val(selection.toString());
+        var x = e.pageX;
+        var y = e.pageY;
+        placeTooltip(x, y);
+        $("#tooltipH").show();
+    }
+    else {
+        $("#tooltipH").hide();
+        $("#tooltipHandD").hide();
+        $("#tooltipDel").hide();
+    }
+});
+
+function placeTooltip(x_pos, y_pos) {
+  $("#tooltipHandD, #tooltipH, #tooltipDel").css({
+    top: (y_pos + 10) + 'px',
+    left: x_pos + 'px',
+    position: 'absolute'
+  });
+}
+
+$("#high,#high2").click(function() {
+  var ids = getSelectedSpanIds();
+    for(var i =0; i<ids.length; i++) {
+        removespan(document.getElementById(ids[i]));
+    }
+    var range = window.getSelection().getRangeAt(0),
+        span = document.createElement('span');
+
+    span.className = 'highlight';
+    span.id = 'id'+idTracker.toString();
+    idTracker += 1;
+    span.appendChild(range.extractContents());
+    range.insertNode(span);
+});
+
+$("#unHigh").click(function() {
+  removespan(highlightedSpan);
+  $("#tooltipDel").hide();
+});
+
+var modal = document.getElementById('myModal');
+var span = document.getElementsByClassName("close")[0];
+
+$("#def").click(function() {
+    var div = document.getElementById("dictionary-modal");
+    div.innerHTML = '<h1 style="font-size: 2vw;">'+t.toString().charAt(0).toUpperCase()+t.toString().substring(1,t.toString().length)+'</h><p style="font-size: 1.2vw; margin-top: 2vh;">Add stuff from dictionary API here</p>';
+    modal.style.display = "block";
+});
+span.onclick = function() {
+    modal.style.display = "none";
+}
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////
 $(document).ready(function(){
     initialAnimation();
     firebaseChange();
