@@ -73,6 +73,7 @@ body{
     text-align: left;
     font-size: 20px;
     padding:20px;
+    align-content:center;
     border-radius: 5px;
     background: rgba(0,0,0,0.5);
     border:none;
