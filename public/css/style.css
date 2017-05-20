@@ -88,6 +88,7 @@ h2,h3,h4,h5{
     top:20px;
     left:20px;
     text-align: center;
+    z-index: 3;
 }
 
 /*Highlight Function CSS*/
@@ -151,5 +152,10 @@ h2,h3,h4,h5{
     text-decoration: none;
     cursor: pointer;
 }
-
+#article-toolbox{
+    overflow: auto;
+}
+#article-content{
+    overflow: auto;
+}
 /*Highlight Function CSS*/

@@ -24,7 +24,8 @@ function setupTabs(){
         $(this).addClass("selected");
         $(".login-bars").hide();
         $(".error").hide();
-        $("#"+$.trim($(this).text())).fadeIn();
+        var string = $.trim($(this).text())
+        $("#"+$.trim($(this).text()).charAt(0).toLowerCase() + string.slice(1)).fadeIn();
     });
 }
 function register(){
