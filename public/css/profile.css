@@ -21,6 +21,7 @@ body{
 
 /*Project List*/
 #project-list-container{
+    height: 100%;
     float: left;
     width: 100%;
 }
@@ -106,7 +107,7 @@ body{
     display: flex;
     padding-top:60px;
     padding-left:20px;
-    width: calc(100% - 15vw);
+    width: calc((100% - 15vw) - 10px);
     flex-direction: column;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -119,7 +120,6 @@ body{
     order:1;
     width: 100%;
     height: 40px;
-    margin-bottom: 20px;
 }
 #recent-terms{
     width: 100%;
@@ -144,7 +144,7 @@ body{
 #project-panels{
     order: 2;
     width: 100%;
-    height: calc(100% - 70px);
+    height: calc(100% - 50px);
 }
 .project-content{
     float: left;
@@ -255,6 +255,7 @@ body{
 }
 #notes{
     padding: 0 5px;
+    overflow: auto;
 }
 
 /*Settings*/

@@ -11,9 +11,6 @@ var idTracker = 0;
 var highlightedSpan = null;
 
 $(document).ready(function(){
-    $("#logo-icon").click(function(){
-        window.location = 'index.html';
-    });
     mouseOver();
     mouseOver1();
     mouseOver2();
