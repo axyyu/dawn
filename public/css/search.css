@@ -321,11 +321,19 @@
 }
 
 /*Project Dropdown*/
-.project-dropdown {
-    position: relative;
+#project-container{
+    position: absolute;
+    top: calc(50vh + 70px);
     width: 100%;
     text-align: center;
-    display: inline-block;
+}
+.project-dropdown {
+    width: 300px;
+    text-align: center;
+    display:inline-block;
+    color:white;
+    border:none;
+    height: 50px;
 }
 .project-list {
     display: none;
@@ -337,15 +345,23 @@
     display: block;
 }
 .selected-project{
+    width: 300px;
     font-size: 20px;
     padding: 15px 0;
     background: rgba(0,0,0,0.5);
 }
 .project-list-element{
+    width: 300px;
     font-size: 16px;
-    padding:20px 15px;
-    background: rgba(0,0,0,0.7);
-    margin-bottom: 1px;
+    height: 50px;
+    margin: 5px 0;
+    background: rgba(0,0,0,0.5);
+    line-height: 50px;
+    transition: font-size .1s ease;
+}
+.project-list-element:hover{
+    font-size: 18px;
+    transition: font-size .1s ease;
 }
 
 /*Bibliography*/
