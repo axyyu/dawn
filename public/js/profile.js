@@ -1,16 +1,30 @@
-$(function() {
-  $('#login-form-link').click(function(e) {
-      $(".login").delay(100).fadeIn(100);
-      $(".signUp").fadeOut(100);
-      $('#register-form-link').removeClass('active');
-      $(this).addClass('active');
-      e.preventDefault();
-  });
-  $('#register-form-link').click(function(e) {
-      $(".signUp").delay(100).fadeIn(100);
-      $(".login").fadeOut(100);
-      $('#login-form-link').removeClass('active');
-      $(this).addClass('active');
-      e.preventDefault();
-  });
+$(document).ready(function(){
+    clickProject();
+    clickArticle();
 });
+function clickProject(){
+    $(".project").click(function(e){
+        $(".project").removeClass("project-selected");
+        $(this).addClass("project-selected");
+        $("#project-list-container").animate({
+            width:"15vw",
+            "min-width":"200px"
+        },500, function(){
+            $("#project-tab").fadeIn();
+        });
+    });
+}
+
+function clickArticle(){
+    $(".article").click(function(e){
+        $("#article-list-container").hide();
+        $("#article-container").fadeIn();
+    });
+}
+
+function exportBibliography(){
+
+}
+function exportNotes() {
+
+}

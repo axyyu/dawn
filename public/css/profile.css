@@ -1,203 +1,271 @@
-html{
-    width: 100vw;
-    background: #141E30; /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(-50deg, #808080, #3fada8); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(-50deg, #808080, #3fada8); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(-50deg, #808080, #3fada8); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(-50deg, #808080, #3fada8);
-    -webkit-animation: fadein 3s; /* Safari, Chrome and Opera > 12.1 */
-       -moz-animation: fadein 3s; /* Firefox < 16 */
-        -ms-animation: fadein 3s; /* Internet Explorer */
-         -o-animation: fadein 3s; /* Opera < 12.1 */
-            animation: fadein 3s;
-}
 body{
-    height: 100%;
-    width: 100vw;
-    color:white;
-    /*font-family: 'Lato', sans-serif;*/
-    font-family: 'Source Sans Pro', sans-serif;
-    background: linear-gradient(-50deg, #808080, #3fada8);
-    overflow-x: hidden;
-    /*background: url("../img/sunrise4.jpg") no-repeat;*/
-    /*-webkit-background-size: cover;*/
-    /*-moz-background-size: cover;*/
-    /*-o-background-size: cover;*/
-    /*background-size: cover;*/
+	height: 100vh;
 }
-h3 {
-	font-size: 2.5vh;
-}
-#background-design{
-    position: absolute;
-    top:0;
-    z-index: 0;
-    height: 100vh;
-    width: 100vw;
-}
-
-#welcomeBack {
-	text-align: center;
-	margin-top: 5%;
-	font-size: 3vw;
-}
-
-.recentlySearched {
-	margin: 1vw;
-}
-
-.recentlySearched ul {
-	list-style-type: none;
-	background: black;
-	opacity: 0.5;
-	overflow: hidden;
-	width: 95%;
-}
-
-.recentlySearched li {
-	float: left;
-	padding: 1vw;
-	margin-left: 1vw;
-	margin-right: 1vw;
-}
-.recentlySearched li a {
-	display: block;
-	color: white;
-	text-align: center;
-	text-decoration: none;
-}
-
-.recentlySearched li:hover {
-	background: red;
-}
-
-.storedWork {
-	position: absolute;
-	top: 30%;
-	margin-left: 1vw;
+#profile-container{
+	height:100%;
 	width: 100%;
+	position: relative;
+	z-index: 2;
 }
-
-.fileExplorer {
-	background: black;
-	opacity: 0.5;
-	width: 30%;
-}
-
-.fileExplorer ul {
-	list-style-type: none;
-	width: 100%;
-	padding-left: 0.0vw;
-}
-
-.fileExplorer li {
-	font-size: 2vw;
+#welcome-title {
 	text-align: center;
-	padding-top: 1vh;
-	padding-bottom: 1vh;
+	padding-top: 10vh;
+	font-size: 50px;
 }
-
-.fileExplorer li:hover {
-	background:red;
-}
-
-.bibAndNotes {
-	background: black;
-	opacity: 0.5;
-	width: 30%;
-	height: 50vh;
-	position: absolute;
-	left: 60%;
-	top: 30%;
-}
-
-#bibAndNotesHeader {
-	position: absolute;
-	left: 60%;
-	top: 0%;
-}
-
-#exportButton {
-	position: absolute;
-	width:30%;
-	height: 20%;
-	font-size: 1vw;
-	left: 60%;
-	top: 210%;
-}
-
-#hidden {
-	display: none;
-}
-
-.tabs {
+#explorer-container{
 	width: 100%;
-	position: absolute;
+	height: calc( 90vh - 80px);
+    padding: 50px;
+    padding-top: 0;
 }
-.tabs ul {
-	list-style-type: none;
-	margin: 0;
- 	padding: 0;
-  	overflow: hidden;
-}
-.tabs li a {
-	display: block;
-    color: white;
-    text-align: center;
-    padding-left: 4vw;
-    padding-right: 4vw;
-    padding-top: 0.25vh;
-    padding-bottom: 0.25vh;
-    text-decoration: none;
-}
-.tabs li {
+
+/*Project List*/
+#project-list-container{
     float: left;
-    width: 49.8%;
-    border-right: 1px solid #bbb;
-    border-bottom: 1px solid #bbb;
-    border-top: 1px solid #bbb;
-    border-left: 1px solid #bbb;
+    width: 100%;
 }
-.tabs li:last-child {
-	border-right: 0px;
+.project{
+    padding: 20px;
+    margin-bottom: 10px;
+    background: rgba(0,0,0,0.3);
+    transition: background .5s ease;
 }
-.tabs li:first-child {
-	border-left: 0px;
+.project-selected{
+    background: rgba(0,0,0,0.5);
+    transition: background .5s ease;
 }
-
-.active {
-	background-color: #2980B9;
-}
-
-button {
-	color: black;
+.project-list-elements{
+    margin-bottom: 15px;
 }
 
-
-@keyframes fadein {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+/*Project Name*/
+.project-name-container{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.project-name{
+    order:1;
+    font-size: 25px;
+    vertical-align: middle;
+    display: inline-block;
+}
+.project-type{
+    order:2;
+    font-size: 18px;
+    vertical-align: middle;
+    display: inline-block;
 }
 
-/* Firefox < 16 */
-@-moz-keyframes fadein {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+/*Project Details*/
+.project-details{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.glyphicon-trash{
+    z-index: 2;
+    position: relative;
+    transition: font-size ease .2s;
+}
+.glyphicon-trash:hover{
+    font-size: 18px;
 }
 
-/* Safari, Chrome and Opera > 12.1 */
-@-webkit-keyframes fadein {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+/*List Buttons*/
+#list-buttons{
+    order:1;
+    padding: 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.list-button{
+    text-align: center;
+    font-size: 24px;
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+    display: inline-block;
+    margin: 5px;
+    transition: font-size ease .2s;
+}
+.list-button:hover{
+    font-size: 28px;
+    vertical-align: middle;
 }
 
-/* Internet Explorer */
-@-ms-keyframes fadein {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+/*Project Tab*/
+#project-tab{
+    display: flex;
+    padding-top:60px;
+    padding-left:20px;
+    width: calc(100% - 15vw);
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    float: left;
+    height: 100%;
 }
 
-/* Opera < 12.1 */
-@-o-keyframes fadein {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+/*Recent Search Terms*/
+#recent{
+    order:1;
+    width: 100%;
+    height: 40px;
+    margin-bottom: 20px;
+}
+#recent-terms{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: left;
+}
+.recent-term{
+    background: rgba(255,255,255,0.1);
+    padding: 10px;
+    font-size: 16px;
+    transition: background .1s ease;
+    margin-right: 10px ;
+}
+.recent-term:hover{
+    background: rgba(255,255,255,0.2) ;
+}
+
+/*Project Panels*/
+#project-panels{
+    order: 2;
+    width: 100%;
+    height: calc(100% - 70px);
+}
+.project-content{
+    float: left;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.content-title{
+    text-align: center;
+    font-size: 30px;
+}
+
+/*Project Article List*/
+#project-articles{
+    width: 40%;
+    padding: 0 5px;
+}
+#article-list-container{
+    float: left;
+    width: 100%;
+    height: calc(100% - 150px);
+}
+#articles-list{
+    padding: 0 10px;
+}
+.article{
+    padding: 20px;
+    margin-bottom: 10px;
+    background: rgba(0,0,0,0.3);
+    transition: background .5s ease;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.article-name{
+    font-size: 18px;
+}
+.article-delete{
+    font-size: 18px;
+}
+.article-delete:hover{
+    font-size: 20px;
+}
+
+/*Article Content*/
+#article-container{
+    width: 100%;
+    height: calc(100% - 150px);
+}
+.article-title-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 35px;
+    justify-content: space-between;
+}
+.article-info-container{
+    display: flex;
+    margin-bottom: 5px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.article-title{
+    order:1;
+    font-size: 22px;
+    vertical-align: middle;
+    display: inline-block;
+}
+.article-toolbox{
+    order:2;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.article-toolbox-button{
+    text-align: center;
+    font-size: 22px;
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+    display: inline-block;
+    margin-left: 5px;
+    transition: font-size ease .1s;
+}
+.article-toolbox-button:hover{
+    font-size: 24px;
+    vertical-align: middle;
+}
+.article-author{
+    font-size: 18px;
+}
+.article-date{
+    font-size: 18px;
+}
+.article-text{
+    font-size: 16px;
+    height: calc(100% - 60px);
+    overflow:auto;
+}
+
+/*Export Button*/
+.export-button{
+    text-align: center;
+    height: 50px;
+}
+.export{
+    display:inline-block;
+    background: rgba(0,0,0,0.5);
+    padding: 0 20px;
+    height: 100%;
+    font-size: 19px;
+    border-radius: 5px;
+    line-height: 50px;
+    transition: font-size .2s ease;
+}
+.export:hover{
+    font-size: 20px;
+    transition: font-size .2s ease;
+}
