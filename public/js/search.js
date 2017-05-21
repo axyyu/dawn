@@ -276,11 +276,37 @@ function setupHighlight(){
     var modal = document.getElementById('myModal');
     var span = document.getElementsByClassName("close")[0];
 
-    $("#def,#def2").click(function() {
-        var div = document.getElementById("dictionary-modal");
-        var text = '<h1 style="font-size: 2vw;">'+t.toString().charAt(0).toUpperCase()+t.toString().substring(1,t.toString().length)+'</h1><p style="font-size: 1.2vw; margin-top: 2vh;">Add stuff from dictionary API here</p>';
-        $(text).appendTo("#dictionary-modal");
-        modal.style.display = "block";
+    $("#def, #def2").click(function() {
+    	var div = document.getElementById("dictionary-modal");
+    	$.ajax({
+        	type: "POST",
+        	url: 'http://www.dictionaryapi.com/api/v1/references/collegiate/xml/'+t.toString().trim()+'?key=e3a55748-d588-4a27-9baa-1d9f1f35a7de',
+        	success: function(data){
+            		try {
+                		var focus = new DOMParser().parseFromString(new XMLSerializer().serializeToString(data), "text/xml").getElementsByTagName("def")[0].innerHTML;
+                		var focus = new DOMParser().parseFromString(new XMLSerializer().serializeToString(data), "text/xml").getElementsByTagName("def")[0].innerHTML;
+                		var definition = "";
+                		for(var i = 0; i < $.parseHTML(focus).length; i++) {
+                    			var text = $.parseHTML(focus)[i].innerHTML;
+                    			if(text != null) {
+                        			if(text.substring(0,1) == ":") {
+                            				definition = text.toString();
+                            				definition = definition.substring(1, text.toString().length);
+                            				break;
+                        			}
+                    			}
+                		}
+               			div.innerHTML = '<h1 style="color:white; text-decoration: underline; font-size: 3vw;">' + t.toString().charAt(0).toUpperCase() + t.toString().slice(1) + '</h1>'+ '<p style="color:white; font-size: 2vw;">' + definition.charAt(0).toUpperCase() + definition.slice(1) + '</p>';
+            		}
+            		catch(err) {
+                		div.innerHTML = '<h1 style="color:white; text-decoration: underline; font-size: 3vw;">' + t.toString().charAt(0).toUpperCase() + t.toString().slice(1) + '</h1>'+ '<p style="color:white; font-size: 2vw;">*Sorry, a definition is currently not available*</p>';
+            		}            
+        	},
+        	error:function(error){
+           		 alert("Dictionary Error!");
+        	}
+    	});
+    	modal.style.display = "block";
     });
     span.onclick = function() {
         modal.style.display = "none";
