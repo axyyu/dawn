@@ -6,13 +6,17 @@
 var searchPage = false;
 var obj;
 var loggedIn = false;
+
 var uid;
+var projectid;
+var userlocation;
+
 var idTracker = 0;
 var highlightedSpan = null;
 
 $(document).ready(function(){
-    initialAnimation();
     firebaseChange();
+    initialAnimation();
     setupScrollTrigger();
     setupAccountButtons();
 	setupReturnHome();
@@ -20,6 +24,55 @@ $(document).ready(function(){
     setupSearchBar();
     setupHighlight();
 });
+function firebaseChange(){
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            uid = user.uid;
+            loggedIn = true;
+            userlocation = 'users/' + uid +'/';
+            setupProjectList();
+        } else {
+            userlocation = null;
+            uid=null;
+            projectid=null;
+            $("#account-logout").fadeOut();
+        }
+    });
+}
+function setupProjectList(){
+    var location = firebase.database().ref(userlocation);
+    location.once('value').then(function(snapshot) {
+        $.each(snapshot.val(), function(k, v) {
+            var project = "<h3 class='project-list-element click' onclick='selectProject(\""+ k +"\", this)'>"+v.name+"</h3>";
+            $(project).appendTo(".project-list");
+        });
+    });
+}
+function selectProject(projectkey, element){
+    if(projectkey=="live"){
+        projectid = null;
+        var k = $(".selected-project").attr("id");
+        var v = $(".selected-project").text();
+        var project = "<h3 class='project-list-element click' onclick='selectProject(\""+ k +"\", this)'>"+v+"</h3>";
+        $(".selected-project").text("Live Project");
+        $(".selected-project").attr('id',projectkey);
+        $(project).appendTo(".project-list");
+    }
+    else{
+        var k = $(".selected-project").attr("id");
+        var v = $(".selected-project").text();
+        projectid = projectkey;
+        var project = "<h3 class='project-list-element click' onclick='selectProject(\""+ k +"\", this)'>"+v+"</h3>";
+        var location = firebase.database().ref(userlocation + projectkey);
+        location.once('value').then(function(snapshot) {
+            $(".selected-project").text(snapshot.val().name);
+            $(".selected-project").attr('id',projectkey);
+        });
+        $(project).appendTo(".project-list");
+    }
+    $(element).remove();
+}
+
 function initialAnimation(){
     $("#title-container").animate({
         top: "-=150px",
@@ -29,19 +82,9 @@ function initialAnimation(){
         $("#logo-icon").fadeIn("slow");
         if(loggedIn){
             $("#account-logout").fadeIn();
+            $("#project-container").fadeIn("slow");
         }
         $("#search-container").fadeIn("slow");
-        $("#project-container").fadeIn("slow");
-    });
-}
-function firebaseChange(){
-    firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-            uid = user.uid;
-            loggedIn = true;
-        } else {
-            $("#account-logout").fadeOut();
-        }
     });
 }
 function setupAccountButtons(){

@@ -14,28 +14,36 @@ var config = {
 firebase.initializeApp(config);
 
 var structure = {
-    uid:[
-        {
-            name:"Project1",
-            type:"MLA/APA",
-            recent:"",
-            articles:[
-                {
-                    title:"",
-                    url: "",
-                    authors: "",
-                    abstract: "",
-                    publisher: "",
-                    publicationDate: "",
-                    mla:"",
-                    apa:"",
-                    sentiment:"",
-                    keywords:"",
-                    concepts:"",
-                    summary:""
-                }
-            ]
-        }
-    ]
+    users: {
+        uid: {}
+    }
 
 };
+var projectstructure = {
+    name: "Project1",
+    type:"MLA/APA",
+    recent: "",
+    articles:{}
+};
+var articlestructure = {
+    title: "",
+    url: "",
+    authors: "",
+    abstract: "",
+    publisher: "",
+    publicationDate: "",
+    mla: "",
+    apa: "",
+    sentiment: "",
+    keywords: "",
+    concepts: "",
+    summary: ""
+};
+
+function testUserStructure(uid){
+    firebase.database().ref('users/' + uid ).set(structure);
+    var newPostKey = firebase.database().ref('users/' + uid).push().key;
+    firebase.database().ref('users/' + uid + "/" + newPostKey).set(projectstructure);
+    var newPostKey2 = firebase.database().ref('users/' + uid +"/"+newPostKey+"/articles/").push().key;
+    firebase.database().ref('users/' + uid +"/"+newPostKey+"/articles/" + newPostKey2).set(articlestructure);
+}

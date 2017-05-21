@@ -4,25 +4,13 @@
 
 $(document).ready(function () {
     setupTabs();
-    $("#login-pass").keydown(function(event){
+    $(".login-input").keydown(function(event){
         if(event.which=="13")
         {
             login();
         }
     });
-    $("#login-email").keydown(function(event){
-        if(event.which=="13")
-        {
-            login();
-        }
-    });
-    $("#register-pass").keydown(function(event){
-        if(event.which=="13")
-        {
-            register();
-        }
-    });
-    $("#register-email").keydown(function(event){
+    $(".register-input").keydown(function(event){
         if(event.which=="13")
         {
             register();
@@ -35,7 +23,7 @@ $(document).ready(function () {
 
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
-            window.location = 'index.html';
+            //window.location = 'index.html';
         } else {
             // User is signed out.
             // ...
@@ -48,7 +36,7 @@ function setupTabs(){
         $(this).addClass("selected");
         $(".login-bars").hide();
         $(".error").hide();
-        var string = $.trim($(this).text())
+        var string = $.trim($(this).text());
         $("#"+$.trim($(this).text()).charAt(0).toLowerCase() + string.slice(1)).fadeIn();
     });
 }
@@ -57,7 +45,9 @@ function register(){
     $("#loading-view").fadeIn("fast");
     var email = $("#register-email").val();
     var password = $("#register-pass").val();
-    firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+    firebase.auth().createUserWithEmailAndPassword(email, password).then(function(user) {
+        // testUserStructure(user.uid);
+    }).catch(function(error) {
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
