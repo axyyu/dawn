@@ -130,6 +130,7 @@ function setupKeywordSearch(){
         }
     });
 }
+
 function setupSearchBar(){
     $("#search-bar").keydown(function(event){
         if(!searchPage){
@@ -170,7 +171,15 @@ function setupHighlight(){
         var y = e.pageY;
         placeTooltip(x, y);
         highlightedSpan = this;
-        $("#tooltipDel").show();
+        console.log(t.toString());
+        if(t.toString().trim().split(" ").length== 1 && t.toString().trim() != "") {
+            $("#tooltipDelAndDef").show();
+        }
+        else {
+            $("#tooltipDel").show();
+        }
+        $("#tooltipH").hide();
+        $("#tooltipHandD").hide();
     });
 
     var t = '';
@@ -180,19 +189,24 @@ function setupHighlight(){
     $("#tooltipH").hide();
     $("#tooltipHandD").hide();
     $("#tooltipDel").hide();
+    $("#tooltipDelAndDef").hide();
 
     document.onmouseup = gText;
 
     $('#article').mouseup(function(e) {
-        console.log(t.toString().trim().split(" ").length);
-        console.log(t.toString().trim().split(" "));
+        //console.log(t.toString().trim().split(" ").length);
+        //console.log(t.toString().trim().split(" "));
+        var ids = getSelectedSpanIds();
+        console.log(ids.length);
         if(t.toString().trim().split(" ").length== 1 && t.toString().trim() != "") {
             var selection = window.getSelection().toString();
             $('#selTxt').val(selection.toString());
             var x = e.pageX;
             var y = e.pageY;
             placeTooltip(x, y);
-            $("#tooltipHandD").show();
+            var ids = getSelectedSpanIds();
+            var ids = getSelectedSpanIds();
+            $("#tooltipHandD").show();            
         }
         else if(t.toString().trim().split(" ").length > 1) {
             var selection = window.getSelection().toString();
@@ -200,17 +214,19 @@ function setupHighlight(){
             var x = e.pageX;
             var y = e.pageY;
             placeTooltip(x, y);
+            var ids = getSelectedSpanIds();
             $("#tooltipH").show();
         }
         else {
             $("#tooltipH").hide();
             $("#tooltipHandD").hide();
             $("#tooltipDel").hide();
+            $("#tooltipDelAndDef").hide();
         }
     });
 
     function placeTooltip(x_pos, y_pos) {
-        $("#tooltipHandD, #tooltipH, #tooltipDel").css({
+        $("#tooltipHandD, #tooltipH, #tooltipDel, #tooltipDelAndDef").css({
             top: (y_pos + 10) + 'px',
             left: x_pos + 'px',
             position: 'absolute'
@@ -232,7 +248,7 @@ function setupHighlight(){
         range.insertNode(span);
     });
 
-    $("#unHigh").click(function() {
+    $("#unHigh, #unHigh2").click(function() {
         removespan(highlightedSpan);
         $("#tooltipDel").hide();
     });
@@ -240,7 +256,7 @@ function setupHighlight(){
     var modal = document.getElementById('myModal');
     var span = document.getElementsByClassName("close")[0];
 
-    $("#def").click(function() {
+    $("#def,#def2").click(function() {
         var div = document.getElementById("dictionary-modal");
         div.innerHTML = '<h1 style="font-size: 2vw;">'+t.toString().charAt(0).toUpperCase()+t.toString().substring(1,t.toString().length)+'</h><p style="font-size: 1.2vw; margin-top: 2vh;">Add stuff from dictionary API here</p>';
         modal.style.display = "block";
