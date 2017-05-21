@@ -1,7 +1,82 @@
+//Globals
+var uid;
+var projectid;
+var userlocation;
+
+var newcitation="APA";
+var setcitation;
+
 $(document).ready(function(){
-    clickProject();
-    clickArticle();
+    setupFirebase();
+    setupAddProject();
 });
+function setupFirebase(){
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            uid = user.uid;
+            userlocation = 'users/' + uid +'/';
+            retrieveProjects();
+        } else {
+            window.location = 'login.html';
+        }
+    });
+}
+function retrieveProjects(){
+    var location = firebase.database().ref(userlocation);
+    location.on('value', function(snapshot) {
+        $("#project-list").empty();
+        $.each(snapshot.val(), function(k, v) {
+            var project = '<div class="project click" id='+k+'><div class="project-name-container project-list-elements">';
+            project+='<h3 class="project-name project-title">'+v.name+'</h3>';
+            project+='<h4 class="project-type">'+v.type+'</h4></div>';
+            project+='<div class="project-details">';
+            if(v.articles == null || v.articles.length==0){
+                project+='<div class="project-button project-count">No Articles</div>';
+            }
+            else{
+                project+='<div class="project-button project-count">Articles: '+v.articles.length+'</div>';
+            }
+            project+='<div title="Delete" class="project-button glyphicon glyphicon-trash click" onclick="deleteProject(\''+""+k+'\')">';
+            project+= '</div></div></div>';
+            $(project).appendTo("#project-list");
+        });
+        $("#loading-view").hide();
+        $("#profile-view").fadeIn();
+        clickProject();
+    });
+}
+
+function setupAddProject(){
+    $("#add-project").click(function() {
+        newcitation = "APA";
+        $("#project-list").hide();
+        $("#project-form").fadeIn("fast");
+    });
+    $("#cancel").click(function(){
+        $("#project-form").hide();
+        $("#project-list").fadeIn("fast");
+    });
+    $("#add").click(function(){
+        addProject();
+    });
+    $(".project-citation-button").click(function(){
+        newcitation = $(this).text();
+        $(".project-citation-button").removeClass("citation-selected");
+        $("#"+newcitation+"-form").addClass("citation-selected");
+    });
+}
+function addProject(){
+    var name = $("#project-form-input").val();
+    var projectKey = firebase.database().ref(userlocation).push().key;
+    firebase.database().ref(userlocation+projectKey+"/name").set(name);
+    firebase.database().ref(userlocation+projectKey+"/type").set(newcitation);
+    $("#project-form").hide();
+    $("#project-list").fadeIn("fast");
+}
+function deleteProject(projectKey){
+    firebase.database().ref(userlocation+projectKey).remove();
+}
+
 function clickProject(){
     $(".project").click(function(e){
         $(".project").removeClass("project-selected");

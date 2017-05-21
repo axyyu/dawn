@@ -49,25 +49,39 @@
             <div id="explorer-container">
                 <div id="project-list-container">
                     <div id="list-buttons">
-                        <div title="Sort Alphabetically" class="list-button glyphicon glyphicon-sort-by-alphabet click">
-                        </div>
-                        <div title="Reverse Sort Alphabetically" class="list-button glyphicon glyphicon-sort-by-alphabet-alt click">
+                        <div title="Add Project" id="add-project" class="list-button glyphicon glyphicon-plus click">
                         </div>
                     </div>
-                    <div id="project-list">
-                        <div class="project click">
-                            <div class="project-name-container project-list-elements">
-                                <h3 class="project-name project-title">
-                                    My Project
-                                </h3>
-                                <h4 class="project-type">
-                                    MLA
-                                </h4>
+                    <div id="project-list" class="scrollbar style-1">
+                        <!--<div class="project click">-->
+                            <!--<div class="project-name-container project-list-elements">-->
+                                <!--<h3 class="project-name project-title">-->
+                                    <!--My Project-->
+                                <!--</h3>-->
+                                <!--<h4 class="project-type">-->
+                                    <!--MLA-->
+                                <!--</h4>-->
+                            <!--</div>-->
+                            <!--<div class="project-details">-->
+                                <!--<div class="project-button project-count">Articles: 5</div>-->
+                                <!--<div title="Delete" class="project-button glyphicon glyphicon-trash click"></div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    </div>
+                    <div id="project-form" style="display: none;">
+                        <h3 id="project-form-title" class="content-title">Add Project</h3>
+                        <div id="project-form-options" class="project-panel-body">
+                            <div id="project-form-input-container">
+                                <input id="project-form-input" placeholder="Project name"/>
                             </div>
-                            <div class="project-details">
-                                <div class="project-button project-count">Articles: 5</div>
-                                <div title="Delete" class="project-button glyphicon glyphicon-trash click"></div>
+                            <div id="project-citation-buttons">
+                                <div id="APA-form" title="APA" class="project-citation-button click citation-selected">APA</div>
+                                <div id="MLA-form" title="MLA" class="project-citation-button click">MLA</div>
                             </div>
+                        </div>
+                        <div id="project-form-buttons">
+                            <div id="cancel" class="project-form-button click">Cancel</div>
+                            <div id="add" class="project-form-button click">Add</div>
                         </div>
                     </div>
                 </div>
@@ -105,7 +119,7 @@
                                     <h2 class="article-author">Joe Smith</h2>
                                     <h2 class="article-date">1/1/2017</h2>
                                 </div>
-                                <p class="article-text"">
+                                <p class="article-text">
                                     In The Great Gatsby, blue is used quite frequency to create a feel for a specific scene or individual. In Nick’s description of Doctor T. J. Eckleburg, he states that the eyes on the billboard are blue and gigantic, building a tone of omniscience. These eyes, often seen as the eyes of God, are given the color to describe a depressing atmosphere over New York. It foreshadows the awful effects that occur to Gatsby, Wilson, providing a tone of dread. Without blue, the entire landscape of Wilson’s workshop and the city becomes less dreary. In addition, Fitzgerald uses blue to provide a depressing tone to the story after Myrtle’s death, enhancing the sadness and emptiness Nick feels, caught in these events. However, Fitzgerald also uses blue to describe Wilson’s eyes when Tom and Nick pull up at his shop. This can be an indication of Wilson’s loyalty to Tom, as Fitzgerald often refers to one’s eyes to describe a specific character. Throughout the story, Wilson is seen to interact with Tom as if he is a friend, despite Tom’s affair with his wife. Even after Daisy kills Myrtle, Tom is the one attempting to console Wilson. This use of blue is repeated when Cody gives Gatsby a blue coat as a gift, since Gatsby was always loyal to him. Although there isn’t much backstory about Gatsby’s experiences with Dan Cody, the splash of blue enhances the sense of Gatsby and Cody’s loyalty and friendship. Without the addition of color, there is a lack of feeling between the two friends, and Gatsby’s loss of his inheritance is less meaningful. Fitzgerald also uses blue to describe tranquility and peace. When Nick gazes out the window in New York during Tom and Myrtle’s party, the description of the blue sky helps the audience see Nick as mesmerized to the city life, breathing in the new environment. It enhances the haziness in the smoky apartment, and allows the audience to feel Nick’s wonder.
                                 </p>
                             </div>
@@ -145,8 +159,8 @@
                                     <input id="project-name-input" placeholder="Project name"/>
                                 </div>
                                 <div id="citation-buttons">
-                                    <div title="APA" class="citation-button click selected">APA</div>
-                                    <div title="MLA" class="citation-button click">MLA</div>
+                                    <div id="APA-settings" title="APA" class="citation-button click selected">APA</div>
+                                    <div id="MLA-settings" title="MLA" class="citation-button click">MLA</div>
                                 </div>
                             </div>
                             <div class="export-button">

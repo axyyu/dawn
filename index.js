@@ -361,6 +361,8 @@ function filterArticle(str){
 app.post('/define', function(req, response) {
     req.on("data", function(chunk) {
         var str = '' + chunk;
+        var word = str.substring(str.indexOf("=") + 1, str.length);
+        word = word.replace(/\+/g, " ");
         defineWord(str, function(def){
             response.send(def);
         });

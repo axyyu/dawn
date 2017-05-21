@@ -20,10 +20,8 @@ $(document).ready(function(){
     setupScrollTrigger();
     setupAccountButtons();
 	setupReturnHome();
-    setupKeywordSearch();
     setupSearchBar();
     setupHighlight();
-    setupArticleClick()
 });
 function firebaseChange(){
     firebase.auth().onAuthStateChanged(function(user) {
@@ -31,11 +29,20 @@ function firebaseChange(){
             uid = user.uid;
             loggedIn = true;
             userlocation = 'users/' + uid +'/';
+            $("#account-icon").attr("title","Profile");
+            $("#account-icon").click(function() {
+                window.location = 'profile.html';
+            });
+            $("#account-logout").fadeIn();
             setupProjectList();
         } else {
             userlocation = null;
             uid=null;
             projectid=null;
+            $("#account-icon").attr("title","Log In");
+            $("#account-icon").click(function() {
+                window.location = 'login.html';
+            });
             $("#account-logout").fadeOut();
         }
     });
@@ -142,6 +149,7 @@ function setupArticleClick(){
         });
     });
 }
+
 
 function setupSearchBar(){
     $("#search-bar").keydown(function(event){
@@ -332,6 +340,7 @@ function getData(term){
                 $("#article-view").fadeIn();
             });
             resetInfo();
+            setupSearchAgain(term);
             addToRecentSearches(term);
             setupData();
         },
@@ -353,6 +362,11 @@ function handleError(){
 
 function resetInfo(){
     $("#article-list").empty();
+}
+function setupSearchAgain(searchTerm){
+    $("#search-again").click(function(){
+        getData(searchTerm);
+    })
 }
 function addToRecentSearches(searchTerm){
     if(projectid){
