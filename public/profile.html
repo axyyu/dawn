@@ -48,9 +48,9 @@
             <div id="explorer-container">
                 <div id="project-list-container">
                     <div id="list-buttons">
-                        <div class="list-button glyphicon glyphicon-sort-by-alphabet click">
+                        <div title="Sort Alphabetically" class="list-button glyphicon glyphicon-sort-by-alphabet click">
                         </div>
-                        <div class="list-button glyphicon glyphicon-sort-by-alphabet-alt click">
+                        <div title="Reverse Sort Alphabetically" class="list-button glyphicon glyphicon-sort-by-alphabet-alt click">
                         </div>
                     </div>
                     <div id="project-list">
@@ -65,7 +65,7 @@
                             </div>
                             <div class="project-details">
                                 <div class="project-button project-count">Articles: 5</div>
-                                <div class="project-button glyphicon glyphicon-trash click"></div>
+                                <div title="Delete" class="project-button glyphicon glyphicon-trash click"></div>
                             </div>
                         </div>
                     </div>
@@ -87,7 +87,7 @@
                                         <h3 class="article-name">
                                             Article Name
                                         </h3>
-                                        <div class=" article-delete glyphicon glyphicon-trash click"></div>
+                                        <div title="Delete" class=" article-delete glyphicon glyphicon-trash click"></div>
                                     </div>
                                 </div>
                             </div>
@@ -95,9 +95,9 @@
                                 <div class="article-title-container">
                                     <h2 class="article-title">Wow you opened an article</h2>
                                     <div class="article-toolbox">
-                                        <div class="article-toolbox-button glyphicon glyphicon-arrow-left click"></div>
-                                        <div class="article-toolbox-button glyphicon glyphicon-link click"></div>
-                                        <div class="article-toolbox-button glyphicon glyphicon-trash click"></div>
+                                        <div title="Back" class="article-toolbox-button glyphicon glyphicon-arrow-left click"></div>
+                                        <div title="Link" class="article-toolbox-button glyphicon glyphicon-link click"></div>
+                                        <div title="Delete" class="article-toolbox-button glyphicon glyphicon-trash click"></div>
                                     </div>
                                 </div>
                                 <div class="article-info-container">
@@ -111,7 +111,7 @@
                             <div class="export-button">
                                 <div class="main-container">
                                     <div class="main-content">
-                                        <div class="export click" onclick="exportBibliography()">Export Bibliography</div>
+                                        <div title="Export Bibliography" class="export click" onclick="exportBibliography()">Export Bibliography</div>
                                     </div>
                                 </div>
                             </div>
@@ -132,7 +132,7 @@
                             <div class="export-button">
                                 <div class="main-container">
                                     <div class="main-content">
-                                        <div class="export click" onclick="exportNotes()">Export Notes</div>
+                                        <div title="Export Notes" class="export click" onclick="exportNotes()">Export Notes</div>
                                     </div>
                                 </div>
                             </div>
@@ -144,14 +144,14 @@
                                     <input id="project-name-input" placeholder="Project name"/>
                                 </div>
                                 <div id="citation-buttons">
-                                    <div class="citation-button click selected">APA</div>
-                                    <div class="citation-button click">MLA</div>
+                                    <div title="APA" class="citation-button click selected">APA</div>
+                                    <div title="MLA" class="citation-button click">MLA</div>
                                 </div>
                             </div>
                             <div class="export-button">
                                 <div class="main-container">
                                     <div class="main-content">
-                                        <div class="export click" onclick="saveSettings()">Save</div>
+                                        <div title="Save" class="export click" onclick="saveSettings()">Save</div>
                                     </div>
                                 </div>
                             </div>
