@@ -107,7 +107,18 @@ function clickArticle(){
 }
 
 function exportBibliography(){
-
+var htmlString = $(‘<html>’).html(<'html xmlns="http://www.w3.org/TR/REC-ht..." xmlns:office="urn:schemas-microsoft-com:office:office" xmlns:word="urn:schemas-microsoft-com:office:word">' + '<head>' + '<xml>' + '<word:WordDocument>' + '<word:Zoom>90</word:Zoom>' + '<word:DoNotOptimizeForBrowser/>' + '</word:WordDocument>' + '</xml>'
++ '</head>' +'<body>' + 
+'<h1>A word document</h1>' +
+'<p>This is the content of the word document</p>' +
+'</body>'
+).get().outerHTML;
+var byteNumbers = new Uint8Array(htmlString.length);
+for (var i = 0; i < htmlString.length; i++) {
+byteNumbers[i] = htmlString.charCodeAt(i);
+}
+var blob = new Blob([byteNumbers], {type: 'text/html'});
+window.saveAs(blob, 'workcited.doc');
 }
 function exportNotes() {
 
