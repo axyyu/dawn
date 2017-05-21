@@ -110,7 +110,6 @@
 }
 .article-journal{
     order:2;
-    color: darkgreen;
     font-size: 20px;
     width: 25px;
     font-weight: bold;
@@ -120,6 +119,9 @@
     font-family: 'Fjalla One', sans-serif;
     background: rgb(255,255,255);
 }
+.N{
+    color: darkgreen;
+}
 .article-name{
     order:1;
     font-size: 20px;
@@ -127,7 +129,7 @@
     display: inline-block;
 }
 .article-desc{
-    font-size: 13px;
+    font-size: 16px;
 }
 .mini-keyword{
     display: inline-block;
@@ -190,7 +192,6 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    height: 60px;
     justify-content: space-between;
     padding: 10px 0;
 }
@@ -204,8 +205,6 @@
 .article-toolbox-button{
     text-align: center;
     font-size: 28px;
-    width: 60px;
-    height: 60px;
     vertical-align: middle;
     display: inline-block;
     margin-left: 5px;
@@ -236,8 +235,7 @@
 }
 .article-text{
     font-size: 16px;
-    height: calc(100% - 150px);
-    overflow:auto;
+    /*height: calc(100% - 150px);*/
 }
 .highlight{
     background-color: rgba(255, 250, 130,0.5)
@@ -263,6 +261,7 @@
     height: inherit;
     width:80%;
     float:left;
+    overflow:auto;
     padding-right: 20px;
 }
 #article-title-button{
@@ -297,19 +296,22 @@
     vertical-align: middle;
 }
 .toolbar{
-    height: inherit;
+    height: 100%;
+    overflow: auto;
 }
 #article-toolbox{
-    height: inherit;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     width:20%;
+    overflow: hidden;
+    justify-content: space-between;
 }
 #toolbar-container {
     order: 1;
     width: 100%;
-    height: calc(100% - 50px);
+    height: calc(100% - 100px);
     overflow: auto;
 }
 #toolbar-buttons {
@@ -387,8 +389,6 @@
     word-wrap: break-word;
 }
 #citation-buttons{
-    height: 40px;
-    margin-top: 30px;
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -408,6 +408,9 @@
     background: rgba(0,0,0,0.5);
     transition: width ease .2s;
 }
+.citation-button-selected{
+    font-weight: bold;
+}
 .citation-button:hover{
     width:70px;
     transition: width ease .2s;
@@ -418,7 +421,6 @@
     height: 100%;
     width: 100%;
     color:white;
-    margin: 10px 0;
     background:rgba(0,0,0,0.5);
 }
 #notes-panel{
@@ -470,4 +472,10 @@
     transition: opacity 1s ease, margin 1s ease;
     margin-top: 30px;
     opacity: 1.0;
+}
+
+/*Tooltip*/
+.tooltip-items{
+    color:black;
+    display: none;
 }

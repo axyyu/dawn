@@ -23,6 +23,7 @@ var projectstructure = {
     name: "Project1",
     type:"MLA/APA",
     recent: "",
+    notes:"",
     articles:{}
 };
 var articlestructure = {
@@ -41,9 +42,12 @@ var articlestructure = {
 };
 
 function testUserStructure(uid){
-    firebase.database().ref('users/' + uid ).set(structure);
+    firebase.database().ref('users/' + uid);
     var newPostKey = firebase.database().ref('users/' + uid).push().key;
     firebase.database().ref('users/' + uid + "/" + newPostKey).set(projectstructure);
     var newPostKey2 = firebase.database().ref('users/' + uid +"/"+newPostKey+"/articles/").push().key;
     firebase.database().ref('users/' + uid +"/"+newPostKey+"/articles/" + newPostKey2).set(articlestructure);
+}
+function testUserStructure(uid){
+    firebase.database().ref('users/' + uid );
 }

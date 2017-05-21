@@ -64,7 +64,8 @@ function natureJournal(question, callback) {
                     "abstract": filterArticle(body.feed.entry[a]['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:description']),
                     "authors": body.feed.entry[a]['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:creator'],
                     "publisher": body.feed.entry[a]['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:publisher'],
-                    "publicationDate": body.feed.entry[a]['sru:recordData']['pam:message']['pam:article']['xhtml:head']['prism:publicationDate']
+                    "publicationDate": body.feed.entry[a]['sru:recordData']['pam:message']['pam:article']['xhtml:head']['prism:publicationDate'],
+                    "journal":"Nature"
                 });
             }
             callback(entityArray);
@@ -383,21 +384,27 @@ app.post('/search', function(req, response) {
                     getCitationApa(entry.title, entry.publisher, entry.publicationDate.substring(0, 4), entry.authors, function(citation) {
                         console.log("\tgot APA citation");
                         entry.apa = citation;
-                        languageAnalysis(entry.abstract, function(s, k, c) {
-                            console.log("\t\tlanguage analysis");
-                            entry.sentiment = s;
-                            entry.keywords = k;
-                            entry.concepts = c;
+                        entry.abstract = filterArticle(entry.abstract);
+                        if( entry.abstract ==null || entry.abstract==""){
+                            --wait;
+                        }
+                        else{
+                            languageAnalysis(entry.abstract, function(s, k, c) {
+                                console.log("\t\tlanguage analysis");
+                                entry.sentiment = s;
+                                entry.keywords = k;
+                                entry.concepts = c;
 
-                            getSummary(entry.abstract, entry.title, 1, function(s) {
-                                console.log("\t\t\tgot summary");
-                                entry.summary = s;
-                                --wait;
-                                if (wait == 0) {
-                                    response.send(entityArray);
-                                }
+                                getSummary(entry.abstract, entry.title, 1, function(s) {
+                                    console.log("\t\t\tgot summary");
+                                    entry.summary = s;
+                                    --wait;
+                                    if (wait == 0) {
+                                        response.send(entityArray);
+                                    }
+                                });
                             });
-                        });
+                        }
                     });
                 });
             });
