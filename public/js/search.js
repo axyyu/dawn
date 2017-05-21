@@ -94,9 +94,11 @@ function setupAccountButtons(){
     $("#account-icon").click(function(){
         if(loggedIn){
             window.location = 'profile.html';
+            $("#account-icon").attr("title","Profile");
         }
         else{
             window.location = 'login.html';
+            $("#account-icon").attr("title","Log In");
         }
     });
     $("#account-logout").click(function(){

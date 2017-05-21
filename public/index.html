@@ -26,7 +26,7 @@
     <script type="text/javascript" src = "js/library.js" defer></script>
     <script type="text/javascript" src="js/search.js" defer></script>
 </head>
-<body>
+<body class="scrollbar style-1">
     <!--ADDED CODE FOR HIGHLIGHT FUNCTIONS-->
     <div id="tooltipH" >
         <button type="button" id="high" style="color:black;">Highlight</button>
@@ -48,15 +48,15 @@
     <!--ADDED CODE FOR HIGHLIGHT FUNCTIONS-->
     <img id="background-design" src="img/pattern.png">
     <div title="Home" class="click icons" id="logo-icon" style="display: none;">
-        <img class="small-icon" src="img/dawn.png" id="logoz">
+        <img class="small-icon" src="img/dawn.png">
     </div>
 
 
-    <div class="click icons" id = "account-icon" style="display: none;">
-        <img class="small-icon" src="img/account.png" id="logoz2">
+    <div title="Log In" class="click icons" id = "account-icon" style="display: none;">
+        <img class="small-icon" src="img/account.png">
     </div>
-    <div class="click icons" id = "account-logout" style="display: none;">
-        <img class="small-icon" src="img/logout.png" id="logoz1">
+    <div title="Log Out" class="click icons" id = "account-logout" style="display: none;">
+        <img class="small-icon" src="img/logout.png">
     </div>
 
     <div id="title-container">
@@ -122,79 +122,15 @@
     <div id="article-view" class="view" style="display: none">
         <div id="article-list-container" class="article-field">
             <div id="list-buttons">
-                <div class="list-button glyphicon glyphicon-sort-by-alphabet click">
+                <div title="Sort Alphabetically" class="list-button glyphicon glyphicon-sort-by-alphabet click">
                 </div>
-                <div class="list-button glyphicon glyphicon-sort-by-alphabet-alt click">
+                <div title="Reverse Sort Alphabetically" class="list-button glyphicon glyphicon-sort-by-alphabet-alt click">
                 </div>
             </div>
             <div id="article-list" class="scrollbar style-1">
                 <div class="article click">
                     <div class="article-name-container article-list-elements">
-                        <h3 class="article-name ">
-                            Article Name
-                        </h3>
-                        <div class="article-journal">N</div>
-                    </div>
-                    <h4 class="article-desc article-list-elements">
-                        Article Desc
-                    </h4>
-                    <div class="article-keywords article-list-elements">
-                        <h4 class="mini-keyword">agent orange</h4>
-                        <h4 class="mini-keyword">orange</h4>
-                    </div>
-                    <div class="article-reliability"></div>
-                </div>
-                <div class="article click">
-                    <div class="article-name-container article-list-elements">
-                        <h3 class="article-name ">
-                            Article Name
-                        </h3>
-                        <div class="article-journal">N</div>
-                    </div>
-                    <h4 class="article-desc article-list-elements">
-                        Article Desc
-                    </h4>
-                    <div class="article-keywords article-list-elements">
-                        <h4 class="mini-keyword">agent orange</h4>
-                        <h4 class="mini-keyword">orange</h4>
-                    </div>
-                    <div class="article-reliability"></div>
-                </div>
-                <div class="article click">
-                    <div class="article-name-container article-list-elements">
-                        <h3 class="article-name ">
-                            Article Name
-                        </h3>
-                        <div class="article-journal">N</div>
-                    </div>
-                    <h4 class="article-desc article-list-elements">
-                        Article Desc
-                    </h4>
-                    <div class="article-keywords article-list-elements">
-                        <h4 class="mini-keyword">agent orange</h4>
-                        <h4 class="mini-keyword">orange</h4>
-                    </div>
-                    <div class="article-reliability"></div>
-                </div>
-                <div class="article click">
-                    <div class="article-name-container article-list-elements">
-                        <h3 class="article-name ">
-                            Article Name
-                        </h3>
-                        <div class="article-journal">N</div>
-                    </div>
-                    <h4 class="article-desc article-list-elements">
-                        Article Desc
-                    </h4>
-                    <div class="article-keywords article-list-elements">
-                        <h4 class="mini-keyword">agent orange</h4>
-                        <h4 class="mini-keyword">orange</h4>
-                    </div>
-                    <div class="article-reliability"></div>
-                </div>
-                <div class="article click">
-                    <div class="article-name-container article-list-elements">
-                        <h3 class="article-name ">
+                        <h3 class="article-name">
                             Article Name
                         </h3>
                         <div class="article-journal">N</div>
@@ -215,14 +151,7 @@
                 <div class="article-title-container">
                     <h2 class="article-title">Wow you opened an article</h2>
                     <div class="article-toolbox">
-                        <div class="article-toolbox-button glyphicon glyphicon-arrow-left click" id="logoz3">
-                                    <div id= "popup3" style="display: none">Back</div>
-                        </div>
-                        <div class="article-toolbox-button glyphicon glyphicon-link click" id="logoz4">
-                                    <div id= "popup4" style="display: none">Article Link</div>
-                        </div>
-                        <div class="article-toolbox-button glyphicon glyphicon-trash click" id="logoz5">
-                                    <div id= "popup5" style="display: none">Delete</div>
+                        <div title="Link" class="article-toolbox-button glyphicon glyphicon-link click">
                         </div>
                     </div>
                 </div>
@@ -243,8 +172,8 @@
                     </div>
                     <div id="bibliography" class="toolbar"  style="display: none">
                         <div id="citation-buttons">
-                            <div class="citation-button click">APA</div>
-                            <div class="citation-button click">MLA</div>
+                            <div title="APA" class="citation-button click">APA</div>
+                            <div title="MPA" class="citation-button click">MLA</div>
                         </div>
                         <div id="citation">
                             <h4>Dean, Cornelia. "Executive on a Mission: Saving the Planet." The New York Times, 22 May 2007, www.nytimes.com/2007/05/22/science/earth/22ander.html?_r=0. Accessed 12 May 2016.</h4>
@@ -257,11 +186,11 @@
                     </div>
                 </div>
                 <div id="toolbar-buttons">
-                    <div class="toolbar-button glyphicon glyphicon-star-empty click" onclick="changeToKeywords()">
+                    <div title="Keywords" class="toolbar-button glyphicon glyphicon-star-empty click" onclick="changeToKeywords()">
                     </div>
-                    <div class="toolbar-button glyphicon glyphicon-education click" onclick="changeToBibliography()">
+                    <div title="Citation" class="toolbar-button glyphicon glyphicon-education click" onclick="changeToBibliography()">
                     </div>
-                    <div class="toolbar-button glyphicon glyphicon-pencil click" onclick="changeToNotes()">
+                    <div title="Notes" class="toolbar-button glyphicon glyphicon-pencil click" onclick="changeToNotes()">
                     </div>
                 </div>
             </div>
