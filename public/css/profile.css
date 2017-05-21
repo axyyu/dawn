@@ -1,6 +1,15 @@
 body{
 	height: 100vh;
 }
+
+#account-logout{
+    position: absolute;
+    top:20px;
+    right:20px;
+    z-index: 2;
+    text-align: center;
+}
+
 #profile-container{
 	height:100%;
 	width: 100%;

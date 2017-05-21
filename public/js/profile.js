@@ -7,6 +7,10 @@ var newcitation="APA";
 var setcitation;
 
 $(document).ready(function(){
+    $("#logo-icon").click(function(){
+        window.location = 'index.html';
+    });
+    setupAccountButtons();
     setupFirebase();
     setupAddProject();
 });
@@ -25,6 +29,9 @@ function retrieveProjects(){
     var location = firebase.database().ref(userlocation);
     location.on('value', function(snapshot) {
         $("#project-list").empty();
+        if(snapshot.val() == null || snapshot.val().length ==0){
+            $('<h2 style="text-align: center">No Projects Found</h2>').appendTo("#project-list");
+        }
         $.each(snapshot.val(), function(k, v) {
             var project = '<div class="project click" id='+k+'><div class="project-name-container project-list-elements">';
             project+='<h3 class="project-name project-title">'+v.name+'</h3>';
@@ -70,6 +77,7 @@ function addProject(){
     var projectKey = firebase.database().ref(userlocation).push().key;
     firebase.database().ref(userlocation+projectKey+"/name").set(name);
     firebase.database().ref(userlocation+projectKey+"/type").set(newcitation);
+    populateArticleTab(projectKey);
     $("#project-form").hide();
     $("#project-list").fadeIn("fast");
 }
@@ -81,6 +89,7 @@ function clickProject(){
     $(".project").click(function(e){
         $(".project").removeClass("project-selected");
         $(this).addClass("project-selected");
+        populateArticleTab($(this).attr("id"));
         $("#project-list-container").animate({
             width:"15vw",
             "min-width":"200px"

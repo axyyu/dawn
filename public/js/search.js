@@ -133,6 +133,7 @@ function setupKeywordSearch(){
         if( e.button == 2 ) {
             var val = $(this).text();
             getData(val);
+            $("#search-bar").val(val);
         }
     });
 }
@@ -149,7 +150,6 @@ function setupArticleClick(){
         });
     });
 }
-
 
 function setupSearchBar(){
     $("#search-bar").keydown(function(event){
