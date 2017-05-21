@@ -41,22 +41,22 @@
 
     <div id="myModal" class="modal">
     	<div class="modal-content" id="dictionary-modal" style="color:black;">
-            <span class="close glyphicon glyphicon-remove"></span> <!--Need to fix-->
+     		 <span class="close glyphicon glyphicon-remove"></span> <!--Need to fix-->
    	    </div>
     </div>
 
     <!--ADDED CODE FOR HIGHLIGHT FUNCTIONS-->
     <img id="background-design" src="img/pattern.png">
-    <div class="click icons" id="logo-icon" style="display: none;">
-        <img class="small-icon" src="img/dawn.png">
+    <div title="Home" class="click icons" id="logo-icon" style="display: none;">
+        <img class="small-icon" src="img/dawn.png" id="logoz">
     </div>
 
 
     <div class="click icons" id = "account-icon" style="display: none;">
-        <img class="small-icon" src="img/account.png">
+        <img class="small-icon" src="img/account.png" id="logoz2">
     </div>
     <div class="click icons" id = "account-logout" style="display: none;">
-        <img class="small-icon" src="img/logout.png">
+        <img class="small-icon" src="img/logout.png" id="logoz1">
     </div>
 
     <div id="title-container">
@@ -215,9 +215,15 @@
                 <div class="article-title-container">
                     <h2 class="article-title">Wow you opened an article</h2>
                     <div class="article-toolbox">
-                        <div class="article-toolbox-button glyphicon glyphicon-arrow-left click"></div>
-                        <div class="article-toolbox-button glyphicon glyphicon-link click"></div>
-                        <div class="article-toolbox-button glyphicon glyphicon-trash click"></div>
+                        <div class="article-toolbox-button glyphicon glyphicon-arrow-left click" id="logoz3">
+                                    <div id= "popup3" style="display: none">Back</div>
+                        </div>
+                        <div class="article-toolbox-button glyphicon glyphicon-link click" id="logoz4">
+                                    <div id= "popup4" style="display: none">Article Link</div>
+                        </div>
+                        <div class="article-toolbox-button glyphicon glyphicon-trash click" id="logoz5">
+                                    <div id= "popup5" style="display: none">Delete</div>
+                        </div>
                     </div>
                 </div>
                 <div class="article-info-container">
