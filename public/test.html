@@ -12,32 +12,38 @@
     <link href="https://cdn.quilljs.com/1.2.4/quill.snow.css" rel="stylesheet">
     <link href="https://cdn.quilljs.com/1.2.4/quill.bubble.css" rel="stylesheet">
 
-    <script type="text/javascript" src="js/jquery.js" defer></script>
-    <script type="text/javascript" src="js/quill.min.js"></script>
-
-
-    <style>
-        #div1{
-            background-color: blue;
-            height: 100vh;
-            width: 100vw;
-        }
-    </style>
-
-</head>
-<body>
-    <div id="editor">
-        <p>Hello World!</p>
-        <p>Some initial <strong>bold</strong> text</p>
-        <p><br></p>
-    </div>
-
-
-    <!-- Initialize Quill editor -->
-    <script defer>
-        var quill = new Quill('#editor', {
-            theme: 'bubble'
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script>
+        var key = "53Ictd96ZekQql2yfzgCTLE7mUwpnVsb";
+        var arr = ["12981393",
+            "32354395"];
+        $.ajax({
+            type: "GET",
+            url: "https://core.ac.uk:443/api-v2/articles/get/"+arr[0],
+            data:{
+                "apiKey": key,
+                "urls": "true"
+            },
+            success: function(result){
+                obj = result;
+                console.log(obj);
+                if(obj.status==false){
+                    handleError();
+                }
+                else{
+                    $("#loading-view").fadeOut("medium", function(){
+                        $("#article-view").fadeIn();
+                    });
+                }
+                // resetInfo();
+                // stopLoading();
+                // appendArticleList(obj);
+                // displayArticleView();
+                // notepadMemory();
+            }
         });
     </script>
+</head>
+<body>
 </body>
 </html>

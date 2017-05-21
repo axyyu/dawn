@@ -23,6 +23,7 @@ $(document).ready(function(){
     setupKeywordSearch();
     setupSearchBar();
     setupHighlight();
+    setupArticleClick()
 });
 function firebaseChange(){
     firebase.auth().onAuthStateChanged(function(user) {
@@ -128,6 +129,18 @@ function setupKeywordSearch(){
             console.log(val);
             // newSearch(val);
         }
+    });
+}
+function setupArticleClick(){
+    $(".article").click(function(e){
+        $(".article").removeClass("article-selected");
+        $(this).addClass("article-selected");
+        $("#article-list-container").animate({
+            width:"20vw",
+            "min-width":"200px"
+        },500, function(){
+            $("#article-tab").fadeIn();
+        });
     });
 }
 function setupSearchBar(){
@@ -242,7 +255,8 @@ function setupHighlight(){
 
     $("#def").click(function() {
         var div = document.getElementById("dictionary-modal");
-        div.innerHTML = '<h1 style="font-size: 2vw;">'+t.toString().charAt(0).toUpperCase()+t.toString().substring(1,t.toString().length)+'</h><p style="font-size: 1.2vw; margin-top: 2vh;">Add stuff from dictionary API here</p>';
+        var text = '<h1 style="font-size: 2vw;">'+t.toString().charAt(0).toUpperCase()+t.toString().substring(1,t.toString().length)+'</h1><p style="font-size: 1.2vw; margin-top: 2vh;">Add stuff from dictionary API here</p>';
+        $(text).appendTo("#dictionary-modal");
         modal.style.display = "block";
     });
     span.onclick = function() {
@@ -285,69 +299,57 @@ function search(){
             var quill = new Quill('#notes-panel', {
                 theme: 'bubble'
             });
-
-            $("#loading-view").fadeOut("medium", function(){
-                $("#article-view").fadeIn();
-                clickArticle();
-            });
         });
     });
     riseSearchBar();
     console.log("Searching...");
     var searchTerm = $("#search-bar").val();
-    //getData(searchTerm);
+    getData(searchTerm);
 }
-function clickArticle(){
-    $(".article").click(function(e){
-        $(".article").removeClass("article-selected");
-        $(this).addClass("article-selected");
-        $("#article-list-container").animate({
-            width:"20vw",
-            "min-width":"200px"
-        },500, function(){
-            $("#article-tab").fadeIn();
-        });
-    });
-}
+
 function getData(term){
-    enableScrolling();
-    startLoading();
     $.ajax({
         type: "POST",
         url: "/search",
         data: {question:term},
         success: function(result){
             obj = result;
-            console.log(obj);
+            $("#loading-view").fadeOut("medium", function(){
+                $("#article-view").fadeIn();
+            });
             resetInfo();
-            stopLoading();
-            appendArticleList(obj);
-            displayArticleView();
-            notepadMemory();
+            addToRecentSearches(term);
+            setupData();
         },
         error:function(error){
-            console.log(error);
-            alert("Error! Please reload!");
+            handleError();
         }
     });
 }
-function resetInfo(){
-    $("#article").empty();
-    $(".article-content").empty();
-    $("#bibliography").empty();
-    $("#keyword-list").empty();
+function handleError(){
+    var span = document.getElementsByClassName("close")[0];
 
+    $("#def").click(function() {
+        var div = document.getElementById("dictionary-modal");
+        var text = '<h1 style="font-size: 2vw;">'+Error+'</h1><p style="font-size: 1.2vw; margin-top: 2vh;">Try again later.</p>';
+        $(text).appendTo("#dictionary-modal");
+        $("#myModal").css("display","block");
+    });
 }
-function appendSecondary(index){
-    for(var i=0;i<obj[index].concepts.length;i++)
-    {
-        $("<h2/>", {
-            html: obj[index].concepts[i],
-            class:"secondary-question click"
-        }).appendTo(".secondary-container");
+
+function resetInfo(){
+    $("#article-list").empty();
+}
+function addToRecentSearches(searchTerm){
+    if(projectid){
+        var recentKey = firebase.database().ref(userlocation + projectid +"/recent").push().key;
+        firebase.database().ref(userlocation + projectid +"/recent/"+recentKey).set(searchTerm);
     }
-    setupSecondaryClick();
 }
+function setupData(){
+    appendArticleList();
+}
+
 function appendKeywords(index){
     var list = "";
     if(obj[index].keywords !=null) {

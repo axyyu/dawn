@@ -23,7 +23,7 @@ $(document).ready(function () {
 
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
-            //window.location = 'index.html';
+            window.location = 'index.html';
         } else {
             // User is signed out.
             // ...
