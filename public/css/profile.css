@@ -173,6 +173,7 @@ body{
 }
 #articles-list{
     padding: 0 10px;
+    overflow: auto;
 }
 .article{
     padding: 20px;
@@ -193,6 +194,7 @@ body{
 .article-delete:hover{
     font-size: 20px;
 }
+
 
 /*Article Content*/
 .article-title-container{
