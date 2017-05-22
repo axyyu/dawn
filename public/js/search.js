@@ -284,7 +284,6 @@ function setupHighlight(){
         	success: function(data){
             		try {
                 		var focus = new DOMParser().parseFromString(new XMLSerializer().serializeToString(data), "text/xml").getElementsByTagName("def")[0].innerHTML;
-                		var focus = new DOMParser().parseFromString(new XMLSerializer().serializeToString(data), "text/xml").getElementsByTagName("def")[0].innerHTML;
                 		var definition = "";
                 		for(var i = 0; i < $.parseHTML(focus).length; i++) {
                     			var text = $.parseHTML(focus)[i].innerHTML;
@@ -296,7 +295,13 @@ function setupHighlight(){
                         			}
                     			}
                 		}
-               			div.innerHTML = '<h1 style="color:white; text-decoration: underline; font-size: 3vw;">' + t.toString().charAt(0).toUpperCase() + t.toString().slice(1) + '</h1>'+ '<p style="color:white; font-size: 2vw;">' + definition.charAt(0).toUpperCase() + definition.slice(1) + '</p>';
+                		var add = '<span class="close glyphicon glyphicon-remove modal-field"></span>';
+               			add += '<h1 class="modal-header modal-field">' + t.toString().charAt(0).toUpperCase() + t.toString().slice(1) + '</h1>';
+               			add+= '<p class="modal-body modal-field">' + definition.charAt(0).toUpperCase() + definition.slice(1) + '</p>';
+            		    div.innerHTML = add;
+            		    $(".close").click(function(){
+                            modal.style.display = "none";
+                        })
             		}
             		catch(err) {
                 		div.innerHTML = '<h1 style="color:white; text-decoration: underline; font-size: 3vw;">' + t.toString().charAt(0).toUpperCase() + t.toString().slice(1) + '</h1>'+ '<p style="color:white; font-size: 2vw;">*Sorry, a definition is currently not available*</p>';
@@ -512,9 +517,6 @@ function showFullArticle(idd){
     else{
         $(".article-text").text(art.abstract);
     }
-    // var a = $("#article-content").height();
-    // var b = $(".article-title-container").outerHeight(true);
-    // var c = $(".article-info-container").outerHeight(true);
     setupHighlight();
     showToolbar(art);
 }

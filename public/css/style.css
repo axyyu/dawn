@@ -131,12 +131,17 @@ h2,h3,h4,h5{
 
 /* Modal Content */
 .modal-content {
-    background-color: #003973;
+    background: rgba(0,0,0,0.5);
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
+    border-radius: 50px;
     width: 80%;
     margin-top: 20vh;
+    color:white;
+}
+.modal-field{
+    color:white !important;
 }
 
 /* The Close Button */
@@ -146,17 +151,9 @@ h2,h3,h4,h5{
     font-size: 28px;
     font-weight: bold;
 }
-
 .close:hover,
 .close:focus {
     color: #000;
     text-decoration: none;
     cursor: pointer;
 }
-#article-toolbox{
-    overflow: auto;
-}
-#article-content{
-    overflow: auto;
-}
-/*Highlight Function CSS*/
