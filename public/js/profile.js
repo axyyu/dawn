@@ -1,18 +1,14 @@
 //Globals
 var uid;
-var projectid;
 var userlocation;
 
 var newcitation="APA";
 var setcitation;
 
 $(document).ready(function(){
-    $("#logo-icon").click(function(){
-        window.location = 'index.html';
-    });
-    setupAccountButtons();
     setupFirebase();
     setupAddProject();
+    setupIconButtons();
 });
 function setupFirebase(){
     firebase.auth().onAuthStateChanged(function(user) {
@@ -41,7 +37,7 @@ function retrieveProjects(){
                 project+='<div class="project-button project-count">No Articles</div>';
             }
             else{
-                project+='<div class="project-button project-count">Articles: '+v.articles.length+'</div>';
+                project+='<div class="project-button project-count">Articles: '+Object.keys(v.articles).length+'</div>';
             }
             project+='<div title="Delete" class="project-button glyphicon glyphicon-trash click" onclick="deleteProject(\''+""+k+'\')">';
             project+= '</div></div></div>';
@@ -50,6 +46,19 @@ function retrieveProjects(){
         $("#loading-view").hide();
         $("#profile-view").fadeIn();
         clickProject();
+    });
+}
+
+function setupIconButtons(){
+    $("#logo-icon").click(function(){
+        window.location = 'index.html';
+    });
+    $("#account-logout").click(function(){
+        firebase.auth().signOut().then(function() {
+            window.location = 'index.html';
+        }).catch(function(error) {
+            alert("There was an error signing out.");
+        });
     });
 }
 
@@ -98,12 +107,156 @@ function clickProject(){
         });
     });
 }
+function populateArticleTab(projectKey){
+    displayRecents(projectKey);
+    displayArticles(projectKey);
+    displayNotes(projectKey);
+    setupSettings(projectKey);
+}
 
-function clickArticle(){
-    $(".article").click(function(e){
+function displayRecents(projectKey){
+    var location = firebase.database().ref(userlocation+projectKey+"/recent");
+    location.on('value', function(snapshot) {
+        $("#recent-terms").empty();
+        if(snapshot.val() == null || snapshot.val().length ==0){
+            $('<h4 style="text-align: center">No Recent Searches Found</h4>').appendTo("#recent-terms");
+        }
+        $.each(snapshot.val(), function(k, v) {
+            var items = "";
+            items+='<h4 class="recent-term">'+v+'</h4>';
+            $(items).appendTo("#recent-terms");
+        });
+    });
+}
+function displayArticles(projectKey){
+    var location = firebase.database().ref(userlocation+projectKey+"/articles");
+    location.on('value', function(snapshot) {
+        $("#articles-list").empty();
+        if(snapshot.val() == null || snapshot.val().length ==0){
+            $('<h4 style="text-align: center">No Articles Found</h4>').appendTo("#articles-list");
+        }
+        $.each(snapshot.val(), function(k, v) {
+            var items = "";
+            items+='<div id="'+k+'" class="article click" class="scrollbar style-1">';
+            items+='<h3 class="article-name">'+v.title+'</h3>';
+            items+='<div title="Delete" id="'+k+'" class="article-delete glyphicon glyphicon-trash click">';
+            items+='</div></div>';
+            $(items).appendTo("#articles-list");
+            $("#save-button").attr("onclick",'saveSettings("'+projectKey+'")');
+        });
+        setupArticleClick(projectKey);
+    });
+}
+function displayNotes(projectKey){
+    var quill = new Quill('#notes', {
+        theme: 'bubble'
+    });
+    var location = firebase.database().ref(userlocation+projectKey+"/notes");
+    location.once('value').then(function(snapshot) {
+        var content = snapshot.val();
+        quill.setContents(content);
+        quill.disable();
+    });
+}
+function setupSettings(projectKey){
+    var location = firebase.database().ref(userlocation+projectKey+"/type");
+    location.on('value', function(snapshot) {
+        var type = snapshot.val();
+        setcitation = type;
+        $(".citation-button").removeClass("selected");
+        $("#"+type+"-settings").addClass("selected");
+        $(".citation-button").click(function(){
+            setcitation = $(this).text();
+            $(".citation-button").removeClass("selected");
+            $("#"+newcitation+"-settings").addClass("selected");
+        })
+    });
+    var location2 = firebase.database().ref(userlocation+projectKey+"/name");
+    location2.on('value', function(snapshot) {
+        var name = snapshot.val();
+        $("#project-name-input").val(name);
+    });
+
+    $("#save-button").attr("onclick",'saveSettings("'+projectKey+'")');
+}
+
+function setupArticleClick(projectKey){
+    $(".article").click(function(){
+        var articleKey = $(this).attr("id");
+        openArticle(projectKey,articleKey);
         $("#article-list-container").hide();
         $("#article-container").fadeIn();
     });
+    $(".article-delete").click(function(){
+        var articleKey = $(this).attr("id");
+        removeArticle(projectKey,articleKey);
+    });
+}
+function openArticle(projectKey, articleKey){
+    var location = firebase.database().ref(userlocation+projectKey+"/articles/"+articleKey);
+    location.on('value', function(snapshot) {
+        if(snapshot.val() == null){
+            $(".article-title").html("No Article Title");
+            $(".article-author").text("No Authors Found");
+            $(".article-date").text("No Date Found");
+        }
+        else{
+            var art = snapshot.val();
+            if(art.title == null){
+                $(".article-title").html("No Article Title");
+            }
+            else{
+                $(".article-title").html(art.title);
+            }
+            var auth = "";
+            if(art.authors == null || art.authors.length == 0 || art.authors[0]=="null"){
+                auth="No Authors Found";
+            }
+            else{
+                for(a=0; a<art.authors.length; a++){
+                    if(a>4 && art.authors.length > 5){
+                        auth+=art.authors[a]+" et al.";
+                        break;
+                    }
+                    if((art.authors.length-1) == a){
+                        auth+=art.authors[a];
+                    }
+                    else{
+                        auth+=art.authors[a]+", ";
+                    }
+                }
+            }
+            $(".article-author").text(auth);
+            if(art.publicationDate == null){
+                $(".article-date").text("No Date Found");
+            }
+            else{
+                $(".article-date").text(art.publicationDate);
+            }
+            if(art.abstract == null || art.abstract == ""){
+                $(".article-text").text("No Abstract Found. Click on link above to view full article.");
+            }
+            else{
+                $(".article-text").text(art.abstract);
+            }
+        }
+        $("#link-button").click(function(){
+            window.open(snapshot.val().url);
+        });
+        $("#delete-article").click(function(){
+            removeArticle(projectKey,articleKey);
+        });
+        $("#back-article").click(function(){
+            $("#article-container").hide();
+            $("#article-list-container").fadeIn();
+        });
+    });
+}
+function removeArticle(projectKey, articleKey){
+    $("#article-container").hide();
+    $("#article-list-container").fadeIn();
+    var location = firebase.database().ref(userlocation+projectKey+"/articles/"+articleKey);
+    location.remove();
 }
 
 function exportBibliography(){
@@ -112,6 +265,10 @@ function exportBibliography(){
 function exportNotes() {
 
 }
-function saveSettings() {
-
+function saveSettings(projectKey) {
+    var newname = $("#project-name-input").val();
+    var location = firebase.database().ref(userlocation+projectKey+"/type");
+    location.set(setcitation);
+    var location2 = firebase.database().ref(userlocation+projectKey+"/name");
+    location2.set(newname);
 }

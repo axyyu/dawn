@@ -355,6 +355,9 @@ function xmlToJson(xml) {
     return obj;
 }
 function filterArticle(str){
+    if(str==null){
+        return "";
+    }
     return str.replace(/<(?:.|\n)*?>/gm, '');
 }
 

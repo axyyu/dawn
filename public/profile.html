@@ -9,16 +9,15 @@
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<link rel="stylesheet" href="css/bootstrap-theme.css">
 	<link rel="stylesheet" href="css/square-loading-pane.css">
+    <link href="https://cdn.quilljs.com/1.2.4/quill.bubble.css" rel="stylesheet">
 
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/profile.css">
 
 	<script type="text/javascript" src="js/jquery.js" defer></script>
-	<script type="text/javascript" src="js/highlight.js" defer></script>
 	<script type="text/javascript" src="js/bootstrap.js" defer></script>
 	<script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js" defer></script>
-	<script type="text/javascript" src="js/progressbar.min.js" defer></script>
-	<script type="text/javascript" src="js/ScrollTrigger.min.js" defer></script>
+    <script src="https://cdn.quilljs.com/1.2.4/quill.min.js" type="text/javascript" defer></script>
 
 	<script type="text/javascript" src = "js/firebase.js" defer></script>
 	<script type="text/javascript" src = "js/library.js" defer></script>
@@ -31,6 +30,7 @@
             <span class="close glyphicon glyphicon-remove"></span> <!--Need to fix-->
         </div>
     </div>
+
     <div title="Back to Search" class="click icons" id="logo-icon">
         <img class="small-icon" src="img/dawn.png">
     </div>
@@ -95,9 +95,9 @@
                 <div id="project-tab" style="display: none">
                     <div id="recent">
                         <div id="recent-terms">
-                            <h4 class="recent-term click">Orange Theory</h4>
-                            <h4 class="recent-term click">Orange Theory</h4>
-                            <h4 class="recent-term click">Orange Theory</h4>
+                            <h4 class="recent-term">Orange Theory</h4>
+                            <h4 class="recent-term">Orange Theory</h4>
+                            <h4 class="recent-term">Orange Theory</h4>
                         </div>
                     </div>
                     <div id="project-panels">
@@ -113,13 +113,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="article-container" style="display: none" class="project-panel-body" >
+                            <div id="article-container" style="display: none" class="project-panel-body scrollbar style-1" >
                                 <div class="article-title-container">
                                     <h2 class="article-title">Wow you opened an article</h2>
                                     <div class="article-toolbox" >
-                                        <div title="Back" class="article-toolbox-button glyphicon glyphicon-arrow-left click"></div>
-                                        <div title="Link" class="article-toolbox-button glyphicon glyphicon-link click"></div>
-                                        <div title="Delete" class="article-toolbox-button glyphicon glyphicon-trash click"></div>
+                                        <div id="back-article" title="Back" class="article-toolbox-button glyphicon glyphicon-arrow-left click"></div>
+                                        <div id="link-button" title="Link" class="article-toolbox-button glyphicon glyphicon-link click"></div>
+                                        <div id="delete-article" title="Delete" class="article-toolbox-button glyphicon glyphicon-trash click"></div>
                                     </div>
                                 </div>
                                 <div class="article-info-container">
@@ -141,15 +141,7 @@
                         <div id="project-notes" class="project-content">
                             <h3 id="notes-title" class="content-title">Notes</h3>
                             <div id="notes" class="project-panel-body">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Illa tamen simplicia, vestra versuta. Duo Reges: constructio interrete. Dat enim intervalla et relaxat. Primum quid tu dicis breve?
 
-                                Sed quid sentiat, non videtis. Occultum facinus esse potuerit, gaudebit; A mene tu? Sed quae tandem ista ratio est? Optime, inquam. Quo modo?
-
-                                Non est igitur voluptas bonum. Pauca mutat vel plura sane; Quorum altera prosunt, nocent altera.
-
-                                Apparet statim, quae sint officia, quae actiones. Scrupulum, inquam, abeunti; Sedulo, inquam, faciam. Quorum altera prosunt, nocent altera.
-
-                                Praeclare hoc quidem. Qua tu etiam inprudens utebare non numquam. Id Sextilius factum negabat. Prioris generis est docilitas, memoria; Sint ista Graecorum; Sed haec omittamus; Sed fac ista esse non inportuna;
                             </div>
                             <div class="export-button">
                                 <div class="main-container">
@@ -173,7 +165,7 @@
                             <div class="export-button">
                                 <div class="main-container">
                                     <div class="main-content">
-                                        <div title="Save" class="export click" onclick="saveSettings()">Save</div>
+                                        <div id="save-button" title="Save" class="export click" onclick="saveSettings()">Save</div>
                                     </div>
                                 </div>
                             </div>

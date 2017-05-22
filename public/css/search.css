@@ -112,6 +112,7 @@
     order:2;
     font-size: 20px;
     width: 25px;
+    height: 27px;
     font-weight: bold;
     text-align: center;
     vertical-align: middle;
@@ -127,6 +128,7 @@
     font-size: 20px;
     vertical-align: middle;
     display: inline-block;
+    max-width: calc(100% - 30px);
 }
 .article-desc{
     font-size: 16px;
@@ -226,6 +228,7 @@
     font-size: 34px;
     vertical-align: middle;
     display: inline-block;
+    max-width: calc(100% - 70px);
 }
 .article-author{
     font-size: 20px;

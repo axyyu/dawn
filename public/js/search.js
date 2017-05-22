@@ -33,7 +33,6 @@ function firebaseChange(){
             $("#account-icon").click(function() {
                 window.location = 'profile.html';
             });
-            $("#account-logout").fadeIn();
             setupProjectList();
         } else {
             userlocation = null;
@@ -131,6 +130,7 @@ function setupKeywordSearch(){
             $('.article-text').highlight($(this).text());
         }
         if( e.button == 2 ) {
+            e.preventDefault();
             var val = $(this).text();
             getData(val);
             $("#search-bar").val(val);
@@ -299,7 +299,6 @@ function shrinkSearchBar(){
         padding:"30px"
     }, 1000, function() {
     });
-    $("#project-container").fadeOut("fast");
     $("#title-container").fadeOut("fast");
 }
 function riseSearchBar(){
@@ -308,6 +307,7 @@ function riseSearchBar(){
         "margin-top":"0",
         'border-radius':"5px"
     }, 1000);
+    $("#project-container").fadeOut("fast");
     createNotepad();
 }
 function search(){
@@ -445,6 +445,7 @@ function showFullArticle(idd){
         window.open(art.url);
     });
     if(projectid){
+        $("#add-button").show();
         $("#add-button").click(function(){
             addToProject(art);
             $("#add-button").hide();
@@ -474,13 +475,13 @@ function showFullArticle(idd){
     }
     $(".article-author").text(auth);
     if(art.publicationDate == null){
-        $(".article-date").text(art.publicationDate);
-    }
-    else{
         $(".article-date").text("No Date Found");
     }
+    else{
+        $(".article-date").text(art.publicationDate);
+    }
     if(art.abstract == null || art.abstract == ""){
-        auth="No Abstract Found. Click on link above to view full article.";
+        $(".article-text").text("No Abstract Found. Click on link above to view full article.");
     }
     else{
         $(".article-text").text(art.abstract);
@@ -570,7 +571,7 @@ function createNotepad(){
 }
 function saveNotes(quill){
     var contents = quill.getContents();
-    var location = firebase.database().ref(userlocation + projectid);
+    var location = firebase.database().ref(userlocation + projectid + "/notes/");
     location.set(contents);
 }
 
