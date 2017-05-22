@@ -66,6 +66,7 @@ function register(){
             errordisplay.text("Sorry, there was an error. Please try again later.");
         }
         $("#loading-view").hide();
+        errordisplay.show();
         $("#register").fadeIn("fast");
     });
 }
@@ -95,6 +96,7 @@ function login(){
         else {
             errordisplay.text("Sorry, there was an error. Please try again later.");
         }
+        errordisplay.show();
         $("#loading-view").hide();
         $("#register").fadeIn("fast");
     });

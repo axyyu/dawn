@@ -370,6 +370,10 @@ function search(){
 }
 
 function getData(term){
+    $("#article-view").hide();
+    $("#loading-view").fadeIn("fast");
+    $("#article-list-container").css("width","100%");
+    $("#article-tab").hide();
     $.ajax({
         type: "POST",
         url: "/search",
