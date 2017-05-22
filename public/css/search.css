@@ -265,7 +265,7 @@
     width:80%;
     float:left;
     overflow:auto;
-    padding-right: 20px;
+    padding-right: 10px;
 }
 #article-title-button{
     order:2;
@@ -308,6 +308,7 @@
     flex-direction: column;
     align-items: flex-end;
     width:20%;
+    padding-left:10px;
     overflow: hidden;
     justify-content: space-between;
 }
