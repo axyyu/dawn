@@ -217,7 +217,7 @@ function setupHighlight(){
         //console.log(t.toString().trim().split(" ").length);
         //console.log(t.toString().trim().split(" "));
         var ids = getSelectedSpanIds();
-        console.log(ids.length);
+        console.log(t.toString());
         if(t.toString().trim().split(" ").length== 1 && t.toString().trim() != "") {
             var selection = window.getSelection().toString();
             $('#selTxt').val(selection.toString());
@@ -238,12 +238,16 @@ function setupHighlight(){
             $("#tooltipH").show();
         }
         else {
-            $("#tooltipH").hide();
+            clickedToolTips();
+        }
+    });
+
+    function clickedToolTips()  {
+        $("#tooltipH").hide();
             $("#tooltipHandD").hide();
             $("#tooltipDel").hide();
             $("#tooltipDelAndDef").hide();
-        }
-    });
+    }
 
     function placeTooltip(x_pos, y_pos) {
         $("#tooltipHandD, #tooltipH, #tooltipDel, #tooltipDelAndDef").css({
@@ -252,25 +256,30 @@ function setupHighlight(){
             position: 'absolute'
         });
     }
-
+    function highlightRange(range) {
+        var newNode = document.createElement("span");
+        newNode.setAttribute(
+           "class",
+           "highlight"
+        );
+        range.surroundContents(newNode);
+    }
     $("#high,#high2").click(function() {
         var ids = getSelectedSpanIds();
         for(var i =0; i<ids.length; i++) {
             removespan(document.getElementById(ids[i]));
         }
-        var range = window.getSelection().getRangeAt(0),
-            span = document.createElement('span');
-
-        span.className = 'highlight';
-        span.id = 'id'+idTracker.toString();
-        idTracker += 1;
-        span.appendChild(range.extractContents());
-        range.insertNode(span);
+        var userSelection = window.getSelection();
+        for(var i = 0; i < userSelection.rangeCount; i++) {
+            highlightRange(userSelection.getRangeAt(i));
+        }
+        clickedToolTips();
     });
 
     $("#unHigh, #unHigh2").click(function() {
         removespan(highlightedSpan);
         $("#tooltipDel").hide();
+        clickedToolTips();
     });
 
     var modal = document.getElementById('myModal');
@@ -306,6 +315,7 @@ function setupHighlight(){
            		 alert("Dictionary Error!");
         	}
     	});
+        clickedToolTips();
     	modal.style.display = "block";
     });
     span.onclick = function() {
