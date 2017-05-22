@@ -16,7 +16,7 @@ $(document).ready(function () {
             register();
         }
     });
-    $("#login-view").fadeIn(1000);
+    $("#login-view").fadeIn("fast");
     $("#logo-icon").click(function(){
         window.location = 'index.html';
     });
@@ -37,7 +37,7 @@ function setupTabs(){
         $(".login-bars").hide();
         $(".error").hide();
         var string = $.trim($(this).text());
-        $("#"+$.trim($(this).text()).charAt(0).toLowerCase() + string.slice(1)).fadeIn();
+        $("#"+$.trim($(this).text()).charAt(0).toLowerCase() + string.slice(1)).fadeIn("fast");
     });
 }
 function register(){

@@ -42,7 +42,7 @@ function firebaseChange(){
             $("#account-icon").click(function() {
                 window.location = 'login.html';
             });
-            $("#account-logout").fadeOut();
+            $("#account-logout").fadeOut("fast");
         }
     });
 }
@@ -85,13 +85,13 @@ function initialAnimation(){
         top: "-=150px",
         opacity:1.0
     }, 1000, function() {
-        $("#account-icon").fadeIn("slow");
-        $("#logo-icon").fadeIn("slow");
+        $("#account-icon").fadeIn("fast");
+        $("#logo-icon").fadeIn("fast");
         if(loggedIn){
             $("#account-logout").fadeIn();
-            $("#project-container").fadeIn("slow");
+            $("#project-container").fadeIn("fast");
         }
-        $("#search-container").fadeIn("slow");
+        $("#search-container").fadeIn("fast");
     });
 }
 function setupAccountButtons(){
@@ -146,7 +146,7 @@ function setupArticleClick(){
             width:"20vw",
             "min-width":"200px"
         },500, function(){
-            $("#article-tab").fadeIn();
+            $("#article-tab").fadeIn("fast");
         });
     });
 }
@@ -352,7 +352,7 @@ function riseSearchBar(){
     createNotepad();
 }
 function search(){
-    $("#background-design").fadeOut("slow");
+    $("#background-design").fadeOut("fast");
     $('html, body').animate({
         scrollTop: $("body").offset().top
     }, 500, function(){
@@ -360,7 +360,7 @@ function search(){
         $('body').animate({
             height: "100vh"
         }, 500, function(){
-            $(".cssload-thecube").fadeIn();
+            $(".cssload-thecube").fadeIn("fast");
         });
     });
     riseSearchBar();
@@ -381,8 +381,8 @@ function getData(term){
         success: function(result){
             obj = result;
             console.log(obj);
-            $("#loading-view").fadeOut("medium", function(){
-                $("#article-view").fadeIn();
+            $("#loading-view").fadeOut("fast", function(){
+                $("#article-view").fadeIn("fast");
             });
             resetInfo();
             setupSearchAgain(term);

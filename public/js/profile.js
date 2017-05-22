@@ -1,7 +1,7 @@
 //Globals
 var uid;
 var userlocation;
-
+var quill;
 var newcitation="APA";
 var setcitation;
 
@@ -44,7 +44,7 @@ function retrieveProjects(){
             $(project).appendTo("#project-list");
         });
         $("#loading-view").hide();
-        $("#profile-view").fadeIn();
+        $("#profile-view").fadeIn("fast");
         clickProject();
     });
 }
@@ -103,7 +103,7 @@ function clickProject(){
             width:"15vw",
             "min-width":"200px"
         },500, function(){
-            $("#project-tab").fadeIn();
+            $("#project-tab").fadeIn("fast");
         });
     });
 }
@@ -149,7 +149,7 @@ function displayArticles(projectKey){
     });
 }
 function displayNotes(projectKey){
-    var quill = new Quill('#notes', {
+    quill = new Quill('#notes', {
         theme: 'bubble'
     });
     var location = firebase.database().ref(userlocation+projectKey+"/notes");
@@ -186,7 +186,7 @@ function setupArticleClick(projectKey){
         var articleKey = $(this).attr("id");
         openArticle(projectKey,articleKey);
         $("#article-list-container").hide();
-        $("#article-container").fadeIn();
+        $("#article-container").fadeIn("fast");
     });
     $(".article-delete").click(function(){
         var articleKey = $(this).attr("id");
@@ -249,13 +249,13 @@ function openArticle(projectKey, articleKey){
         });
         $("#back-article").click(function(){
             $("#article-container").hide();
-            $("#article-list-container").fadeIn();
+            $("#article-list-container").fadeIn("fast");
         });
     });
 }
 function removeArticle(projectKey, articleKey){
     $("#article-container").hide();
-    $("#article-list-container").fadeIn();
+    $("#article-list-container").fadeIn("fast");
     var location = firebase.database().ref(userlocation+projectKey+"/articles/"+articleKey);
     location.remove();
 }
@@ -294,10 +294,10 @@ function exportBibliography(projectkey){
     getbibliography(projectkey);
 }
 function exportNotes() {
+    var string = quill.getText();
     var htmlString = $("html").html('<html xmlns="http://www.w3.org/TR/REC-ht..." xmlns:office="urn:schemas-microsoft-com:office:office" xmlns:word="urn:schemas-microsoft-com:office:word">' + '<head>' + '<xml>' + '<word:WordDocument>' + '<word:Zoom>90</word:Zoom>' + '<word:DoNotOptimizeForBrowser/>' + '</word:WordDocument>' + '</xml>'
         + '</head>' +'<body>' +
-        '<h1>A word document</h1>' +
-        '<p>This is the content of the word document</p>' +
+        '<p>' + string + '</p>' +
         '</body>' + '</html>'
     ).get().outerHTML;
     var byteNumbers = new Uint8Array(htmlString.length);
