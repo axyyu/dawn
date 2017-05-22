@@ -274,17 +274,25 @@ function exportBibliography(){
 }
 function exportNotes() {
     var string = quill.getText();
-    var htmlString = $("html").html('<html xmlns="http://www.w3.org/TR/REC-ht..." xmlns:office="urn:schemas-microsoft-com:office:office" xmlns:word="urn:schemas-microsoft-com:office:word">' + '<head>' + '<xml>' + '<word:WordDocument>' + '<word:Zoom>90</word:Zoom>' + '<word:DoNotOptimizeForBrowser/>' + '</word:WordDocument>' + '</xml>'
-        + '</head>' +'<body>' +
-        '<p>' + string + '</p>' +
-        '</body>' + '</html>'
-    ).get().outerHTML;
-    var byteNumbers = new Uint8Array(htmlString.length);
-    for (var i = 0; i < htmlString.length; i++) {
-        byteNumbers[i] = htmlString.charCodeAt(i);
-    }
-    var blob = new Blob([byteNumbers], {type: 'text/html'});
-    window.saveAs(blob, 'notes.doc');
+    // var htmlString = $('<html').html('<html xmlns="http://www.w3.org/TR/REC-ht..." xmlns:office="urn:schemas-microsoft-com:office:office" xmlns:word="urn:schemas-microsoft-com:office:word">' + '<head>' + '<xml>' + '<word:WordDocument>' + '<word:Zoom>90</word:Zoom>' + '<word:DoNotOptimizeForBrowser/>' + '</word:WordDocument>' + '</xml>'
+    //     + '</head>' +'<body>' + 
+    //     '<p>' + string + '</p>' +
+    //     '</body>' + '</html>'
+    // ).get().outerHTML;
+    // console.log(htmlString)
+    // htmlString = htmlString.toString();
+    // var byteNumbers = new Uint8Array(htmlString.length);
+    // for (var i = 0; i < htmlString.length; i++) {
+    //     byteNumbers[i] = htmlString.charCodeAt(i);
+    // }
+    // var blob = new Blob([byteNumbers], {type: 'text/html'});
+    // window.saveAs(blob, 'notes.doc');
+    // var dataUri = 'data:text/html,' + encodeURIComponent(htmlString);
+    // var a = document.getElementById('exportNotes')
+    // a.href= "" + dataUri
+    var doc = new jsPDF()
+    doc.text(string, 10, 10)
+    doc.save('notes.pdf')
 }
 function saveSettings(projectKey) {
     var newname = $("#project-name-input").val();
