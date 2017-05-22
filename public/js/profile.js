@@ -294,10 +294,21 @@ function outputBibliography(works){
     var doc = new jsPDF({
         unit: 'in'
     });
+    var quill2 = new Quill('#bibliographyz', {
+        theme: 'bubble'
+    });
+    var string = "";
+    for(i = 0;i<works.length;i++){
+        quill2.insertText(i, works[i], {
+            'italic': true
+        })
+        quill2.insertText(i, "\n")
+    }
+    quill2.formatLine(1, 2, 'align', 'right');
     doc.setFont("times","normal");
     doc.setFontSize("12");
     doc.setLineWidth(6);
-    doc.text(works, 1, 1);
+    doc.text(quill2.getText(), 1, 1);
     doc.save('bibliography.pdf');
     $("#export-bibliography").show();
 }
