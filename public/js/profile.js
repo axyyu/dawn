@@ -44,7 +44,7 @@ function retrieveProjects(){
             $(project).appendTo("#project-list");
         });
         $("#loading-view").hide();
-        $("#profile-view").fadeIn();
+        $("#profile-view").fadeIn("fast");
         clickProject();
     });
 }
@@ -103,7 +103,7 @@ function clickProject(){
             width:"15vw",
             "min-width":"200px"
         },500, function(){
-            $("#project-tab").fadeIn();
+            $("#project-tab").fadeIn("fast");
         });
     });
 }
@@ -185,7 +185,7 @@ function setupArticleClick(projectKey){
         var articleKey = $(this).attr("id");
         openArticle(projectKey,articleKey);
         $("#article-list-container").hide();
-        $("#article-container").fadeIn();
+        $("#article-container").fadeIn("fast");
     });
     $(".article-delete").click(function(){
         var articleKey = $(this).attr("id");
@@ -248,13 +248,13 @@ function openArticle(projectKey, articleKey){
         });
         $("#back-article").click(function(){
             $("#article-container").hide();
-            $("#article-list-container").fadeIn();
+            $("#article-list-container").fadeIn("fast");
         });
     });
 }
 function removeArticle(projectKey, articleKey){
     $("#article-container").hide();
-    $("#article-list-container").fadeIn();
+    $("#article-list-container").fadeIn("fast");
     var location = firebase.database().ref(userlocation+projectKey+"/articles/"+articleKey);
     location.remove();
 }
