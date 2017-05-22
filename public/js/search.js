@@ -543,7 +543,7 @@ function showToolbar(art){
     }
     else{
         for(a=0; a<art.keywords.length; a++){
-            list+='<h4 class="list-keyword">'+art.keywords[a]+'</h4>';
+            list+='<h4 class="list-keyword click">'+art.keywords[a]+'</h4>';
         }
     }
 
@@ -552,7 +552,7 @@ function showToolbar(art){
     }
     else{
         for(b=0; b<art.concepts.length; b++){
-            list+='<h4 class="list-keyword">'+art.concepts[b]+'</h4>';
+            list+='<h4 class="list-keyword click">'+art.concepts[b]+'</h4>';
         }
     }
     $(list).appendTo("#keywords");
@@ -628,7 +628,7 @@ function changeProjectBibliography(element, art){
 function changeBibliography(element, art){
     var type = $(element).text();
     $(".citation-button").removeClass("citation-button-selected");
-    $(this).addClass("citation-button-selected");
+    $(element).addClass("citation-button-selected");
     selectBibliography(type,art);
 }
 function selectBibliography(type, art){

@@ -145,6 +145,7 @@ function displayArticles(projectKey){
             $("#save-button").attr("onclick",'saveSettings("'+projectKey+'")');
         });
         setupArticleClick(projectKey);
+        $("#export-bibliography").attr("onclick",'exportBibliography("'+projectKey+'")');
     });
 }
 function displayNotes(projectKey){
@@ -259,19 +260,38 @@ function removeArticle(projectKey, articleKey){
     location.remove();
 }
 
-function exportBibliography(){
-    var htmlString = $("html").html('<html xmlns="http://www.w3.org/TR/REC-ht..." xmlns:office="urn:schemas-microsoft-com:office:office" xmlns:word="urn:schemas-microsoft-com:office:word">' + '<head>' + '<xml>' + '<word:WordDocument>' + '<word:Zoom>90</word:Zoom>' + '<word:DoNotOptimizeForBrowser/>' + '</word:WordDocument>' + '</xml>'
-        + '</head>' +'<body>' +
-        '<h1>A word document</h1>' +
-        '<p>This is the content of the word document</p>' +
-        '</body>' + '</html>'
-    ).get().outerHTML;
-    var byteNumbers = new Uint8Array(htmlString.length);
-    for (var i = 0; i < htmlString.length; i++) {
-        byteNumbers[i] = htmlString.charCodeAt(i);
-    }
-    var blob = new Blob([byteNumbers], {type: 'text/html'});
-    window.saveAs(blob, 'workcited.doc');
+function getbibliography(projectKey){
+    var location = firebase.database().ref(userlocation+projectKey+"/articles");
+    location.on('value', function(snapshot) {
+        var type = setcitation;
+        var workscited = [];
+        $.each(snapshot.val(), function(k, v) {
+            if(type=="MLA"){
+                workscited.push(v.mla);
+            }
+            else if(type=="APA"){
+                workscited.push(v.apa);
+            }
+        });
+        workscited.sort();
+        outputBibliography(workscited);
+    });
+}
+function outputBibliography(works){
+    var doc = new jsPDF({
+        unit: 'in'
+    });
+    doc.setFont("times","normal");
+    doc.setFontSize("12");
+    doc.setLineWidth(6);
+    doc.text(works, 1, 1);
+    doc.save('bibliography.pdf');
+    $("#export-bibliography").show();
+}
+
+function exportBibliography(projectkey){
+    $("#export-bibliography").hide();
+    getbibliography(projectkey);
 }
 function exportNotes() {
     var htmlString = $("html").html('<html xmlns="http://www.w3.org/TR/REC-ht..." xmlns:office="urn:schemas-microsoft-com:office:office" xmlns:word="urn:schemas-microsoft-com:office:word">' + '<head>' + '<xml>' + '<word:WordDocument>' + '<word:Zoom>90</word:Zoom>' + '<word:DoNotOptimizeForBrowser/>' + '</word:WordDocument>' + '</xml>'
