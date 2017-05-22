@@ -30,6 +30,7 @@ function firebaseChange(){
             loggedIn = true;
             userlocation = 'users/' + uid +'/';
             $("#account-icon").attr("title","Profile");
+            $("#account-icon").unbind( "click" );
             $("#account-icon").click(function() {
                 window.location = 'profile.html';
             });
@@ -39,6 +40,7 @@ function firebaseChange(){
             uid=null;
             projectid=null;
             $("#account-icon").attr("title","Log In");
+            $( "#account-icon").unbind( "click" );
             $("#account-icon").click(function() {
                 window.location = 'login.html';
             });
@@ -95,9 +97,11 @@ function initialAnimation(){
     });
 }
 function setupAccountButtons(){
+    $( "#logo-icon").unbind( "click" );
     $("#logo-icon").click(function(){
         window.location = 'index.html';
     });
+    $( "#account-icon").unbind( "click" );
     $("#account-icon").click(function(){
         if(loggedIn){
             window.location = 'profile.html';
@@ -108,6 +112,7 @@ function setupAccountButtons(){
             $("#account-icon").attr("title","Log In");
         }
     });
+    $( "#account-logout").unbind( "click" );
     $("#account-logout").click(function(){
         firebase.auth().signOut().then(function() {
             window.location = 'index.html';
@@ -117,6 +122,7 @@ function setupAccountButtons(){
     });
 }
 function setupReturnHome(){
+    $( "#logo-icon").unbind( "click" );
 	$("#logo-icon").click(function(){
 		window.location="index.html";
 	});
@@ -138,6 +144,7 @@ function setupKeywordSearch(){
     });
 }
 function setupArticleClick(){
+    $( ".article").unbind( "click" );
     $(".article").click(function(e){
         $(".article").removeClass("article-selected");
         $(this).addClass("article-selected");
@@ -264,6 +271,7 @@ function setupHighlight(){
         );
         range.surroundContents(newNode);
     }
+    $( "#high,#high2").unbind( "click" );
     $("#high,#high2").click(function() {
         var ids = getSelectedSpanIds();
         for(var i =0; i<ids.length; i++) {
@@ -275,7 +283,7 @@ function setupHighlight(){
         }
         clickedToolTips();
     });
-
+    $( "#unHigh, #unHigh2").unbind( "click" );
     $("#unHigh, #unHigh2").click(function() {
         removespan(highlightedSpan);
         $("#tooltipDel").hide();
@@ -284,37 +292,47 @@ function setupHighlight(){
 
     var modal = document.getElementById('myModal');
     var span = document.getElementsByClassName("close")[0];
-
+    $( "#def, #def2").unbind( "click" );
     $("#def, #def2").click(function() {
     	var div = document.getElementById("dictionary-modal");
     	$.ajax({
         	type: "POST",
-        	url: 'http://www.dictionaryapi.com/api/v1/references/collegiate/xml/'+t.toString().trim()+'?key=e3a55748-d588-4a27-9baa-1d9f1f35a7de',
+        	url: '/define',
+            data: {question:t.toString().trim()},
         	success: function(data){
-            		try {
-                		var focus = new DOMParser().parseFromString(new XMLSerializer().serializeToString(data), "text/xml").getElementsByTagName("def")[0].innerHTML;
-                		var definition = "";
-                		for(var i = 0; i < $.parseHTML(focus).length; i++) {
-                    			var text = $.parseHTML(focus)[i].innerHTML;
-                    			if(text != null) {
-                        			if(text.substring(0,1) == ":") {
-                            				definition = text.toString();
-                            				definition = definition.substring(1, text.toString().length);
-                            				break;
-                        			}
-                    			}
-                		}
+        	    console.log(data);
+                try {
+                    var focus = new DOMParser().parseFromString(data, "text/xml").getElementsByTagName("def")[0].innerHTML;
+                    var definition = "";
+                    for(var i = 0; i < $.parseHTML(focus).length; i++) {
+                        var text = $.parseHTML(focus)[i].innerHTML;
+                        if(text != null) {
+                            if(text.substring(0,1) == ":") {
+                                definition = text.toString();
+                                definition = definition.substring(1, text.toString().length);
+                                break;
+                            }
+                        }
+                    }
                 		var add = '<span class="close glyphicon glyphicon-remove modal-field"></span>';
                			add += '<h1 class="modal-header modal-field">' + t.toString().charAt(0).toUpperCase() + t.toString().slice(1) + '</h1>';
                			add+= '<p class="modal-body modal-field">' + definition.charAt(0).toUpperCase() + definition.slice(1) + '</p>';
             		    div.innerHTML = add;
+                        $( ".close").unbind( "click" );
             		    $(".close").click(function(){
                             modal.style.display = "none";
                         })
             		}
             		catch(err) {
-                		div.innerHTML = '<h1 style="color:white; text-decoration: underline; font-size: 3vw;">' + t.toString().charAt(0).toUpperCase() + t.toString().slice(1) + '</h1>'+ '<p style="color:white; font-size: 2vw;">*Sorry, a definition is currently not available*</p>';
-            		}            
+                        var add = '<span class="close glyphicon glyphicon-remove modal-field"></span>';
+                        add += '<h1 class="modal-header modal-field">' + t.toString().charAt(0).toUpperCase() + t.toString().slice(1) + '</h1>';
+                        add+= '<p class="modal-body modal-field">A definition is not available.</p>';
+                        div.innerHTML = add;
+                        $( ".close").unbind( "click" );
+                        $(".close").click(function(){
+                            modal.style.display = "none";
+                        })
+            	}
         	},
         	error:function(error){
            		 alert("Dictionary Error!");
@@ -395,20 +413,14 @@ function getData(term){
     });
 }
 function handleError(){
-    var span = document.getElementsByClassName("close")[0];
-
-    $("#def").click(function() {
-        var div = document.getElementById("dictionary-modal");
-        var text = '<h1 style="font-size: 2vw;">'+Error+'</h1><p style="font-size: 1.2vw; margin-top: 2vh;">Try again later.</p>';
-        $(text).appendTo("#dictionary-modal");
-        $("#myModal").css("display","block");
-    });
+    alert("Server error. Try again later.");
 }
 
 function resetInfo(){
     $("#article-list").empty();
 }
 function setupSearchAgain(searchTerm){
+    $( "#search-again").unbind( "click" );
     $("#search-again").click(function(){
         getData(searchTerm);
     })
@@ -486,11 +498,13 @@ function showFullArticle(idd){
     else{
         $(".article-title").html(art.title);
     }
+    $( "#link-button").unbind( "click" );
     $("#link-button").click(function(){
         window.open(art.url);
     });
     if(projectid){
         $("#add-button").show();
+        $( "#add-button").unbind( "click" );
         $("#add-button").click(function(){
             addToProject(art);
             $("#add-button").hide();
@@ -566,6 +580,7 @@ function showToolbar(art){
     }
     else{
         if(projectid){
+            $( ".citation-button").unbind( "click" );
             $(".citation-button").click(function(){
                 changeProjectBibliography(this,art);
             });
@@ -579,6 +594,7 @@ function showToolbar(art){
         }
         else{
             var type = "APA";
+            $( ".citation-button").unbind( "click" );
             $(".citation-button").click(function(){
                 changeBibliography(this,art);
             });

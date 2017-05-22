@@ -50,9 +50,11 @@ function retrieveProjects(){
 }
 
 function setupIconButtons(){
+    $( "#logo-icon").unbind( "click" );
     $("#logo-icon").click(function(){
         window.location = 'index.html';
     });
+    $( "#account-logout").unbind( "click" );
     $("#account-logout").click(function(){
         firebase.auth().signOut().then(function() {
             window.location = 'index.html';
@@ -63,18 +65,22 @@ function setupIconButtons(){
 }
 
 function setupAddProject(){
+    $( "#add-project").unbind( "click" );
     $("#add-project").click(function() {
         newcitation = "APA";
         $("#project-list").hide();
         $("#project-form").fadeIn("fast");
     });
+    $( "#cancel").unbind( "click" );
     $("#cancel").click(function(){
         $("#project-form").hide();
         $("#project-list").fadeIn("fast");
     });
+    $( "#add").unbind( "click" );
     $("#add").click(function(){
         addProject();
     });
+    $( ".project-citation-button").unbind( "click" );
     $(".project-citation-button").click(function(){
         newcitation = $(this).text();
         $(".project-citation-button").removeClass("citation-selected");
@@ -95,6 +101,7 @@ function deleteProject(projectKey){
 }
 
 function clickProject(){
+    $( ".project").unbind( "click" );
     $(".project").click(function(e){
         $(".project").removeClass("project-selected");
         $(this).addClass("project-selected");
@@ -166,6 +173,7 @@ function setupSettings(projectKey){
         setcitation = type;
         $(".citation-button").removeClass("selected");
         $("#"+type+"-settings").addClass("selected");
+        $( ".citation-button").unbind( "click" );
         $(".citation-button").click(function(){
             setcitation = $(this).text();
             $(".citation-button").removeClass("selected");
@@ -182,12 +190,14 @@ function setupSettings(projectKey){
 }
 
 function setupArticleClick(projectKey){
+    $( ".article").unbind( "click" );
     $(".article").click(function(){
         var articleKey = $(this).attr("id");
         openArticle(projectKey,articleKey);
         $("#article-list-container").hide();
         $("#article-container").fadeIn("fast");
     });
+    $( ".article-delete").unbind( "click" );
     $(".article-delete").click(function(){
         var articleKey = $(this).attr("id");
         removeArticle(projectKey,articleKey);
@@ -241,12 +251,15 @@ function openArticle(projectKey, articleKey){
                 $(".article-text").text(art.abstract);
             }
         }
+        $( "#link-button").unbind( "click" );
         $("#link-button").click(function(){
             window.open(snapshot.val().url);
         });
+        $( "#delete-article").unbind( "click" );
         $("#delete-article").click(function(){
             removeArticle(projectKey,articleKey);
         });
+        $( "#back-article").unbind( "click" );
         $("#back-article").click(function(){
             $("#article-container").hide();
             $("#article-list-container").fadeIn("fast");

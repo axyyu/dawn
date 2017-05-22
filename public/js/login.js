@@ -17,6 +17,7 @@ $(document).ready(function () {
         }
     });
     $("#login-view").fadeIn("fast");
+    $( "#logo-icon").unbind( "click" );
     $("#logo-icon").click(function(){
         window.location = 'index.html';
     });
@@ -31,6 +32,7 @@ $(document).ready(function () {
     });
 });
 function setupTabs(){
+    $( ".login-tab").unbind( "click" );
     $(".login-tab").click(function(){
         $(".login-tab").removeClass("selected");
         $(this).addClass("selected");

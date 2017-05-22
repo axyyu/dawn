@@ -1,6 +1,8 @@
 var $ = require('jquery');
 var request = require('request');
 var express = require('express');
+var DOMParser = require('xmldom').DOMParser;
+var XMLSerializer = require('xmldom').XMLSerializer;
 var http = require('http');
 var fs = require('fs');
 // var Bing = require('node-bing-api');
@@ -8,7 +10,7 @@ var NaturalLanguageUnderstandingV1 = require('watson-developer-cloud/natural-lan
 var AYLIENTextAPI = require('aylien_textapi');
 var havenondemand = require("havenondemand");
 var data, config;
-var bluemix, aylien_key, aylien_app_id, oxford_app_id, oxford_key, CORE_key, DIFF_key, ebib_key, scopus_key, haven_key;
+var bluemix, aylien_key, aylien_app_id, dictionary_key, CORE_key, DIFF_key, ebib_key, scopus_key, haven_key;
 var port;
 
 try {
@@ -18,8 +20,7 @@ try {
     bluemix = config['bluemix'];
     aylien_key = config['aylien_key'];
     aylien_app_id = config['aylien_app_id'];
-    oxford_key = config['oxford_key'];
-    oxford_app_id = config['oxford_app_id'];
+    dictionary_key = config['dictionary_key'];
     CORE_key = config['CORE_key'];
     DIFF_key = config['DIFF_key'];
     ebib_key = config['ebib_key'];
@@ -285,17 +286,11 @@ function getCitationApa(title, publisher, publicationYear, authors, callback) {
 /*Retrive Other Data*/
 function defineWord(text, callback){
     request({
-        url: "https://od-api.oxforddictionaries.com/api/v1",
-        method: "GET",
-        json: {
-            "source_lang": "en",
-            "word_id": text,
-            "app_id": oxford_app_id,
-            "app_key": oxford_key
-        }
-    }, function(error, res, info) {
+        url: "http://www.dictionaryapi.com/api/v1/references/collegiate/xml/"+text+"?key="+dictionary_key,
+        method: "POST"
+    }, function(error, res, data) {
         if (!error && res.statusCode === 200) {
-            callback(info.results[0].lexicalEntries[0].entries[0].senses[0].definitions[0]);
+            callback(data);
         } else {
             console.log(error);
             callback(null);
@@ -366,7 +361,8 @@ app.post('/define', function(req, response) {
         var str = '' + chunk;
         var word = str.substring(str.indexOf("=") + 1, str.length);
         word = word.replace(/\+/g, " ");
-        defineWord(str, function(def){
+        defineWord(word, function(def){
+            console.log("got definition");
             response.send(def);
         });
     });
