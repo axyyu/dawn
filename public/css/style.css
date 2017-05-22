@@ -146,10 +146,10 @@ h2,h3,h4,h5{
 
 /* The Close Button */
 .close {
-    color: #aaaaaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
+    opacity: 1;
 }
 .close:hover,
 .close:focus {
