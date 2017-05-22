@@ -295,8 +295,8 @@ function exportBibliography(projectkey){
 }
 function exportNotes() {
     var string = quill.getText();
-    var doc = new jsPDF()
-    doc.text(string, 10, 10)
+    var doc = new jsPDF();
+    doc.text(string, 10, 10);
     doc.save('notes.pdf')
 }
 function saveSettings(projectKey) {
