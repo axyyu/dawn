@@ -85,13 +85,13 @@ function initialAnimation(){
         top: "-=150px",
         opacity:1.0
     }, 1000, function() {
-        $("#account-icon").fadeIn("slow");
-        $("#logo-icon").fadeIn("slow");
+        $("#account-icon").fadeIn("fast");
+        $("#logo-icon").fadeIn("fast");
         if(loggedIn){
             $("#account-logout").fadeIn();
-            $("#project-container").fadeIn("slow");
+            $("#project-container").fadeIn("fast");
         }
-        $("#search-container").fadeIn("slow");
+        $("#search-container").fadeIn("fast");
     });
 }
 function setupAccountButtons(){
@@ -352,7 +352,7 @@ function riseSearchBar(){
     createNotepad();
 }
 function search(){
-    $("#background-design").fadeOut("slow");
+    $("#background-design").fadeOut("fast");
     $('html, body').animate({
         scrollTop: $("body").offset().top
     }, 500, function(){
