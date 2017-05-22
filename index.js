@@ -31,7 +31,7 @@ try {
 }
 
 /*GLOBAL*/
-var ARTICLE_COUNT = 2;
+var ARTICLE_COUNT = 3;
 var KEYWORD_COUNT = 2;
 
 /*Setup*/
