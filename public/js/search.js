@@ -6,6 +6,7 @@
 var searchPage = false;
 var obj;
 var loggedIn = false;
+var searching = false;
 
 var uid;
 var projectid;
@@ -392,25 +393,29 @@ function getData(term){
     $("#loading-view").fadeIn("fast");
     $("#article-list-container").css("width","100%");
     $("#article-tab").hide();
-    $.ajax({
-        type: "POST",
-        url: "/search",
-        data: {question:term},
-        success: function(result){
-            obj = result;
-            console.log(obj);
-            $("#loading-view").fadeOut("fast", function(){
-                $("#article-view").fadeIn("fast");
-            });
-            resetInfo();
-            setupSearchAgain(term);
-            addToRecentSearches(term);
-            setupData();
-        },
-        error:function(error){
-            handleError();
-        }
-    });
+    if(!searching){
+        searching = true;
+        $.ajax({
+            type: "POST",
+            url: "/search",
+            data: {question:term},
+            success: function(result){
+                obj = result;
+                console.log(obj);
+                $("#loading-view").fadeOut("fast", function(){
+                    $("#article-view").fadeIn("fast");
+                });
+                resetInfo();
+                setupSearchAgain(term);
+                addToRecentSearches(term);
+                setupData();
+                searching = false;
+            },
+            error:function(error){
+                handleError();
+            }
+        });
+    }
 }
 function handleError(){
     alert("Server error. Try again later.");
