@@ -4,31 +4,20 @@
 
 $(document).ready(function () {
     setupTabs();
-    $("#login-pass").keydown(function(event){
+    $(".login-input").keydown(function(event){
         if(event.which=="13")
         {
             login();
         }
     });
-    $("#login-email").keydown(function(event){
-        if(event.which=="13")
-        {
-            login();
-        }
-    });
-    $("#register-pass").keydown(function(event){
+    $(".register-input").keydown(function(event){
         if(event.which=="13")
         {
             register();
         }
     });
-    $("#register-email").keydown(function(event){
-        if(event.which=="13")
-        {
-            register();
-        }
-    });
-    $("#login-view").fadeIn(1000);
+    $("#login-view").fadeIn("fast");
+    $( "#logo-icon").unbind( "click" );
     $("#logo-icon").click(function(){
         window.location = 'index.html';
     });
@@ -43,13 +32,14 @@ $(document).ready(function () {
     });
 });
 function setupTabs(){
+    $( ".login-tab").unbind( "click" );
     $(".login-tab").click(function(){
         $(".login-tab").removeClass("selected");
         $(this).addClass("selected");
         $(".login-bars").hide();
         $(".error").hide();
-        var string = $.trim($(this).text())
-        $("#"+$.trim($(this).text()).charAt(0).toLowerCase() + string.slice(1)).fadeIn();
+        var string = $.trim($(this).text());
+        $("#"+$.trim($(this).text()).charAt(0).toLowerCase() + string.slice(1)).fadeIn("fast");
     });
 }
 function register(){
@@ -57,7 +47,9 @@ function register(){
     $("#loading-view").fadeIn("fast");
     var email = $("#register-email").val();
     var password = $("#register-pass").val();
-    firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+    firebase.auth().createUserWithEmailAndPassword(email, password).then(function(user) {
+        // testUserStructure(user.uid);
+    }).catch(function(error) {
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
@@ -76,6 +68,7 @@ function register(){
             errordisplay.text("Sorry, there was an error. Please try again later.");
         }
         $("#loading-view").hide();
+        errordisplay.show();
         $("#register").fadeIn("fast");
     });
 }
@@ -105,6 +98,7 @@ function login(){
         else {
             errordisplay.text("Sorry, there was an error. Please try again later.");
         }
+        errordisplay.show();
         $("#loading-view").hide();
         $("#register").fadeIn("fast");
     });

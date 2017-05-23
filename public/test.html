@@ -12,32 +12,40 @@
     <link href="https://cdn.quilljs.com/1.2.4/quill.snow.css" rel="stylesheet">
     <link href="https://cdn.quilljs.com/1.2.4/quill.bubble.css" rel="stylesheet">
 
-    <script type="text/javascript" src="js/jquery.js" defer></script>
-    <script type="text/javascript" src="js/quill.min.js"></script>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script>
+        var key = "7a3bdffde96ee1447e99c8dff975efb8";
+        var arr_id ="25470e27";
+        $.ajax({
+            type: "GET",
+            url: "https://od-api.oxforddictionaries.com/api/v1",
+            data:{
+                "source_lang": "en",
+                "word_id": "text",
+                "app_id": arr_id,
+                "app_key": key
+            },
+            success: function(result){
+                obj = result;
+                console.log(obj);
+                if(obj.status==false){
+                    handleError();
+                }
+                else{
+                    $("#loading-view").fadeOut("medium", function(){
+                        $("#article-view").fadeIn();
+                    });
+                }
+                // resetInfo();
+                // stopLoading();
+                // appendArticleList(obj);
+                // displayArticleView();
+                // notepadMemory();
+            }
 
-
-    <style>
-        #div1{
-            background-color: blue;
-            height: 100vh;
-            width: 100vw;
-        }
-    </style>
-
-</head>
-<body>
-    <div id="editor">
-        <p>Hello World!</p>
-        <p>Some initial <strong>bold</strong> text</p>
-        <p><br></p>
-    </div>
-
-
-    <!-- Initialize Quill editor -->
-    <script defer>
-        var quill = new Quill('#editor', {
-            theme: 'bubble'
         });
     </script>
+</head>
+<body>
 </body>
 </html>

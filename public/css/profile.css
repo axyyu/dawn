@@ -1,6 +1,15 @@
 body{
 	height: 100vh;
 }
+
+#account-logout{
+    position: absolute;
+    top:20px;
+    right:20px;
+    z-index: 3;
+    text-align: center;
+}
+
 #profile-container{
 	height:100%;
 	width: 100%;
@@ -21,8 +30,13 @@ body{
 
 /*Project List*/
 #project-list-container{
+    height: 100%;
     float: left;
     width: 100%;
+}
+#project-list{
+    height: calc(100% - 60px);
+    overflow: auto;
 }
 .project{
     padding: 20px;
@@ -51,6 +65,7 @@ body{
     font-size: 25px;
     vertical-align: middle;
     display: inline-block;
+    max-width: calc(100% - 35px);
 }
 .project-type{
     order:2;
@@ -74,6 +89,9 @@ body{
 }
 .glyphicon-trash:hover{
     font-size: 18px;
+}
+.project-count{
+    max-width: calc(100% - 20px);
 }
 
 /*List Buttons*/
@@ -106,7 +124,7 @@ body{
     display: flex;
     padding-top:60px;
     padding-left:20px;
-    width: calc(100% - 15vw);
+    width: calc((100% - 15vw) - 10px);
     flex-direction: column;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -119,7 +137,6 @@ body{
     order:1;
     width: 100%;
     height: 40px;
-    margin-bottom: 20px;
 }
 #recent-terms{
     width: 100%;
@@ -128,6 +145,7 @@ body{
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: left;
+    overflow: hidden;
 }
 .recent-term{
     background: rgba(255,255,255,0.1);
@@ -144,7 +162,7 @@ body{
 #project-panels{
     order: 2;
     width: 100%;
-    height: calc(100% - 70px);
+    height: calc(100% - 50px);
 }
 .project-content{
     float: left;
@@ -173,6 +191,8 @@ body{
 }
 #articles-list{
     padding: 0 10px;
+    overflow: auto;
+    height: 100%;
 }
 .article{
     padding: 20px;
@@ -186,6 +206,7 @@ body{
 }
 .article-name{
     font-size: 18px;
+    max-width: calc(100% - 20px);
 }
 .article-delete{
     font-size: 18px;
@@ -194,12 +215,15 @@ body{
     font-size: 20px;
 }
 
+
 /*Article Content*/
+#article-container{
+    overflow: auto;
+}
 .article-title-container{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    height: 35px;
     justify-content: space-between;
 }
 .article-info-container{
@@ -214,6 +238,7 @@ body{
     font-size: 22px;
     vertical-align: middle;
     display: inline-block;
+    max-width: calc(100% - 110px);
 }
 .article-toolbox{
     order:2;
@@ -244,8 +269,6 @@ body{
 }
 .article-text{
     font-size: 16px;
-    height: calc(100% - 60px);
-    overflow:auto;
 }
 
 /*Project Notes*/
@@ -255,6 +278,8 @@ body{
 }
 #notes{
     padding: 0 5px;
+    overflow: auto;
+    background: rgba(0,0,0,0.3);
 }
 
 /*Settings*/
@@ -326,6 +351,98 @@ body{
     font-weight: bold;
 }
 
+/*Project Form*/
+#project-form{
+    height: calc(100% - 60px);
+}
+#project-form-options{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+#project-form-input{
+    height: 20px;
+    color:white;
+    text-align: center;
+    font-size: 22px;
+    padding:20px;;
+    align-content:center;
+    border-radius: 5px;
+    background: rgba(0,0,0,0.5);
+    border:none;
+    width: 70%;
+}
+#project-form-input::-webkit-input-placeholder {
+    color: lightgrey !important;
+}
+#project-form-input:-moz-placeholder { /* Firefox 18- */
+    color: lightgrey !important;
+}
+#project-form-input::-moz-placeholder {  /* Firefox 19+ */
+    color: lightgrey !important;
+}
+#project-form-input:-ms-input-placeholder {
+    color: lightgrey !important;
+}
+#project-form-input-container{
+    margin-bottom: 5%;
+    width: 100%;
+    text-align: center;
+}
+#project-citation-buttons{
+    height: 40px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    vertical-align: middle;
+}
+.project-citation-button{
+    text-align: center;
+    font-size: 20px;
+    height: 40px;
+    width:60px;
+    padding: 5px 10px;
+    vertical-align: middle;
+    display: inline-block;
+    margin: 5px 5px;
+    background: rgba(0,0,0,0.5);
+    transition: width ease .2s;
+}
+.project-citation-button:hover{
+    width:70px;
+    transition: width ease .2s;
+}
+.citation-selected{
+    font-weight: bold;
+}
+#project-form-buttons{
+    height: 40px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    vertical-align: middle;
+}
+.project-form-button{
+    text-align: center;
+    font-size: 20px;
+    height: 40px;
+    width: 100px;
+    padding: 5px 10px;
+    vertical-align: middle;
+    display: inline-block;
+    margin: 5px 5px;
+    background: rgba(0,0,0,0.5);
+    transition: width ease .2s;
+}
+.project-form-button:hover{
+    width:120px;
+    transition: width ease .2s;
+}
 
 /*Export Button*/
 .export-button{
