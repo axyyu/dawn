@@ -217,6 +217,8 @@ function natureJournal(question, length, callback) {
         if (!error && resp.statusCode == 200) {
             var entityArray = [];
             body = JSON.parse(body);
+            if(body != null && body.feed != null && body.feed.entry != null){
+
             for (a = 0; a < body.feed.entry.length; a++) {
                 entityArray.push({
                     "title": body.feed.entry[a].title,
@@ -226,6 +228,7 @@ function natureJournal(question, length, callback) {
                     "publisher": body.feed.entry[a]['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:publisher'],
                     "publicationDate": body.feed.entry[a]['sru:recordData']['pam:message']['pam:article']['xhtml:head']['prism:publicationDate']
                 });
+            }
             }
             callback(entityArray);
         } else {
