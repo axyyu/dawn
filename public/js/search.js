@@ -299,9 +299,8 @@ function setupHighlight(){
     	$.ajax({
         	type: "POST",
         	url: '/define',
-            data: {question:t.toString().trim()},
-        	success: function(data){
-        	    console.log(data);
+            data: {question:t.toString().trim()}})
+            .done(function( data, textStatus, jqXHR ) {
                 try {
                     var focus = new DOMParser().parseFromString(data, "text/xml").getElementsByTagName("def")[0].innerHTML;
                     var definition = "";
@@ -315,30 +314,36 @@ function setupHighlight(){
                             }
                         }
                     }
-                		var add = '<span class="close glyphicon glyphicon-remove modal-field"></span>';
-               			add += '<h1 class="modal-header modal-field">' + t.toString().charAt(0).toUpperCase() + t.toString().slice(1) + '</h1>';
-               			add+= '<p class="modal-body modal-field">' + definition.charAt(0).toUpperCase() + definition.slice(1) + '</p>';
-            		    div.innerHTML = add;
-                        $( ".close").unbind( "click" );
-            		    $(".close").click(function(){
-                            modal.style.display = "none";
-                        })
-            		}
-            		catch(err) {
-                        var add = '<span class="close glyphicon glyphicon-remove modal-field"></span>';
-                        add += '<h1 class="modal-header modal-field">' + t.toString().charAt(0).toUpperCase() + t.toString().slice(1) + '</h1>';
-                        add+= '<p class="modal-body modal-field">A definition is not available.</p>';
-                        div.innerHTML = add;
-                        $( ".close").unbind( "click" );
-                        $(".close").click(function(){
-                            modal.style.display = "none";
-                        })
-            	}
-        	},
-        	error:function(error){
-           		 alert("Dictionary Error!");
-        	}
-    	});
+                    var add = '<span class="close glyphicon glyphicon-remove modal-field"></span>';
+                    add += '<h1 class="modal-header modal-field">' + t.toString().charAt(0).toUpperCase() + t.toString().slice(1) + '</h1>';
+                    add+= '<p class="modal-body modal-field">' + definition.charAt(0).toUpperCase() + definition.slice(1) + '</p>';
+                    div.innerHTML = add;
+                    $( ".close").unbind( "click" );
+                    $(".close").click(function(){
+                        modal.style.display = "none";
+                    })
+                }
+                catch(err) {
+                    var add = '<span class="close glyphicon glyphicon-remove modal-field"></span>';
+                    add += '<h1 class="modal-header modal-field">' + t.toString().charAt(0).toUpperCase() + t.toString().slice(1) + '</h1>';
+                    add+= '<p class="modal-body modal-field">A definition is not available.</p>';
+                    div.innerHTML = add;
+                    $( ".close").unbind( "click" );
+                    $(".close").click(function(){
+                        modal.style.display = "none";
+                    })
+                }
+            })
+            .fail(function( e, textStatus, errorThrown ) {
+                switch (e.status) {
+                    case 429:
+                        handleError('Currently we are only permitting 5 searches per hour. Please try again in an hour.');
+                        break;
+                    default:
+                        handleError('The server had an error. Please try again later.');
+                        break;
+                }
+            });
         clickedToolTips();
     	modal.style.display = "block";
     });
@@ -398,8 +403,8 @@ function getData(term){
         $.ajax({
             type: "POST",
             url: "/search",
-            data: {question:term},
-            success: function(result){
+            data: {question:term}})
+            .done(function( result, textStatus, jqXHR ) {
                 obj = result;
                 console.log(obj);
                 $("#loading-view").fadeOut("fast", function(){
@@ -410,15 +415,22 @@ function getData(term){
                 addToRecentSearches(term);
                 setupData();
                 searching = false;
-            },
-            error:function(error){
-                handleError();
-            }
-        });
+            })
+            .fail(function( e, textStatus, errorThrown ) {
+                switch (e.status) {
+                    case 429:
+                        handleError('Currently we are only permitting 5 searches per hour. Please try again in an hour.');
+                        break;
+                    default:
+                        handleError('The server had an error. Please try again later.');
+                        break;
+                }
+            })
     }
 }
-function handleError(){
-    alert("Server error. Try again later.");
+function handleError(str){
+    alert(str);
+    window.location = 'index.html';
 }
 
 function resetInfo(){

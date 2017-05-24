@@ -1,8 +1,9 @@
 var $ = require('jquery');
 var request = require('request');
 var express = require('express');
-var DOMParser = require('xmldom').DOMParser;
-var XMLSerializer = require('xmldom').XMLSerializer;
+var RateLimit = require('express-rate-limit');
+// var DOMParser = require('xmldom').DOMParser;
+// var XMLSerializer = require('xmldom').XMLSerializer;
 var http = require('http');
 var fs = require('fs');
 // var Bing = require('node-bing-api');
@@ -36,9 +37,21 @@ var KEYWORD_COUNT = 2;
 
 /*Setup*/
 var app = express();
+app.enable('trust proxy');
 
 app.set('port', (process.env.PORT || port));
 app.use(express.static(__dirname + '/public'));
+
+var searchLimiter = new RateLimit({
+    windowMs: 60*60*1000,
+    max: 5,
+    delayMs: 0
+});
+var defineLimiter = new RateLimit({
+    windowMs: 60*60*1000,
+    max: 100,
+    delayMs: 0
+});
 
 /*API Setup*/
 var natural_language_understanding = new NaturalLanguageUnderstandingV1({
@@ -366,7 +379,7 @@ function filterArticle(str){
     return str.replace(/<(?:.|\n)*?>/gm, '');
 }
 
-app.post('/define', function(req, response) {
+app.post('/define', defineLimiter, function(req, response) {
     req.on("data", function(chunk) {
         var str = '' + chunk;
         var word = str.substring(str.indexOf("=") + 1, str.length);
@@ -378,7 +391,7 @@ app.post('/define', function(req, response) {
     });
 });
 
-app.post('/search', function(req, response) {
+app.post('/search', searchLimiter, function(req, response) {
     req.on("data", function(chunk) {
         var str = '' + chunk;
         var question = str.substring(str.indexOf("=") + 1, str.length);

@@ -177,7 +177,7 @@ function setupSettings(projectKey){
         $(".citation-button").click(function(){
             setcitation = $(this).text();
             $(".citation-button").removeClass("selected");
-            $("#"+newcitation+"-settings").addClass("selected");
+            $("#"+setcitation+"-settings").addClass("selected");
         })
     });
     var location2 = firebase.database().ref(userlocation+projectKey+"/name");
@@ -301,7 +301,7 @@ function outputBibliography(works){
     for(i = 0;i<works.length;i++){
         quill2.insertText(i, works[i], {
             'italic': true
-        })
+        });
         quill2.insertText(i, "\n")
     }
     quill2.formatLine(1, 2, 'align', 'right');
