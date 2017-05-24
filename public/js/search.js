@@ -383,7 +383,6 @@ function search(){
         });
     });
     riseSearchBar();
-    console.log("Searching...");
     var searchTerm = $("#search-bar").val();
     getData(searchTerm);
 }
@@ -395,6 +394,7 @@ function getData(term){
     $("#article-tab").hide();
     if(!searching){
         searching = true;
+        console.log("Searching...");
         $.ajax({
             type: "POST",
             url: "/search",

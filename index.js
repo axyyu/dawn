@@ -387,6 +387,9 @@ app.post('/search', function(req, response) {
         natureJournal(question, function(entityArray) {
             console.log("array made");
             var wait = entityArray.length;
+            if(wait==0){
+                response.send(entityArray);
+            }
             entityArray.forEach(function(entry) {
                 console.log("entered array");
                 getCitationMla(entry.title, entry.publisher, entry.publicationDate.substring(0, 4), entry.authors, function(citation) {
