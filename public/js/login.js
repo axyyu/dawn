@@ -82,7 +82,7 @@ function login(){
         var errorCode = error.code;
         var errorMessage = error.message;
         console.log(errorCode);
-        var errordisplay = $("#register-error");
+        var errordisplay = $("#login-error");
         if (errorCode == 'auth/invalid-email') {
             errordisplay.text('Please enter a proper email.');
         }
@@ -100,6 +100,6 @@ function login(){
         }
         errordisplay.show();
         $("#loading-view").hide();
-        $("#register").fadeIn("fast");
+        $("#login").fadeIn("fast");
     });
 }
