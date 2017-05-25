@@ -107,8 +107,7 @@ function clickProject(){
         $(this).addClass("project-selected");
         populateArticleTab($(this).attr("id"));
         $("#project-list-container").animate({
-            width:"15vw",
-            "min-width":"200px"
+            width:"15vw"
         },500, function(){
             $("#project-tab").fadeIn("fast");
         });
