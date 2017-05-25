@@ -143,6 +143,9 @@ function setupKeywordSearch(){
             $("#search-bar").val(val);
         }
     });
+    $('.list-keyword').on('contextmenu', function(){
+        return false;
+    });
 }
 function setupArticleClick(){
     $( ".article").unbind( "click" );
