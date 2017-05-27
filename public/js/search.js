@@ -143,6 +143,9 @@ function setupKeywordSearch(){
             $("#search-bar").val(val);
         }
     });
+    $('.list-keyword').on('contextmenu', function(){
+        return false;
+    });
 }
 function setupArticleClick(){
     $( ".article").unbind( "click" );
@@ -412,6 +415,7 @@ function getData(term){
                 });
                 resetInfo();
                 setupSearchAgain(term);
+
                 addToRecentSearches(term);
                 setupData();
                 searching = false;
@@ -454,39 +458,43 @@ function setupData(){
 
 function appendArticleList(){
     var item = "";
-    for(i=0;i<obj.length;i++){
-        item+='<div class="article click" id="A'+i+'"><div class="article-name-container article-list-elements">';
-        item+='<h3 class="article-name">' + obj[i].title + '</h3>';
-        item+='<div class="article-journal '+ obj[i].journal.charAt(0) + '">'+ obj[i].journal.charAt(0) +'</div>';
-        item+='</div>';
-        if(obj[i].summary){
-            item+='<h4 class="article-desc article-list-elements">' + obj[i].summary + '</h4>';
-        }
-        else{
-            item+='<h4 class="article-desc article-list-elements">' + 'Summary not found.' + '</h4>';
-        }
-        item+='<div class="article-keywords article-list-elements">';
-        if(obj[i].keywords != null && obj[i].keywords.length>=1)
-        {
-            var l = 5;
-            if(obj[i].keywords.length<5){
-                l = obj[i].keywords.length;
+    if(obj != null) {
+        for (i = 0; i < obj.length; i++) {
+            item += '<div class="article click" id="A' + i + '"><div class="article-name-container article-list-elements">';
+            item += '<h3 class="article-name">' + obj[i].title + '</h3>';
+            item += '<div class="article-journal ' + obj[i].journal.charAt(0) + '">' + obj[i].journal.charAt(0) + '</div>';
+            item += '</div>';
+            if (obj[i].summary) {
+                item += '<h4 class="article-desc article-list-elements">' + obj[i].summary + '</h4>';
             }
-            for(a = 0; a<l;a++){
-                item+='<h4 class="mini-keyword">'+obj[i].keywords[a]+'</h4>';
+            else {
+                item += '<h4 class="article-desc article-list-elements">' + 'Summary not found.' + '</h4>';
             }
+            item += '<div class="article-keywords article-list-elements">';
+            if (obj[i].keywords != null && obj[i].keywords.length >= 1) {
+                var l = 5;
+                if (obj[i].keywords.length < 5) {
+                    l = obj[i].keywords.length;
+                }
+                for (a = 0; a < l; a++) {
+                    item += '<h4 class="mini-keyword">' + obj[i].keywords[a] + '</h4>';
+                }
+            }
+            else {
+                item += '<h4 class="article-desc">' + 'No Keywords Found' + '</h4>';
+            }
+            item += '</div><div class="article-reliability" id="R' + i + '">';
+            if (obj[i].sentiment) {
+                item += 'Bias: ' + parseInt(Math.abs((obj[i].sentiment) * 100));
+            }
+            else {
+                item += 'Can\'t Determine Reliability';
+            }
+            item += '</div></div>';
         }
-        else{
-            item+='<h4 class="article-desc">'+ 'No Keywords Found'+'</h4>';
-        }
-        item+='</div><div class="article-reliability" id="R'+i+'">';
-        if(obj[i].sentiment){
-            item+='Bias: ' + parseInt(Math.abs( (obj[i].sentiment)*100));
-        }
-        else{
-            item+='Can\'t Determine Reliability';
-        }
-        item+='</div></div>';
+    }
+    else{
+        item = "<h4>No Articles Found</h4>";
     }
     $(item).appendTo("#article-list");
     setupArticleClick();
@@ -601,7 +609,7 @@ function showToolbar(art){
             $(".citation-button").click(function(){
                 changeProjectBibliography(this,art);
             });
-            var location = firebase.database().ref(userlocation + projectid);
+            var location = firebase.database().ref(userlocation + projectid+"/type");
             location.on('value', function(snapshot) {
                 var type = snapshot.val().type;
                 $(".citation-button").removeClass("citation-button-selected");
@@ -646,13 +654,13 @@ function createNotepad(){
 }
 function saveNotes(quill){
     var contents = quill.getContents();
-    var location = firebase.database().ref(userlocation + projectid + "/notes/");
+    var location = firebase.database().ref(userlocation + projectid + "/notes");
     location.set(contents);
 }
 
 function changeProjectBibliography(element, art){
     var type = $(element).text();
-    var location = firebase.database().ref(userlocation + projectid);
+    var location = firebase.database().ref(userlocation + projectid +"/type");
     location.set(type);
     $(".citation-button").removeClass("citation-button-selected");
     $("#"+type).addClass("citation-button-selected");
