@@ -388,11 +388,11 @@ function search(){
             height: "100vh"
         }, 500, function(){
             $(".cssload-thecube").fadeIn("fast");
+            var searchTerm = $("#search-bar").val();
+            getData(searchTerm);
         });
     });
     riseSearchBar();
-    var searchTerm = $("#search-bar").val();
-    getData(searchTerm);
 }
 
 function getData(term){
