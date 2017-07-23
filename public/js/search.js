@@ -362,9 +362,7 @@ function setupHighlight(){
 
 function shrinkSearchBar(){
     $("#search-bar").animate({
-        width: "40vw",
-        'min-width':"300px",
-        padding:"30px"
+        width: "40vw"
     }, 1000, function() {
     });
     $("#title-container").fadeOut("fast");
@@ -387,9 +385,10 @@ function search(){
         $('body').animate({
             height: "100vh"
         }, 500, function(){
-            $(".cssload-thecube").fadeIn("fast");
-            var searchTerm = $("#search-bar").val();
-            getData(searchTerm);
+            $(".cssload-thecube").fadeIn("fast", function(){
+                var searchTerm = $("#search-bar").val();
+                getData(searchTerm);
+            });
         });
     });
     riseSearchBar();
@@ -528,11 +527,20 @@ function showFullArticle(idd){
         window.open(art.url);
     });
     if(projectid){
-        $("#add-button").show();
-        $( "#add-button").unbind( "click" );
-        $("#add-button").click(function(){
-            addToProject(art);
-            $("#add-button").hide();
+        var articlekey = md5(art.title);
+        var location = firebase.database().ref(userlocation + projectid +"/articles/");
+        location.once('value', function(snapshot) {
+            if (snapshot.hasChild(articlekey)) {
+                $("#add-button").hide();
+            }
+            else{
+                $("#add-button").show();
+                $( "#add-button").unbind( "click" );
+                $("#add-button").click(function(){
+                    addToProject(art);
+                    $("#add-button").hide();
+                });
+            }
         });
     }
     else{
@@ -630,7 +638,8 @@ function showToolbar(art){
 
 function addToProject(art){
     if(projectid){
-        var articlekey = firebase.database().ref(userlocation + projectid +"articles").push().key;
+        var articlekey = md5(art.title);
+        // var articlekey = firebase.database().ref(userlocation + projectid +"articles").push().key;
         firebase.database().ref(userlocation + projectid +"/articles/"+articlekey).set(art);
     }
 }
