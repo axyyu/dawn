@@ -3,13 +3,12 @@ html{
     background: linear-gradient(-50deg, #808080, rgb(0, 57, 115));
 }
 body{
-    height: 200vh;
     width: 100vw;
     color:white;
     /*font-family: 'Lato', sans-serif;*/
     font-family: 'Source Sans Pro', sans-serif;
     background: linear-gradient(-50deg, #808080, rgb(0, 57, 115));
-    overflow: auto;
+    overflow: scroll;
     overflow-x: hidden;
     /*background: url("../img/sunrise4.jpg") no-repeat;*/
     /*-webkit-background-size: cover;*/

@@ -84,18 +84,18 @@ function selectProject(projectkey, element){
 }
 
 function initialAnimation(){
-    $("#title-container").animate({
-        top: "-=150px",
-        opacity:1.0
-    }, 1000, function() {
-        $("#account-icon").fadeIn("fast");
-        $("#logo-icon").fadeIn("fast");
-        if(loggedIn){
-            $("#account-logout").fadeIn();
-            $("#project-container").fadeIn("fast");
-        }
-        $("#search-container").fadeIn("fast");
-    });
+    // $("#title-container").animate({
+    //     top: "-=150px",
+    //     opacity:1.0
+    // }, 1000, function() {
+    //     $("#account-icon").fadeIn("fast");
+    //     $("#logo-icon").fadeIn("fast");
+    //     if(loggedIn){
+    //         $("#account-logout").fadeIn();
+    //         $("#project-container").fadeIn("fast");
+    //     }
+    //     $("#search-container").fadeIn("fast");
+    // });
 }
 function setupAccountButtons(){
     $( "#logo-icon").unbind( "click" );
@@ -157,7 +157,7 @@ function setupArticleClick(){
             width:"20vw",
             "min-width":"200px"
         },500, function(){
-            $("#article-tab").fadeIn("fast");
+            // $("#article-tab").fadeIn("fast");
         });
     });
 }
@@ -361,10 +361,6 @@ function setupHighlight(){
 }
 
 function shrinkSearchBar(){
-    $("#search-bar").animate({
-        width: "40vw"
-    }, 1000, function() {
-    });
     $("#title-container").fadeOut("fast");
 }
 function riseSearchBar(){

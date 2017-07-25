@@ -47,7 +47,7 @@ app.use(express.static(__dirname + '/public'));
 
 var searchLimiter = new RateLimit({
     windowMs: 60*60*1000,
-    max: 5,
+    max: 1000,
     delayMs: 0
 });
 var defineLimiter = new RateLimit({
