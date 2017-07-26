@@ -70,13 +70,21 @@
         <h1 id="title-text">dawn</h1>
     </div>
     <div id="search-container">
-        <input id="search-bar" class = "form-control" type="text" name="search-term" placeholder="type something" autocomplete="off" autofocus>
-    </div>
-    <div id="project-container" style="display: none">
-        <div class="project-dropdown">
+        <div id="project-dropdown">
             <h3 class="selected-project click" id="live">Live Project</h3>
-            <div class="project-list">
+            <div class="project-list scrollbar style-1">
                 <!--<h3 class="project-list-element click">Your Project</h3>-->
+            </div>
+        </div>
+        <input id="search-bar" class = "form-control" type="text" name="search-term" placeholder="type something" autocomplete="off" autofocus>
+        <div id="database-dropdown">
+            <h3 class="selected-database click">Database</h3>
+            <div class="database-list scrollbar style-1">
+                <h3 class="database-list-element selected-db click">Nature</h3>
+                <h3 class="database-list-element click">Proquest</h3>
+                <h3 class="database-list-element click">CORES</h3>
+                <h3 class="database-list-element click">Science Direct</h3>
+                <h3 class="database-list-element click">Gale Cengage</h3>
             </div>
         </div>
     </div>
@@ -126,11 +134,22 @@
         </div>
     </div>
 
-    <div id="article-view" class="view" style="display: none">
-        <div id="article-list-container" class="article-field">
-            <div id="list-buttons">
-                <div id="search-again" title="Search Again" class="list-button glyphicon glyphicon-refresh click">
+    <div id="popup-view" class="view">
+        <div class="main-container">
+            <div class="main-content">
+                <div id="popup-container">
+
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="article-view" class="view" style="display: none">
+        <div id="article-list-container">
+            <div id="list-buttons">
+                <div id="search-again" title="Search Again" class="list-button glyphicon glyphicon-refresh click"></div>
+                <div id="related-terms" title="Related Terms" class="list-button glyphicon glyphicon-cloud click"></div>
+                <div id="date-range" title="Date Range" class="list-field click">FROM: 2019 TO: 2018 </div>
             </div>
             <div id="article-list" class="scrollbar style-1">
                 <div class="article click">
@@ -143,56 +162,22 @@
                     <h4 class="article-desc article-list-elements">
                         Article Desc
                     </h4>
-                    <div class="article-keywords article-list-elements">
-                        <h4 class="mini-keyword">agent orange</h4>
-                        <h4 class="mini-keyword">orange</h4>
-                    </div>
-                    <div class="article-reliability"></div>
-                </div>
-            </div>
-        </div>
-        <div id="article-tab" class="article-field" style="display: none">
-            <div id="article-content" class="scrollbar style-1">
-                <div class="article-title-container">
-                    <h2 class="article-title"></h2>
-                    <div class="article-toolbox">
-                        <div id="link-button" title="Link" class="article-toolbox-button glyphicon glyphicon-link click">
+                    <div class="article-info article-list-elements">
+                        <div class="article-keywords">
+                            <h4 class="mini-keyword">agent orange</h4>
+                            <h4 class="mini-keyword">orange</h4>
                         </div>
-                        <div id="add-button" title="Link" class="article-toolbox-button glyphicon glyphicon-plus click">
+                        <div class="article-reliability">Bias: 90</div>
+                    </div>
+                    <div class="article-buttons-container">
+                        <div class="article-tools article-buttons">
+                            <div id="keywords" class="glyphicon glyphicon-th-list article-tool-button"></div>
+                            <div id="bibliography" class="glyphicon glyphicon-book article-tool-button"></div>
                         </div>
-                    </div>
-                </div>
-                <div class="article-info-container">
-                    <h2 class="article-author"></h2>
-                    <h2 class="article-date"></h2>
-                </div>
-                <p class="article-text" id="article">
-                </p>
-            </div>
-            <div id = "article-toolbox">
-                <div id="toolbar-container">
-                    <div id="keywords" class="toolbar scrollbar style-1">
-                    </div>
-                    <div id="bibliography" class="toolbar scrollbar style-1"  style="display: none">
-                        <div id="citation-buttons">
-                            <div id="APA" title="APA" class="citation-button click citation-button-selected">APA</div>
-                            <div id="MLA" title="MPA" class="citation-button click">MLA</div>
+                        <div class="article-add article-buttons">
+                            <div id="add" class="glyphicon glyphicon-plus article-tool-button"></div>
+                            <div id="added" class="glyphicon glyphicon-ok article-tool-button"></div>
                         </div>
-                        <div id="citation">
-                        </div>
-                    </div>
-                    <div id="notes" class="toolbar scrollbar style-1"  style="display: none">
-                        <div id="notes-container">
-                            <div id="notes-panel"></div>
-                        </div>
-                    </div>
-                </div>
-                <div id="toolbar-buttons">
-                    <div title="Keywords" class="toolbar-button glyphicon glyphicon-star-empty click" onclick="changeToKeywords()">
-                    </div>
-                    <div title="Citation" class="toolbar-button glyphicon glyphicon-education click" onclick="changeToBibliography()">
-                    </div>
-                    <div title="Notes" class="toolbar-button glyphicon glyphicon-pencil click" onclick="changeToNotes()">
                     </div>
                 </div>
             </div>
