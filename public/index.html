@@ -32,27 +32,6 @@
 
 </head>
 <body class="scrollbar style-1">
-    <!--ADDED CODE FOR HIGHLIGHT FUNCTIONS-->
-    <div id="tooltipH" class="tooltip-items">
-        <button type="button" id="high">Highlight</button>
-    </div>
-    <div id="tooltipHandD" class="tooltip-items">
-        <button type="button" id="high2">Highlight</button>
-        <button type="button" id="def">Define</button>
-    </div>
-    <div id="tooltipDel" class="tooltip-items">
-        <button type="button" id="unHigh">Unhighlight</button>
-    </div>
-    <div id="tooltipDelAndDef" class="tooltip-items">
-        <button type="button" id="unHigh2">Unhighlight</button>
-        <button type="button" id="def2">Define</button>
-    </div>
-    <div id="myModal" class="modal">
-    	<div class="modal-content" id="dictionary-modal" style="color:black;">
-     		 <span class="close glyphicon glyphicon-remove"></span> <!--Need to fix-->
-   	    </div>
-    </div>
-    <!--ADDED CODE FOR HIGHLIGHT FUNCTIONS-->
     <img id="background-design" src="img/pattern.png">
     <div title="Home" class="click icons" id="logo-icon">
         <img class="small-icon" src="img/dawn.png">
@@ -138,7 +117,49 @@
         <div class="main-container">
             <div class="main-content">
                 <div id="popup-container">
-
+                    <div id="bibliography" >
+                        <div class="popup-title-container">
+                            <h3 class="popup-title">Citation Formats</h3>
+                            <span class="glyphicon glyphicon-remove popup-close click"></span>
+                        </div>
+                        <div id="citation-list" class="scrollbar style-1">
+                            <div class="citation-container">
+                                <div class="citation">
+                                    <div class="citation-title">APA</div>
+                                    <div id="apa" class="citation-content"></div>
+                                </div>
+                            </div>
+                            <div class="citation-container">
+                                <div class="citation">
+                                    <div class="citation-title">MLA</div>
+                                    <div id="mla" class="citation-content"></div>
+                                </div>
+                            </div>
+                            <div class="citation-container">
+                                <div class="citation">
+                                    <div class="citation-title">Chicago</div>
+                                    <div id="chicago" class="citation-content"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="dictionary" style="display: none;">
+                        <div class="popup-title-container">
+                            <h3 class="popup-title">Key Word Dictionary</h3>
+                            <span class="glyphicon glyphicon-remove popup-close click"></span>
+                        </div>
+                        <div id="search-def-container">
+                            <input id="search-def" title="Search" placeholder="type keyword">
+                        </div>
+                        <div id="keyword-list" class="scrollbar style-1">
+                            <div class="keyword-entry">
+                                <div class="keyword-container">
+                                    <div class="keyword">genes</div>
+                                </div>
+                                <div class="keyword-def"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -149,7 +170,14 @@
             <div id="list-buttons">
                 <div id="search-again" title="Search Again" class="list-button glyphicon glyphicon-refresh click"></div>
                 <div id="related-terms" title="Related Terms" class="list-button glyphicon glyphicon-cloud click"></div>
-                <div id="date-range" title="Date Range" class="list-field click">FROM: 2019 TO: 2018 </div>
+                <div class="list-field">
+                    From:
+                    <input id="date-begin" class="list-input" title="Start Year" placeholder="ALL">
+                </div>
+                <div class="list-field">
+                    To:
+                    <input id="date-end" class="list-input" title="Start Year" placeholder="ALL">
+                </div>
             </div>
             <div id="article-list" class="scrollbar style-1">
                 <div class="article click">
@@ -159,6 +187,9 @@
                         </h3>
                         <div class="article-journal N">N</div>
                     </div>
+                    <h4 class="article-date article-list-elements">
+                        4/7/2017
+                    </h4>
                     <h4 class="article-desc article-list-elements">
                         Article Desc
                     </h4>
@@ -171,8 +202,8 @@
                     </div>
                     <div class="article-buttons-container">
                         <div class="article-tools article-buttons">
-                            <div id="keywords" class="glyphicon glyphicon-th-list article-tool-button"></div>
-                            <div id="bibliography" class="glyphicon glyphicon-book article-tool-button"></div>
+                            <div id="keyword-button" class="glyphicon glyphicon-th-list article-tool-button"></div>
+                            <div id="bibliography-button" class="glyphicon glyphicon-book article-tool-button"></div>
                         </div>
                         <div class="article-add article-buttons">
                             <div id="add" class="glyphicon glyphicon-plus article-tool-button"></div>
