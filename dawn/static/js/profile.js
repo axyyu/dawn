@@ -89,6 +89,7 @@ function setupAddProject(){
 }
 function addProject(){
     var name = $("#project-form-input").val();
+    $("#project-form-input").val("");
     var projectKey = firebase.database().ref(userlocation).push().key;
     firebase.database().ref(userlocation+projectKey+"/name").set(name);
     firebase.database().ref(userlocation+projectKey+"/type").set(newcitation);
@@ -130,7 +131,7 @@ function displayRecents(projectKey){
         $.each(snapshot.val(), function(k, v) {
             var items = "";
             items+='<h4 class="recent-term">'+v+'</h4>';
-            $(items).appendTo("#recent-terms");
+            $(items).prependTo("#recent-terms");
         });
     });
 }

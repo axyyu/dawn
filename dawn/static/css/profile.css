@@ -43,6 +43,7 @@ body{
     margin-bottom: 10px;
     background: rgba(0,0,0,0.3);
     transition: background .5s ease;
+    border-radius: 5px;
 }
 .project-selected{
     background: rgba(0,0,0,0.5);
@@ -440,7 +441,7 @@ body{
     transition: width ease .2s;
 }
 .project-form-button:hover{
-    width:120px;
+    width:110px;
     transition: width ease .2s;
 }
 

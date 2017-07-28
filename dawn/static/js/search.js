@@ -17,35 +17,70 @@ var highlightedSpan = null;
 
 $(document).ready(function(){
     firebaseChange();
-    initialAnimation();
-    setupScrollTrigger();
-    setupAccountButtons();
-	setupReturnHome();
+    setupIconButtons();
     setupSearchBar();
-    setupHighlight();
 });
 function firebaseChange(){
     firebase.auth().onAuthStateChanged(function(user) {
+        if(searchPage){
+            window.location='index.html';
+        }
         if (user) {
             uid = user.uid;
             loggedIn = true;
             userlocation = 'users/' + uid +'/';
-            $("#account-icon").attr("title","Profile");
-            $("#account-icon").unbind( "click" );
-            $("#account-icon").click(function() {
+
+            var accountIcon = $("#account-icon");
+            var accountLogout = $("#account-logout");
+
+            accountIcon.attr("title","Profile");
+            accountIcon.unbind( "click" );
+            accountIcon.click(function() {
                 window.location = 'profile.html';
             });
+
+            accountLogout.unbind( "click" );
+            accountLogout.click(function(){
+                firebase.auth().signOut().then(function() {
+                    window.location = 'index.html';
+                }).catch(function(error) {
+                    alert("There was an error signing out.");
+                });
+            });
+            accountLogout.show();
+
             setupProjectList();
         } else {
             userlocation = null;
             uid=null;
             projectid=null;
-            $("#account-icon").attr("title","Log In");
-            $( "#account-icon").unbind( "click" );
-            $("#account-icon").click(function() {
+
+            var accountIcon = $("#account-icon");
+            accountIcon.attr("title","Log In");
+            accountIcon.unbind( "click" );
+            accountIcon.click(function() {
                 window.location = 'login.html';
             });
             $("#account-logout").fadeOut("fast");
+        }
+    });
+}
+function setupIconButtons(){
+    var logoicon = $( "#logo-icon");
+    logoicon.unbind( "click" );
+    logoicon.click(function(){
+        window.location = 'index.html';
+    });
+}
+function setupSearchBar(){
+    $("#search-bar").keydown(function(event){
+        if(!searchPage){
+            $("#title-container").fadeOut("fast");
+            searchPage = true;
+        }
+        if(event.which=="13")
+        {
+            search();
         }
     });
 }
@@ -57,6 +92,7 @@ function setupProjectList(){
             $(project).appendTo(".project-list");
         });
     });
+    $( "#project-container").show();
 }
 function selectProject(projectkey, element){
     if(projectkey=="live"){
@@ -83,51 +119,74 @@ function selectProject(projectkey, element){
     $(element).remove();
 }
 
-function initialAnimation(){
-    $("#title-container").animate({
-        top: "-=150px",
-        opacity:1.0
-    }, 1000, function() {
-        $("#account-icon").fadeIn("fast");
-        $("#logo-icon").fadeIn("fast");
-        if(loggedIn){
-            $("#account-logout").fadeIn();
-            $("#project-container").fadeIn("fast");
-        }
-        $("#search-container").fadeIn("fast");
-    });
-}
-function setupAccountButtons(){
-    $( "#logo-icon").unbind( "click" );
-    $("#logo-icon").click(function(){
-        window.location = '/';
-    });
-    $( "#account-icon").unbind( "click" );
-    $("#account-icon").click(function(){
-        if(loggedIn){
-            window.location = 'profile.html';
-            $("#account-icon").attr("title","Profile");
-        }
-        else{
-            window.location = 'login.html';
-            $("#account-icon").attr("title","Log In");
-        }
-    });
-    $( "#account-logout").unbind( "click" );
-    $("#account-logout").click(function(){
-        firebase.auth().signOut().then(function() {
-            window.location = '/';
-        }).catch(function(error) {
-            alert("There was an error signing out.");
+function search(){
+    $("#search-container").animate({
+        top:"30px",
+        "margin-top":"0",
+        'border-radius':"5px"
+    }, 1000);
+    $("#background-design").fadeOut("fast");
+    $('html, body').animate({
+        scrollTop: $("body").offset().top
+    }, 500, function(){
+        $("#introduction-view").hide();
+        $(".cssload-thecube").fadeIn("fast", function(){
+            var searchTerm = $("#search-bar").val();
+            getData(searchTerm);
         });
     });
+    $("#project-container").fadeOut("fast");
+    // createNotepad();
 }
-function setupReturnHome(){
-    $( "#logo-icon").unbind( "click" );
-	$("#logo-icon").click(function(){
-		window.location="/";
-	});
+function getData(term){
+    $("#loading-view").fadeIn("fast");
+    if(!searching){
+        searching = true;
+        console.log("Searching...");
+        $.ajax({
+            type: "POST",
+            url: "/search",
+            data: {question:term}})
+            .done(function( result, textStatus, jqXHR ) {
+                obj = result;
+                console.log(obj);
+                $("#loading-view").fadeOut("fast", function(){
+                    $("#article-view").fadeIn("fast");
+                });
+                // resetInfo();
+                setupSearchAgain(term);
+
+                addToRecentSearches(term);
+                setupData();
+                searching = false;
+            })
+            .fail(function( e, textStatus, errorThrown ) {
+                switch (e.status) {
+                    case 429:
+                        handleError('Currently we are only permitting 5 searches per hour. Please try again in an hour.');
+                        break;
+                    default:
+                        handleError('The server had an error. Please try again later.');
+                        break;
+                }
+            })
+    }
 }
+function handleError(str){
+    alert(str);
+    window.location = 'index.html';
+}
+
+function resetInfo(){
+    $("#article-list").empty();
+}
+function setupSearchAgain(searchTerm){
+    $( "#search-again").unbind( "click" );
+    $("#search-again").click(function(){
+        getData(searchTerm);
+    })
+}
+
 function setupKeywordSearch(){
     $(".list-keyword").mousedown(function(e){
         if( e.button == 0 ){
@@ -153,333 +212,9 @@ function setupArticleClick(){
         $(".article").removeClass("article-selected");
         $(this).addClass("article-selected");
         showFullArticle($(this).attr("id"));
-        $("#article-list-container").animate({
-            width:"20vw",
-            "min-width":"200px"
-        },500, function(){
-            $("#article-tab").fadeIn("fast");
-        });
     });
 }
 
-function setupSearchBar(){
-    $("#search-bar").keydown(function(event){
-        if(!searchPage){
-            shrinkSearchBar();
-            searchPage = true;
-        }
-        if(event.which=="13")
-        {
-            search();
-        }
-    });
-}
-function setupHighlight(){
-    function getSelectedSpanIds() {
-        var sel = rangy.getSelection(), ids = [];
-        for (var r = 0; r < sel.rangeCount; ++r) {
-            var spans = sel.getRangeAt(r).getNodes([1], function(node) {
-                return node.nodeName.toLowerCase() == "span";
-            });
-            for (var i = 0, len = spans.length; i < len; ++i) {
-                ids.push(spans[i].id);
-            }
-        }
-        return ids;
-    }
-
-    function removespan(span) {
-        var span_contents = span.innerHTML;
-        var span_parent = span.parentNode;
-        var text_node = document.createTextNode(span.innerHTML);
-        span_parent.replaceChild(text_node, span);
-    }
-
-    $(document).on('click','.highlight',function(e){
-        var selection = window.getSelection().toString();
-        $('#selTxt').val(selection.toString());
-        var x = e.pageX;
-        var y = e.pageY;
-        placeTooltip(x, y);
-        highlightedSpan = this;
-        console.log(t.toString());
-        if(t.toString().trim().split(" ").length== 1 && t.toString().trim() != "") {
-            $("#tooltipDelAndDef").show();
-        }
-        else {
-            $("#tooltipDel").show();
-        }
-        $("#tooltipH").hide();
-        $("#tooltipHandD").hide();
-    });
-
-    var t = '';
-    function gText(e) {
-        t = (document.all) ? document.selection.createRange().text : document.getSelection();
-    }
-    $("#tooltipH").hide();
-    $("#tooltipHandD").hide();
-    $("#tooltipDel").hide();
-    $("#tooltipDelAndDef").hide();
-
-    document.onmouseup = gText;
-
-    $('#article').mouseup(function(e) {
-        //console.log(t.toString().trim().split(" ").length);
-        //console.log(t.toString().trim().split(" "));
-        var ids = getSelectedSpanIds();
-        console.log(t.toString());
-        if(t.toString().trim().split(" ").length== 1 && t.toString().trim() != "") {
-            var selection = window.getSelection().toString();
-            $('#selTxt').val(selection.toString());
-            var x = e.pageX;
-            var y = e.pageY;
-            placeTooltip(x, y);
-            var ids = getSelectedSpanIds();
-            var ids = getSelectedSpanIds();
-            $("#tooltipHandD").show();
-        }
-        else if(t.toString().trim().split(" ").length > 1) {
-            var selection = window.getSelection().toString();
-            $('#selTxt').val(selection.toString());
-            var x = e.pageX;
-            var y = e.pageY;
-            placeTooltip(x, y);
-            var ids = getSelectedSpanIds();
-            $("#tooltipH").show();
-        }
-        else {
-            clickedToolTips();
-        }
-    });
-
-    function clickedToolTips()  {
-        $("#tooltipH").hide();
-            $("#tooltipHandD").hide();
-            $("#tooltipDel").hide();
-            $("#tooltipDelAndDef").hide();
-    }
-
-    function placeTooltip(x_pos, y_pos) {
-        $("#tooltipHandD, #tooltipH, #tooltipDel, #tooltipDelAndDef").css({
-            top: (y_pos + 10) + 'px',
-            left: x_pos + 'px',
-            position: 'absolute'
-        });
-    }
-    function highlightRange(range) {
-        var newNode = document.createElement("span");
-        newNode.setAttribute(
-           "class",
-           "highlight"
-        );
-        range.surroundContents(newNode);
-    }
-    $( "#high,#high2").unbind( "click" );
-    $("#high,#high2").click(function() {
-        var ids = getSelectedSpanIds();
-        for(var i =0; i<ids.length; i++) {
-            removespan(document.getElementById(ids[i]));
-        }
-        var userSelection = window.getSelection();
-        for(var i = 0; i < userSelection.rangeCount; i++) {
-            highlightRange(userSelection.getRangeAt(i));
-        }
-        clickedToolTips();
-    });
-    $( "#unHigh, #unHigh2").unbind( "click" );
-    $("#unHigh, #unHigh2").click(function() {
-        removespan(highlightedSpan);
-        $("#tooltipDel").hide();
-        clickedToolTips();
-    });
-
-    var modal = document.getElementById('myModal');
-    var span = document.getElementsByClassName("close")[0];
-    $( "#def, #def2").unbind( "click" );
-    $("#def, #def2").click(function() {
-    	var div = document.getElementById("dictionary-modal");
-    	$.ajax({
-        	type: "POST",
-        	url: '/define/',
-            data: {question:t.toString().trim()}})
-            .done(function( data, textStatus, jqXHR ) {
-                try {
-                    var focus = new DOMParser().parseFromString(data, "text/xml").getElementsByTagName("def")[0].innerHTML;
-                    var definition = "";
-                    for(var i = 0; i < $.parseHTML(focus).length; i++) {
-                        var text = $.parseHTML(focus)[i].innerHTML;
-                        if(text != null) {
-                            if(text.substring(0,1) == ":") {
-                                definition = text.toString();
-                                definition = definition.substring(1, text.toString().length);
-                                break;
-                            }
-                        }
-                    }
-                    var add = '<span class="close glyphicon glyphicon-remove modal-field"></span>';
-                    add += '<h1 class="modal-header modal-field">' + t.toString().charAt(0).toUpperCase() + t.toString().slice(1) + '</h1>';
-                    add+= '<p class="modal-body modal-field">' + definition.charAt(0).toUpperCase() + definition.slice(1) + '</p>';
-                    div.innerHTML = add;
-                    $( ".close").unbind( "click" );
-                    $(".close").click(function(){
-                        modal.style.display = "none";
-                    })
-                }
-                catch(err) {
-                    var add = '<span class="close glyphicon glyphicon-remove modal-field"></span>';
-                    add += '<h1 class="modal-header modal-field">' + t.toString().charAt(0).toUpperCase() + t.toString().slice(1) + '</h1>';
-                    add+= '<p class="modal-body modal-field">A definition is not available.</p>';
-                    div.innerHTML = add;
-                    $( ".close").unbind( "click" );
-                    $(".close").click(function(){
-                        modal.style.display = "none";
-                    })
-                }
-            })
-            .fail(function( e, textStatus, errorThrown ) {
-                switch (e.status) {
-                    case 429:
-                        handleError('Currently we are only permitting 5 searches per hour. Please try again in an hour.');
-                        break;
-                    default:
-                        handleError('The server had an error. Please try again later.');
-                        break;
-                }
-            });
-        clickedToolTips();
-    	modal.style.display = "block";
-    });
-    span.onclick = function() {
-        modal.style.display = "none";
-    };
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    };
-}
-
-function shrinkSearchBar(){
-    $("#search-bar").animate({
-        width: "40vw",
-        'min-width':"300px",
-        padding:"30px"
-    }, 1000, function() {
-    });
-    $("#title-container").fadeOut("fast");
-}
-function riseSearchBar(){
-    $("#search-container").animate({
-        top:"30px",
-        "margin-top":"0",
-        'border-radius':"5px"
-    }, 1000);
-    $("#project-container").fadeOut("fast");
-    createNotepad();
-}
-function search(){
-    $("#background-design").fadeOut("fast");
-    $('html, body').animate({
-        scrollTop: $("body").offset().top
-    }, 500, function(){
-        $("#introduction-view").hide();
-        $('body').animate({
-            height: "100vh"
-        }, 500, function(){
-            $(".cssload-thecube").fadeIn("fast");
-        });
-    });
-    riseSearchBar();
-    var searchTerm = $("#search-bar").val();
-    getData(searchTerm);
-}
-
-
-function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = jQuery.trim(cookies[i]);
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-
-
-function csrfSafeMethod(method) {
-    // these HTTP methods do not require CSRF protection
-    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-}
-
-
-function getData(term){
-    $("#article-view").hide();
-    $("#loading-view").fadeIn("fast");
-    $("#article-list-container").css("width","100%");
-    $("#article-tab").hide();
-    var token = "abcd";
-    if(!searching){
-        searching = true;
-        console.log("Searching...");
-        var csrftoken = getCookie('csrftoken');
-		
-        $.ajaxSetup({
-			beforeSend: function(xhr, settings) {
-				if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-					xhr.setRequestHeader("X-CSRFToken", csrftoken);
-				}
-			}
-		});
-	
-        $.ajax({
-            type: "POST",
-            url: "/search/",
-            data: { question: term }})
-            .done(function( result, textStatus, jqXHR ) {
-                obj = result;
-                console.log(obj);
-                $("#loading-view").fadeOut("fast", function(){
-                    $("#article-view").fadeIn("fast");
-                });
-                resetInfo();
-                setupSearchAgain(term);
-
-                addToRecentSearches(term);
-                setupData();
-                searching = false;
-            })
-            .fail(function( e, textStatus, errorThrown ) {
-                switch (e.status) {
-                    case 429:
-                        handleError('Currently we are only permitting 5 searches per hour. Please try again in an hour.');
-                        break;
-                    default:
-                        handleError('The server had an error. Please try again later.');
-                        break;
-                }
-            })
-    }
-}
-function handleError(str){
-    alert(str);
-}
-
-function resetInfo(){
-    $("#article-list").empty();
-}
-function setupSearchAgain(searchTerm){
-    $( "#search-again").unbind( "click" );
-    $("#search-again").click(function(){
-        getData(searchTerm);
-    })
-}
 function addToRecentSearches(searchTerm){
     if(projectid){
         var recentKey = firebase.database().ref(userlocation + projectid +"/recent").push().key;
@@ -562,11 +297,20 @@ function showFullArticle(idd){
         window.open(art.url);
     });
     if(projectid){
-        $("#add-button").show();
-        $( "#add-button").unbind( "click" );
-        $("#add-button").click(function(){
-            addToProject(art);
-            $("#add-button").hide();
+        var articlekey = md5(art.title);
+        var location = firebase.database().ref(userlocation + projectid +"/articles/");
+        location.once('value', function(snapshot) {
+            if (snapshot.hasChild(articlekey)) {
+                $("#add-button").hide();
+            }
+            else{
+                $("#add-button").show();
+                $( "#add-button").unbind( "click" );
+                $("#add-button").click(function(){
+                    addToProject(art);
+                    $("#add-button").hide();
+                });
+            }
         });
     }
     else{
@@ -664,7 +408,8 @@ function showToolbar(art){
 
 function addToProject(art){
     if(projectid){
-        var articlekey = firebase.database().ref(userlocation + projectid +"articles").push().key;
+        var articlekey = md5(art.title);
+        // var articlekey = firebase.database().ref(userlocation + projectid +"articles").push().key;
         firebase.database().ref(userlocation + projectid +"/articles/"+articlekey).set(art);
     }
 }

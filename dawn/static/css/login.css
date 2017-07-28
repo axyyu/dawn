@@ -8,15 +8,16 @@ body{
 #login-container{
     position: relative;
     display: inline-block;
-    height: 600px;
-    width: 600px;
+    height: 500px;
+    width: 500px;
     background: rgba(0,0,0,0.1);
     border: 10px solid rgba(0,0,0,0.3);
     text-align: center;
     z-index: 2;
+    border-radius: 5px;
 }
 #login-tabs {
-    height: 100px;
+    height: 50px;
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -34,25 +35,24 @@ body{
     transition: background 0.5s ease;
 }
 .login-tab-text {
-    line-height: 100px;
+    line-height: 50px;
 }
 .selected{
     background: rgba(0,0,0,0.5);
 }
 .login-bars{
     width: 100%;
-    height: 450px;
+    height: calc(100% - 50px);
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-around;
     vertical-align: middle;
 }
 .login-title{
-    margin: 20px 0;
+    margin:0;
 }
 .input-row{
-    margin: 30px 0;
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -93,7 +93,6 @@ body{
 }
 
 .submit-button{
-    margin: 30px 0;
     text-align: center;
     height: 50px;
 }
@@ -109,6 +108,6 @@ body{
 }
 .submit:hover{
     font-size: 22px;
-    width: 170px;
+    width: 160px;
     transition: font-size .5s ease, width .5s ease;
 }

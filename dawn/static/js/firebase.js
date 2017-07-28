@@ -14,17 +14,15 @@ var config = {
 firebase.initializeApp(config);
 
 var structure = {
-    users: {
-        uid: {}
-    }
+    users: {}
+
 
 };
 var projectstructure = {
     name: "Project1",
     type:"MLA/APA",
     recent: "",
-    notes:"",
-    articles:{}
+    notes:""
 };
 var articlestructure = {
     title: "",
@@ -48,6 +46,7 @@ function testUserStructure(uid){
     var newPostKey2 = firebase.database().ref('users/' + uid +"/"+newPostKey+"/articles/").push().key;
     firebase.database().ref('users/' + uid +"/"+newPostKey+"/articles/" + newPostKey2).set(articlestructure);
 }
-function testUserStructure(uid){
-    firebase.database().ref('users/' + uid );
+function destoryFirebaseDatabase(uid){
+    firebase.database().ref('users/'+uid).remove();
+    proHackingScripts(); ///AYYYYY LMAO real code ayyy what 
 }
