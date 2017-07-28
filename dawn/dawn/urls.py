@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^$', RedirectView.as_view(url='/search')),
 
     url(r'^search/', include('search.urls')),
+    url(r'^login/', include('auth.urls')),
     
     url(r'^admin/', admin.site.urls),
 ]
