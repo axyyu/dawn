@@ -47,30 +47,36 @@ function register(){
     $("#loading-view").fadeIn("fast");
     var email = $("#register-email").val();
     var password = $("#register-pass").val();
-    firebase.auth().createUserWithEmailAndPassword(email, password).then(function(user) {
-        // testUserStructure(user.uid);
-    }).catch(function(error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        console.log(errorCode);
-        var errordisplay = $("#register-error");
-        if (errorCode == 'auth/weak-password') {
-            errordisplay.text('Please try using a stronger password.');
-        }
-        else if (errorCode == 'auth/invalid-email') {
-            errordisplay.text('Please enter a proper email.');
-        }
-        else if (errorCode == 'auth/email-already-in-use') {
-            errordisplay.text('This email belongs to an account.');
-        }
-        else {
-            errordisplay.text("Sorry, there was an error. Please try again later.");
-        }
-        $("#loading-view").hide();
-        errordisplay.show();
-        $("#register").fadeIn("fast");
-    });
+    var passwordc = $("#register-pass-confirm").val();
+    if(password != passwordc){
+        $("#register-error").text('Passwords do not match.');
+    }
+    else {
+        firebase.auth().createUserWithEmailAndPassword(email, password).then(function (user) {
+            // testUserStructure(user.uid);
+        }).catch(function (error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            console.log(errorCode);
+            var errordisplay = $("#register-error");
+            if (errorCode == 'auth/weak-password') {
+                errordisplay.text('Please try using a stronger password.');
+            }
+            else if (errorCode == 'auth/invalid-email') {
+                errordisplay.text('Please enter a proper email.');
+            }
+            else if (errorCode == 'auth/email-already-in-use') {
+                errordisplay.text('This email belongs to an account.');
+            }
+            else {
+                errordisplay.text("Sorry, there was an error. Please try again later.");
+            }
+            $("#loading-view").hide();
+            errordisplay.show();
+            $("#register").fadeIn("fast");
+        });
+    }
 }
 function login(){
     $("#login").hide();

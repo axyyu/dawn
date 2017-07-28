@@ -1,12 +1,15 @@
 var $ = require('jquery');
 var request = require('request');
 var express = require('express');
-var RateLimit = require('express-rate-limit');
-// var DOMParser = require('xmldom').DOMParser;
-// var XMLSerializer = require('xmldom').XMLSerializer;
 var http = require('http');
 var fs = require('fs');
-// var Bing = require('node-bing-api');
+
+var RateLimit = require('express-rate-limit');
+
+var crypto = require('crypto');
+var admin = require("firebase-admin");
+var database;
+
 var NaturalLanguageUnderstandingV1 = require('watson-developer-cloud/natural-language-understanding/v1.js');
 var AYLIENTextAPI = require('aylien_textapi');
 var havenondemand = require("havenondemand");
@@ -44,7 +47,7 @@ app.use(express.static(__dirname + '/public'));
 
 var searchLimiter = new RateLimit({
     windowMs: 60*60*1000,
-    max: 5,
+    max: 1000,
     delayMs: 0
 });
 var defineLimiter = new RateLimit({
@@ -52,6 +55,14 @@ var defineLimiter = new RateLimit({
     max: 100,
     delayMs: 0
 });
+
+/*Firebase Setup*/
+admin.initializeApp({
+    credential: admin.credential.cert("dawn-fb.json"),
+    databaseURL: "https://dawn-45cc6.firebaseio.com"
+});
+database = admin.database();
+var ref = database.ref("cache/");
 
 /*API Setup*/
 var natural_language_understanding = new NaturalLanguageUnderstandingV1({
@@ -396,45 +407,55 @@ app.post('/search', searchLimiter, function(req, response) {
         var str = '' + chunk;
         var question = str.substring(str.indexOf("=") + 1, str.length);
         question = question.replace(/\+/g, " ");
+        var hash = crypto.createHash('md5').update(question).digest("hex");
 
-        natureJournal(question, function(entityArray) {
-            console.log("array made");
-            var wait = entityArray.length;
-            if(wait==0){
-                response.send(entityArray);
+        ref.child(hash).once("value", function(snapshot) {
+            var ent = snapshot.val();
+            if(ent !== null){
+                response.send(ent);
             }
-            entityArray.forEach(function(entry) {
-                console.log("entered array");
-                getCitationMla(entry.title, entry.publisher, entry.publicationDate.substring(0, 4), entry.authors, function(citation) {
-                    console.log("\tgot MLA citation");
-                    entry.mla = citation;
-                    getCitationApa(entry.title, entry.publisher, entry.publicationDate.substring(0, 4), entry.authors, function(citation) {
-                        console.log("\tgot APA citation");
-                        entry.apa = citation;
-                        entry.abstract = filterArticle(entry.abstract);
-                        if( entry.abstract ==null || entry.abstract==""){
-                            --wait;
-                        }
-                        else{
-                            languageAnalysis(entry.abstract, function(s, k, c) {
-                                console.log("\t\tlanguage analysis");
-                                entry.sentiment = s;
-                                entry.keywords = k;
-                                entry.concepts = c;
-
-                                getSummary(entry.abstract, entry.title, 1, function(s) {
-                                    console.log("\t\t\tgot summary");
-                                    entry.summary = s;
+            else{
+                natureJournal(question, function(entityArray) {
+                    // console.log("array made");
+                    var wait = entityArray.length;
+                    if(wait==0){
+                        response.send(entityArray);
+                    }
+                    entityArray.forEach(function(entry) {
+                        // console.log("entered array");
+                        getCitationMla(entry.title, entry.publisher, entry.publicationDate.substring(0, 4), entry.authors, function(citation) {
+                            // console.log("\tgot MLA citation");
+                            entry.mla = citation;
+                            getCitationApa(entry.title, entry.publisher, entry.publicationDate.substring(0, 4), entry.authors, function(citation) {
+                                // console.log("\tgot APA citation");
+                                entry.apa = citation;
+                                entry.abstract = filterArticle(entry.abstract);
+                                if( entry.abstract ==null || entry.abstract==""){
                                     --wait;
-                                    if (wait == 0) {
-                                        response.send(entityArray);
-                                    }
-                                });
+                                }
+                                else{
+                                    languageAnalysis(entry.abstract, function(s, k, c) {
+                                        // console.log("\t\tlanguage analysis");
+                                        entry.sentiment = s;
+                                        entry.keywords = k;
+                                        entry.concepts = c;
+
+                                        getSummary(entry.abstract, entry.title, 1, function(s) {
+                                            // console.log("\t\t\tgot summary");
+                                            entry.summary = s;
+                                            --wait;
+                                            if (wait == 0) {
+                                                ref.child(hash).set(entityArray);
+                                                response.send(entityArray);
+                                            }
+                                        });
+                                    });
+                                }
                             });
-                        }
+                        });
                     });
                 });
-            });
+            }
         });
     });
 });
