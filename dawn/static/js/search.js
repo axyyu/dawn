@@ -23,7 +23,7 @@ $(document).ready(function(){
 function firebaseChange(){
     firebase.auth().onAuthStateChanged(function(user) {
         if(searchPage){
-            window.location='index.html';
+            window.location='/';
         }
         if (user) {
             uid = user.uid;
@@ -42,7 +42,7 @@ function firebaseChange(){
             accountLogout.unbind( "click" );
             accountLogout.click(function(){
                 firebase.auth().signOut().then(function() {
-                    window.location = 'index.html';
+                    window.location = '/';
                 }).catch(function(error) {
                     alert("There was an error signing out.");
                 });
@@ -69,7 +69,7 @@ function setupIconButtons(){
     var logoicon = $( "#logo-icon");
     logoicon.unbind( "click" );
     logoicon.click(function(){
-        window.location = 'index.html';
+        window.location = '/';
     });
 }
 function setupSearchBar(){
@@ -138,14 +138,47 @@ function search(){
     $("#project-container").fadeOut("fast");
     // createNotepad();
 }
+
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+
 function getData(term){
     $("#loading-view").fadeIn("fast");
     if(!searching){
         searching = true;
         console.log("Searching...");
+        var csrftoken = getCookie('csrftoken');
+		
+        $.ajaxSetup({
+			beforeSend: function(xhr, settings) {
+				if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+					xhr.setRequestHeader("X-CSRFToken", csrftoken);
+				}
+			}
+		});
+	
         $.ajax({
             type: "POST",
-            url: "/search",
+            url: "/search/",
             data: {question:term}})
             .done(function( result, textStatus, jqXHR ) {
                 obj = result;
@@ -174,7 +207,7 @@ function getData(term){
 }
 function handleError(str){
     alert(str);
-    window.location = 'index.html';
+    window.location = '/';
 }
 
 function resetInfo(){
