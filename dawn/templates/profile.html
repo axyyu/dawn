@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dawn</title>
+    {% include head.html %}
+	<link rel="stylesheet" href="css/profile.css">
+    <script type="text/javascript" src="js/jspdf.min.js" defer></script>
+	<script type="text/javascript" src="js/profile.js" defer></script>
+
+</head>
+<body>
+    <div id="myModal" class="modal">
+        <div class="modal-content" id="dictionary-modal" style="color:black;">
+            <span class="close glyphicon glyphicon-remove"></span> <!--Need to fix-->
+        </div>
+    </div>
+
+    <div title="Back to Search" class="click icons" id="logo-icon">
+        <img class="small-icon" src="img/dawn.png">
+    </div>
+    <div title="Log Out" class="click icons" id = "account-logout">
+        <img class="small-icon" src="img/logout.png">
+    </div>
+
+    <div id="loading-view" class="view" style="display: none;">
+        <div class="main-container">
+            <div class="main-content">
+                <div class="cssload-thecube">
+                    <div class="cssload-cube cssload-c1"></div>
+                    <div class="cssload-cube cssload-c2"></div>
+                    <div class="cssload-cube cssload-c4"></div>
+                    <div class="cssload-cube cssload-c3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+	<div id="profile-view" class="view">
+        <div id="profile-container">
+            <div id="welcome-title">Welcome Back</div>
+            <div id="explorer-container">
+                <div id="project-list-container">
+                    <div id="list-buttons">
+                        <div title="Add Project" id="add-project" class="list-button glyphicon glyphicon-plus click">
+                        </div>
+                    </div>
+                    <div id="project-list" class="scrollbar style-1">
+                        <!--<div class="project click">-->
+                            <!--<div class="project-name-container project-list-elements">-->
+                                <!--<h3 class="project-name project-title">-->
+                                    <!--My Project-->
+                                <!--</h3>-->
+                                <!--<h4 class="project-type">-->
+                                    <!--MLA-->
+                                <!--</h4>-->
+                            <!--</div>-->
+                            <!--<div class="project-details">-->
+                                <!--<div class="project-button project-count">Articles: 5</div>-->
+                                <!--<div title="Delete" class="project-button glyphicon glyphicon-trash click"></div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    </div>
+                    <div id="project-form" style="display: none;">
+                        <h3 id="project-form-title" class="content-title">Add Project</h3>
+                        <div id="project-form-options" class="project-panel-body">
+                            <div id="project-form-input-container">
+                                <input id="project-form-input" placeholder="Project name" autofocus/>
+                            </div>
+                            <div id="project-citation-buttons">
+                                <div id="APA-form" title="APA" class="project-citation-button click citation-selected">APA</div>
+                                <div id="MLA-form" title="MLA" class="project-citation-button click">MLA</div>
+                            </div>
+                        </div>
+                        <div id="project-form-buttons">
+                            <div id="cancel" class="project-form-button click">Cancel</div>
+                            <div id="add" class="project-form-button click">Add</div>
+                        </div>
+                    </div>
+                </div>
+                <div id="project-tab" style="display: none">
+                    <div id="recent">
+                        <div id="recent-terms">
+                            <h4 class="recent-term">Orange Theory</h4>
+                            <h4 class="recent-term">Orange Theory</h4>
+                            <h4 class="recent-term">Orange Theory</h4>
+                        </div>
+                    </div>
+                    <div id="project-panels">
+                        <div id="project-articles" class="project-content">
+                            <h3 id="articles-title" class="content-title">Articles</h3>
+                            <div id="article-list-container" class="project-panel-body">
+                                <div id="articles-list" class="scrollbar style-1">
+                                    <div class="article click" class="scrollbar style-1">
+                                        <h3 class="article-name">
+                                            Article Name
+                                        </h3>
+                                        <div title="Delete" class=" article-delete glyphicon glyphicon-trash click"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="article-container" style="display: none" class="project-panel-body scrollbar style-1" >
+                                <div class="article-title-container">
+                                    <h2 class="article-title">Wow you opened an article</h2>
+                                    <div class="article-toolbox" >
+                                        <div id="back-article" title="Back" class="article-toolbox-button glyphicon glyphicon-arrow-left click"></div>
+                                        <div id="link-button" title="Link" class="article-toolbox-button glyphicon glyphicon-link click"></div>
+                                        <div id="delete-article" title="Delete" class="article-toolbox-button glyphicon glyphicon-trash click"></div>
+                                    </div>
+                                </div>
+                                <div class="article-info-container">
+                                    <h2 class="article-author">Joe Smith</h2>
+                                    <h2 class="article-date">1/1/2017</h2>
+                                </div>
+                                <p class="article-text">
+                                    In The Great Gatsby, blue is used quite frequency to create a feel for a specific scene or individual. In Nick’s description of Doctor T. J. Eckleburg, he states that the eyes on the billboard are blue and gigantic, building a tone of omniscience. These eyes, often seen as the eyes of God, are given the color to describe a depressing atmosphere over New York. It foreshadows the awful effects that occur to Gatsby, Wilson, providing a tone of dread. Without blue, the entire landscape of Wilson’s workshop and the city becomes less dreary. In addition, Fitzgerald uses blue to provide a depressing tone to the story after Myrtle’s death, enhancing the sadness and emptiness Nick feels, caught in these events. However, Fitzgerald also uses blue to describe Wilson’s eyes when Tom and Nick pull up at his shop. This can be an indication of Wilson’s loyalty to Tom, as Fitzgerald often refers to one’s eyes to describe a specific character. Throughout the story, Wilson is seen to interact with Tom as if he is a friend, despite Tom’s affair with his wife. Even after Daisy kills Myrtle, Tom is the one attempting to console Wilson. This use of blue is repeated when Cody gives Gatsby a blue coat as a gift, since Gatsby was always loyal to him. Although there isn’t much backstory about Gatsby’s experiences with Dan Cody, the splash of blue enhances the sense of Gatsby and Cody’s loyalty and friendship. Without the addition of color, there is a lack of feeling between the two friends, and Gatsby’s loss of his inheritance is less meaningful. Fitzgerald also uses blue to describe tranquility and peace. When Nick gazes out the window in New York during Tom and Myrtle’s party, the description of the blue sky helps the audience see Nick as mesmerized to the city life, breathing in the new environment. It enhances the haziness in the smoky apartment, and allows the audience to feel Nick’s wonder.
+                                </p>
+                            </div>
+                            <div class="export-button">
+                                <div class="main-container">
+                                    <div class="main-content">
+                                        <div id="export-bibliography" title="Export Bibliography" class="export click" onclick="exportBibliography()">Export Bibliography</div>
+                                        <div id="bibliographyz" style="display:none"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="project-notes" class="project-content">
+                            <h3 id="notes-title" class="content-title">Notes</h3>
+                            <div id="notes" class="project-panel-body">
+
+                            </div>
+                            <div class="export-button">
+                                <div class="main-container">
+                                    <div class="main-content">
+                                            <div title="Export Notes" class="export click" onclick="exportNotes()">Export Notes</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="project-settings" class="project-content">
+                            <h3 id="settings-title" class="content-title">Settings</h3>
+                            <div id="project-settings-options" class="project-panel-body">
+                                <div id="project-name-input-container">
+                                    <input id="project-name-input" placeholder="Project name"/>
+                                </div>
+                                <div id="citation-buttons">
+                                    <div id="APA-settings" title="APA" class="citation-button click selected">APA</div>
+                                    <div id="MLA-settings" title="MLA" class="citation-button click">MLA</div>
+                                </div>
+                            </div>
+                            <div class="export-button">
+                                <div class="main-container">
+                                    <div class="main-content">
+                                        <div id="save-button" title="Save" class="export click" onclick="saveSettings()">Save</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

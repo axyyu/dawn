@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <title>Dawn</title>
+    {% include 'head.html' %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/search.css' %}">
+
+    <script type="text/javascript" src="{% static 'js/search.js' %}" defer></script>
+</head>
+<body class="scrollbar style-1">
+    <!--ADDED CODE FOR HIGHLIGHT FUNCTIONS-->
+    <div id="tooltipH" class="tooltip-items">
+        <button type="button" id="high">Highlight</button>
+    </div>
+    <div id="tooltipHandD" class="tooltip-items">
+        <button type="button" id="high2">Highlight</button>
+        <button type="button" id="def">Define</button>
+    </div>
+    <div id="tooltipDel" class="tooltip-items">
+        <button type="button" id="unHigh">Unhighlight</button>
+    </div>
+    <div id="tooltipDelAndDef" class="tooltip-items">
+        <button type="button" id="unHigh2">Unhighlight</button>
+        <button type="button" id="def2">Define</button>
+    </div>
+    <div id="myModal" class="modal">
+    	<div class="modal-content" id="dictionary-modal" style="color:black;">
+     		 <span class="close glyphicon glyphicon-remove"></span> <!--Need to fix-->
+   	    </div>
+    </div>
+    <!--ADDED CODE FOR HIGHLIGHT FUNCTIONS-->
+    <img id="background-design" src={% static 'img/pattern.png' %}>
+    <div title="Home" class="click icons" id="logo-icon" style="display: none;">
+        <img class="small-icon" src={% static 'img/dawn.png' %}>
+    </div>
+
+
+    <div title="Log In" class="click icons" id = "account-icon" style="display: none;">
+        <img class="small-icon" src={% static 'img/account.png' %}>
+    </div>
+    <div title="Log Out" class="click icons" id = "account-logout" style="display: none;">
+        <img class="small-icon" src={% static 'img/logout.png' %}>
+    </div>
+
+    <div id="title-container">
+        <h1 id="title-text">dawn</h1>
+    </div>
+    <div id="search-container" style="display: none">
+        <input id="search-bar" class = "form-control" type="text" name="search-term" placeholder="type something" autocomplete="off" autofocus>
+    </div>
+    <div id="project-container" style="display: none">
+        <div class="project-dropdown">
+            <h3 class="selected-project click" id="live">Live Project</h3>
+            <div class="project-list">
+                <!--<h3 class="project-list-element click">Your Project</h3>-->
+            </div>
+        </div>
+    </div>
+
+    <div id="loading-view" class="view">
+        <div class="main-container">
+            <div class="main-content">
+                <div class="cssload-thecube" style="display: none;">
+                    <div class="cssload-cube cssload-c1"></div>
+                    <div class="cssload-cube cssload-c2"></div>
+                    <div class="cssload-cube cssload-c4"></div>
+                    <div class="cssload-cube cssload-c3"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="introduction-view" class="view">
+        <div class="main-container">
+            <div class="main-content">
+                <h2 id="catchphrase">New horizons for research</h2>
+                <hr id="intro-break"/>
+                <div id="intro-container">
+                    <div class="intro-panel" data-scroll>
+                        <img class="intro-image" src={% static 'img/keywords.png' %}>
+                        <h3 class="intro-key">Key Words</h3>
+                        <h4 class="intro-desc">Generates important key words for each article, highlighting them in the text for easy reading.</h4>
+                    </div>
+                    <div class="intro-panel" data-scroll>
+                        <img class="intro-image" src={% static 'img/notes.png' %}>
+                        <h3 class="intro-key">Notes</h3>
+                        <h4 class="intro-desc">Saves notes to each project, enabling you to take notes while searching through articles.</h4>
+                    </div>
+                    <div class="intro-panel" data-scroll>
+                        <img class="intro-image" src={% static 'img/citation.png' %}>
+                        <h3 class="intro-key">Citations</h3>
+                        <h4 class="intro-desc">Automatically cites documents for you, exporting a bibliography in MLA & APA formatting.</h4>
+                    </div>
+                    <div class="intro-panel" data-scroll>
+                        <img class="intro-image" src={% static 'img/search.png' %}>
+                        <h3 class="intro-key">Search</h3>
+                        <h4 class="intro-desc">Offers concept searching and allows you to find important concepts related to the search term.</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="article-view" class="view" style="display: none">
+        <div id="article-list-container" class="article-field">
+            <div id="list-buttons">
+                <div id="search-again" title="Search Again" class="list-button glyphicon glyphicon-refresh click">
+                </div>
+            </div>
+            <div id="article-list" class="scrollbar style-1">
+                <div class="article click">
+                    <div class="article-name-container article-list-elements">
+                        <h3 class="article-name">
+                            Article Name
+                        </h3>
+                        <div class="article-journal N">N</div>
+                    </div>
+                    <h4 class="article-desc article-list-elements">
+                        Article Desc
+                    </h4>
+                    <div class="article-keywords article-list-elements">
+                        <h4 class="mini-keyword">agent orange</h4>
+                        <h4 class="mini-keyword">orange</h4>
+                    </div>
+                    <div class="article-reliability"></div>
+                </div>
+            </div>
+        </div>
+        <div id="article-tab" class="article-field" style="display: none">
+            <div id="article-content" class="scrollbar style-1">
+                <div class="article-title-container">
+                    <h2 class="article-title"></h2>
+                    <div class="article-toolbox">
+                        <div id="link-button" title="Link" class="article-toolbox-button glyphicon glyphicon-link click">
+                        </div>
+                        <div id="add-button" title="Link" class="article-toolbox-button glyphicon glyphicon-plus click">
+                        </div>
+                    </div>
+                </div>
+                <div class="article-info-container">
+                    <h2 class="article-author"></h2>
+                    <h2 class="article-date"></h2>
+                </div>
+                <p class="article-text" id="article">
+                </p>
+            </div>
+            <div id = "article-toolbox">
+                <div id="toolbar-container">
+                    <div id="keywords" class="toolbar scrollbar style-1">
+                    </div>
+                    <div id="bibliography" class="toolbar scrollbar style-1"  style="display: none">
+                        <div id="citation-buttons">
+                            <div id="APA" title="APA" class="citation-button click citation-button-selected">APA</div>
+                            <div id="MLA" title="MPA" class="citation-button click">MLA</div>
+                        </div>
+                        <div id="citation">
+                        </div>
+                    </div>
+                    <div id="notes" class="toolbar scrollbar style-1"  style="display: none">
+                        <div id="notes-container">
+                            <div id="notes-panel"></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="toolbar-buttons">
+                    <div title="Keywords" class="toolbar-button glyphicon glyphicon-star-empty click" onclick="changeToKeywords()">
+                    </div>
+                    <div title="Citation" class="toolbar-button glyphicon glyphicon-education click" onclick="changeToBibliography()">
+                    </div>
+                    <div title="Notes" class="toolbar-button glyphicon glyphicon-pencil click" onclick="changeToNotes()">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

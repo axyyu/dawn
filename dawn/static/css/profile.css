@@ -1,0 +1,465 @@
+body{
+	height: 100vh;
+}
+
+#account-logout{
+    position: absolute;
+    top:20px;
+    right:20px;
+    z-index: 3;
+    text-align: center;
+}
+
+#profile-container{
+	height:100%;
+	width: 100%;
+	position: relative;
+	z-index: 2;
+}
+#welcome-title {
+	text-align: center;
+	padding-top: 10vh;
+	font-size: 50px;
+}
+#explorer-container{
+	width: 100%;
+	height: calc( 90vh - 80px);
+    padding: 50px;
+    padding-top: 0;
+}
+
+/*Project List*/
+#project-list-container{
+    height: 100%;
+    float: left;
+    width: 100%;
+}
+#project-list{
+    height: calc(100% - 60px);
+    overflow: auto;
+}
+.project{
+    padding: 20px;
+    margin-bottom: 10px;
+    background: rgba(0,0,0,0.3);
+    transition: background .5s ease;
+}
+.project-selected{
+    background: rgba(0,0,0,0.5);
+    transition: background .5s ease;
+}
+.project-list-elements{
+    margin-bottom: 15px;
+}
+
+/*Project Name*/
+.project-name-container{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.project-name{
+    order:1;
+    font-size: 25px;
+    vertical-align: middle;
+    display: inline-block;
+    max-width: calc(100% - 35px);
+}
+.project-type{
+    order:2;
+    font-size: 18px;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+/*Project Details*/
+.project-details{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.glyphicon-trash{
+    z-index: 2;
+    position: relative;
+    transition: font-size ease .2s;
+}
+.glyphicon-trash:hover{
+    font-size: 18px;
+}
+.project-count{
+    max-width: calc(100% - 20px);
+}
+
+/*List Buttons*/
+#list-buttons{
+    order:1;
+    padding: 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.list-button{
+    text-align: center;
+    font-size: 24px;
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+    display: inline-block;
+    margin: 5px;
+    transition: font-size ease .2s;
+}
+.list-button:hover{
+    font-size: 28px;
+    vertical-align: middle;
+}
+
+/*Project Tab*/
+#project-tab{
+    display: flex;
+    padding-top:60px;
+    padding-left:20px;
+    width: calc((100% - 15vw) - 10px);
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    float: left;
+    height: 100%;
+}
+
+/*Recent Search Terms*/
+#recent{
+    order:1;
+    width: 100%;
+    height: 40px;
+}
+#recent-terms{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: left;
+    overflow: hidden;
+}
+.recent-term{
+    background: rgba(255,255,255,0.1);
+    padding: 10px;
+    font-size: 16px;
+    transition: background .1s ease;
+    margin-right: 10px ;
+}
+.recent-term:hover{
+    background: rgba(255,255,255,0.2) ;
+}
+
+/*Project Panels*/
+#project-panels{
+    order: 2;
+    width: 100%;
+    height: calc(100% - 50px);
+}
+.project-content{
+    float: left;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.content-title{
+    text-align: center;
+    font-size: 30px;
+}
+.project-panel-body{
+    width: 100%;
+    height: calc(100% - 150px);
+}
+
+/*Project Article List*/
+#project-articles{
+    width: 40%;
+    padding: 0 5px;
+}
+#article-list-container{
+    float: left;
+}
+#articles-list{
+    padding: 0 10px;
+    overflow: auto;
+    height: 100%;
+}
+.article{
+    padding: 20px;
+    margin-bottom: 10px;
+    background: rgba(0,0,0,0.3);
+    transition: background .5s ease;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.article-name{
+    font-size: 18px;
+    max-width: calc(100% - 20px);
+}
+.article-delete{
+    font-size: 18px;
+}
+.article-delete:hover{
+    font-size: 20px;
+}
+
+
+/*Article Content*/
+#article-container{
+    overflow: auto;
+}
+.article-title-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.article-info-container{
+    display: flex;
+    margin-bottom: 5px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.article-title{
+    order:1;
+    font-size: 22px;
+    vertical-align: middle;
+    display: inline-block;
+    max-width: calc(100% - 110px);
+}
+.article-toolbox{
+    order:2;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.article-toolbox-button{
+    text-align: center;
+    font-size: 22px;
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+    display: inline-block;
+    margin-left: 5px;
+    transition: font-size ease .1s;
+}
+.article-toolbox-button:hover{
+    font-size: 24px;
+    vertical-align: middle;
+}
+.article-author{
+    font-size: 18px;
+}
+.article-date{
+    font-size: 18px;
+}
+.article-text{
+    font-size: 16px;
+}
+
+/*Project Notes*/
+#project-notes{
+    width: 30%;
+    padding: 0 5px;
+}
+#notes{
+    padding: 0 5px;
+    overflow: auto;
+    background: rgba(0,0,0,0.3);
+}
+
+/*Settings*/
+#project-settings{
+    width: 30%;
+    padding: 0 5px;
+}
+#project-settings-options{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+#project-name-input{
+    height: 20px;
+    color:white;
+    text-align: center;
+    font-size: 22px;
+    padding:20px;;
+    align-content:center;
+    border-radius: 5px;
+    background: rgba(0,0,0,0.5);
+    border:none;
+    width: 70%;
+}
+#project-name-input::-webkit-input-placeholder {
+    color: lightgrey !important;
+}
+#project-name-input:-moz-placeholder { /* Firefox 18- */
+    color: lightgrey !important;
+}
+#project-name-input::-moz-placeholder {  /* Firefox 19+ */
+    color: lightgrey !important;
+}
+#project-name-input:-ms-input-placeholder {
+    color: lightgrey !important;
+}
+#project-name-input-container{
+    margin-bottom: 5%;
+    width: 100%;
+    text-align: center;
+}
+#citation-buttons{
+    height: 40px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    vertical-align: middle;
+}
+.citation-button{
+    text-align: center;
+    font-size: 20px;
+    height: 40px;
+    width:60px;
+    padding: 5px 10px;
+    vertical-align: middle;
+    display: inline-block;
+    margin: 5px 5px;
+    background: rgba(0,0,0,0.5);
+    transition: width ease .2s;
+}
+.citation-button:hover{
+    width:70px;
+    transition: width ease .2s;
+}
+.selected{
+    font-weight: bold;
+}
+
+/*Project Form*/
+#project-form{
+    height: calc(100% - 60px);
+}
+#project-form-options{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+#project-form-input{
+    height: 20px;
+    color:white;
+    text-align: center;
+    font-size: 22px;
+    padding:20px;;
+    align-content:center;
+    border-radius: 5px;
+    background: rgba(0,0,0,0.5);
+    border:none;
+    width: 70%;
+}
+#project-form-input::-webkit-input-placeholder {
+    color: lightgrey !important;
+}
+#project-form-input:-moz-placeholder { /* Firefox 18- */
+    color: lightgrey !important;
+}
+#project-form-input::-moz-placeholder {  /* Firefox 19+ */
+    color: lightgrey !important;
+}
+#project-form-input:-ms-input-placeholder {
+    color: lightgrey !important;
+}
+#project-form-input-container{
+    margin-bottom: 5%;
+    width: 100%;
+    text-align: center;
+}
+#project-citation-buttons{
+    height: 40px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    vertical-align: middle;
+}
+.project-citation-button{
+    text-align: center;
+    font-size: 20px;
+    height: 40px;
+    width:60px;
+    padding: 5px 10px;
+    vertical-align: middle;
+    display: inline-block;
+    margin: 5px 5px;
+    background: rgba(0,0,0,0.5);
+    transition: width ease .2s;
+}
+.project-citation-button:hover{
+    width:70px;
+    transition: width ease .2s;
+}
+.citation-selected{
+    font-weight: bold;
+}
+#project-form-buttons{
+    height: 40px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    vertical-align: middle;
+}
+.project-form-button{
+    text-align: center;
+    font-size: 20px;
+    height: 40px;
+    width: 100px;
+    padding: 5px 10px;
+    vertical-align: middle;
+    display: inline-block;
+    margin: 5px 5px;
+    background: rgba(0,0,0,0.5);
+    transition: width ease .2s;
+}
+.project-form-button:hover{
+    width:120px;
+    transition: width ease .2s;
+}
+
+/*Export Button*/
+.export-button{
+    text-align: center;
+    height: 50px;
+}
+.export{
+    display:inline-block;
+    background: rgba(0,0,0,0.5);
+    padding: 0 20px;
+    height: 100%;
+    font-size: 19px;
+    border-radius: 5px;
+    line-height: 50px;
+    transition: font-size .2s ease;
+}
+.export:hover{
+    font-size: 20px;
+    transition: font-size .2s ease;
+}

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Login</title>
+    {% include head.html %}
+	<link rel="stylesheet" href="css/login.css">
+    <script type="text/javascript" src = "js/login.js" defer></script>
+
+</head>
+<body>
+	<div title="Back to Search" class="click icons" id="logo-icon">
+		<img class="small-icon" src="img/dawn.png">
+	</div>
+
+	<div id="login-view" class="view" style="display: none;">
+		<div class="main-container">
+			<div class="main-content">
+				<div id="login-container">
+					<div id = "login-tabs">
+						<div class="login-tab selected click">
+							<div class="login-tab-text">
+								Login
+							</div>
+						</div>
+						<div class="login-tab click">
+							<div class="login-tab-text">
+								Register
+							</div>
+						</div>
+					</div>
+					<div id="login" class="login-bars">
+						<h1 class="login-title">Welcome Back</h1>
+                        <h4 id="login-error" class="error" style="display: none;"></h4>
+						<div class="input-row">
+							<div class="input-name">Email</div>
+							<input id="login-email" class="form-control input-bar login-input" type="email" name="email" placeholder="email@email.com" autocomplete="off">
+						</div>
+						<div class="input-row">
+							<div class="input-name">Password</div>
+							<input id="login-pass" class="form-control input-bar login-input" type="password" name="password" placeholder="password123" autocomplete="off">
+						</div>
+						<div class="submit-button">
+							<div class="main-container">
+								<div class="main-content">
+									<div class="submit click" onclick="login()">Login</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="register" class="login-bars" style="display: none">
+						<h1 class="login-title">Welcome to Dawn</h1>
+                        <h4 id="register-error" class="error" style="display: none;"></h4>
+						<div class="input-row">
+							<div class="input-name">Email</div>
+							<input id="register-email" class="form-control input-bar register-input" type="email" name="email" placeholder="email@email.com" autocomplete="off">
+						</div>
+						<div class="input-row">
+							<div class="input-name">Password</div>
+							<input id="register-pass" class="form-control input-bar register-input" type="password" name="password" placeholder="password123" autocomplete="off">
+						</div>
+						<div class="submit-button">
+							<div class="main-container">
+								<div class="main-content">
+									<div class="submit click" onclick="register()">Register</div>
+								</div>
+							</div>
+						</div>
+					</div>
+                    <div id="loading-view" style="display: none">
+                        <div class="main-container">
+                            <div class="main-content">
+                                <div class="cssload-thecube">
+                                    <div class="cssload-cube cssload-c1"></div>
+                                    <div class="cssload-cube cssload-c2"></div>
+                                    <div class="cssload-cube cssload-c4"></div>
+                                    <div class="cssload-cube cssload-c3"></div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
