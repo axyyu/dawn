@@ -4,6 +4,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 
 import requests
 import json
+import re
 
 @ensure_csrf_cookie
 def index(request):
@@ -16,7 +17,52 @@ def index(request):
         return HttpResponse(output, content_type='application/json')
 
     return render(request, 'index.html')
+
+
+def filter_article(string):
+    if string is None:
+        return ''
+    string = re.sub(r'<(?:.|\n)*?>', '', string)
+    return string
     
+
+def get_bib(style, title, pub, year, authors):
+    auth = []
+    if authors is None or len(authors) == 0:
+        auth.append(json.dumps({}))
+    else:
+        for a in authors:
+            author = {}
+            author['function'] = 'author'
+            space = a.find(" ")
+            lspace = a.rfind(" ")
+            if space == -1:
+                author['first'] = ''
+                author['middle'] = ''
+                author['last'] = ''
+            else:
+                author['first'] = a[0:space]
+                author['middle'] = a[space:lspace]
+                author['last'] = a[lspace:]
+            auth.append(json.dumps(author))
+
+    payload = {}
+    payload['key'] = 'e8d16813ad492175b055390bd9d62c2b'
+    payload['source'] = 'journal'
+    payload['style'] = style
+    payload['journal'] = {'title': filter_article(title)}
+    payload['pubtype'] = {'main': 'pubjournal'} 
+    payload['pubjournal'] = {'title': filter_article(pub), 'year': year}
+    payload['contributors'] = auth
+    output = json.dumps(payload)
+    r = requests.post('https://api.citation-api.com/2.1/rest/cite', data = output)
+    
+    if r.status_code == requests.codes.ok:
+        return r.json()
+    else:
+        blank = {}
+        return json.dumps(blank)
+
 
 def get_nature_journal(question):
     ARTICLE_COUNT = 3;
@@ -29,26 +75,29 @@ def get_nature_journal(question):
         except:
             console.log("Bad data from Nature")
             return None
+
         entity_array = []
         if body.get('feed') and body.get('feed').get('entry'):
-            print(body)
             for i in body['feed']['entry']:
                 item = {}
                 item['title'] = i['title']
                 item['url'] = i['link']
-                item['abstract'] = ''
+                item['abstract'] = i['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:description']
                 item['authors'] = i['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:creator']
                 item['publisher'] = i['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:publisher']
                 item['publicationDate'] = i['sru:recordData']['pam:message']['pam:article']['xhtml:head']['prism:publicationDate']
                 item['journal'] = 'Nature'
-                entity_array.append(json.dumps(item))
+                entity_array.append(item)
             if len(entity_array) == 0:
                 return entity_array
             for e in entity_array:
-                #do things
-                print(entity_array)
+                #FIX HTML TAGS SHOWING UP
+                pubdate = e['publicationDate']
+                e['mla'] = get_bib('mla7', e['title'], e['publisher'], pubdate[0:4], e['authors'])  
+                e['apa'] = get_bib('apa', e['title'], e['publisher'], pubdate[0:4], e['authors'])  
+                e['abstract'] = filter_article(e['abstract'])
             return entity_array
-
+    
     '''natureJournal(question, function(entityArray) {
         console.log("array made");
         var wait = entityArray.length;
