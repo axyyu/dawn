@@ -6,6 +6,7 @@ import requests
 import json
 import re
 
+
 @ensure_csrf_cookie
 def index(request):
     return render(request, 'login.html')
