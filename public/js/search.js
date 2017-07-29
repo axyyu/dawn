@@ -71,6 +71,9 @@ function setupIconButtons(){
     logoicon.click(function(){
         window.location = 'index.html';
     });
+    $(".popup-close").click(function () {
+        $("#popup-view").hide();
+    });
 }
 function setupSearchBar(){
     $("#search-bar").keydown(function(event){
@@ -136,7 +139,6 @@ function search(){
         });
     });
     $("#project-container").fadeOut("fast");
-    // createNotepad();
 }
 function getData(term){
     $("#loading-view").fadeIn("fast");
@@ -153,9 +155,9 @@ function getData(term){
                 $("#loading-view").fadeOut("fast", function(){
                     $("#article-view").fadeIn("fast");
                 });
-                // resetInfo();
-                setupSearchAgain(term);
+                $("#article-list").empty();
 
+                setupSearchAgain(term);
                 addToRecentSearches(term);
                 setupData();
                 searching = false;
@@ -177,87 +179,53 @@ function handleError(str){
     window.location = 'index.html';
 }
 
-function resetInfo(){
-    $("#article-list").empty();
-}
 function setupSearchAgain(searchTerm){
-    $( "#search-again").unbind( "click" );
-    $("#search-again").click(function(){
+    var searchagain = $("#search-again");
+    searchagain.unbind( "click" );
+    searchagain.click(function(){
         getData(searchTerm);
     })
 }
-
-function setupKeywordSearch(){
-    $(".list-keyword").mousedown(function(e){
-        if( e.button == 0 ){
-            $(".list-keyword").removeClass("list-keyword-selected");
-            $(this).addClass("list-keyword-selected");
-            $('.article-text').removeHighlight();
-            $('.article-text').highlight($(this).text());
-        }
-        if( e.button == 2 ) {
-            e.preventDefault();
-            var val = $(this).text();
-            getData(val);
-            $("#search-bar").val(val);
-        }
-    });
-    $('.list-keyword').on('contextmenu', function(){
-        return false;
-    });
-}
-function setupArticleClick(){
-    $( ".article").unbind( "click" );
-    $(".article").click(function(e){
-        $(".article").removeClass("article-selected");
-        $(this).addClass("article-selected");
-        showFullArticle($(this).attr("id"));
-    });
-}
-
 function addToRecentSearches(searchTerm){
     if(projectid){
         var recentKey = firebase.database().ref(userlocation + projectid +"/recent").push().key;
         firebase.database().ref(userlocation + projectid +"/recent/"+recentKey).set(searchTerm);
     }
 }
+
 function setupData(){
     appendArticleList();
+    setupArticleClick();
 }
 
 function appendArticleList(){
     var item = "";
     if(obj != null) {
         for (i = 0; i < obj.length; i++) {
-            item += '<div class="article click" id="A' + i + '"><div class="article-name-container article-list-elements">';
+            item += '<div class="article click" link="'+ obj[i].url +'">';
+            item += '<div class="article-name-container article-list-elements">';
             item += '<h3 class="article-name">' + obj[i].title + '</h3>';
-            item += '<div class="article-journal ' + obj[i].journal.charAt(0) + '">' + obj[i].journal.charAt(0) + '</div>';
-            item += '</div>';
-            if (obj[i].summary) {
-                item += '<h4 class="article-desc article-list-elements">' + obj[i].summary + '</h4>';
-            }
-            else {
-                item += '<h4 class="article-desc article-list-elements">' + 'Summary not found.' + '</h4>';
-            }
-            item += '<div class="article-keywords article-list-elements">';
+            item += '<div class="article-journal '+obj[i].journal.charAt(0)+'">'+obj[i].journal.charAt(0)+'</div></div>';
+            item += '<h4 class="article-date article-list-elements">' + obj[i].publicationDate + '</h4>';
+            item += '<h4 class="article-desc article-list-elements">' + obj[i].summary + '</h4>';
+            item += '<div class="article-info article-list-elements"><div class="article-keywords">';
             if (obj[i].keywords != null && obj[i].keywords.length >= 1) {
-                var l = 5;
-                if (obj[i].keywords.length < 5) {
-                    l = obj[i].keywords.length;
-                }
-                for (a = 0; a < l; a++) {
+                for (a = 0; a < obj[i].keywords.length; a++) {
                     item += '<h4 class="mini-keyword">' + obj[i].keywords[a] + '</h4>';
                 }
             }
             else {
                 item += '<h4 class="article-desc">' + 'No Keywords Found' + '</h4>';
             }
-            item += '</div><div class="article-reliability" id="R' + i + '">';
-            if (obj[i].sentiment) {
-                item += 'Bias: ' + parseInt(Math.abs((obj[i].sentiment) * 100));
-            }
-            else {
-                item += 'Can\'t Determine Reliability';
+            item += '</div><div class="article-reliability">Bias: '+ parseInt(Math.abs((obj[i].sentiment) * 100)) +'</div></div>';
+            item += '<div class="article-buttons-container"><div class="article-tools article-buttons">';
+            item += '<div class="keyword-button glyphicon glyphicon-th-list article-tool-button" index="'+i+'"></div>';
+            item += '<div class="bibliography-button glyphicon glyphicon-book article-tool-button" index="'+i+'"></div></div>';
+            if(loggedIn){
+                item += '<div class="article-add article-buttons">';
+                item += '<div class="added glyphicon glyphicon-remove article-tool-button"></div>';
+                item += '<div class="notes glyphicon glyphicon-pencil article-tool-button"></div>';
+                item += '<div class="add glyphicon glyphicon-plus article-tool-button"></div></div>';
             }
             item += '</div></div>';
         }
@@ -266,24 +234,56 @@ function appendArticleList(){
         item = "<h4>No Articles Found</h4>";
     }
     $(item).appendTo("#article-list");
-    setupArticleClick();
-
-    // for(c = 0; c<obj.length;c++){
-    //     var percen = parseInt(Math.abs((obj[c].sentiment)*100));
-    //     var bar = new ProgressBar.Line("#R"+i, {
-    //         strokeWidth: 4,
-    //         easing: 'easeInOut',
-    //         duration: 1400,
-    //         color: '#ffca82',
-    //         fill: 'rgba(255, 255, 255, 0.1)',
-    //         trailColor: '#eee',
-    //         trailWidth: 1,
-    //         svgStyle: {width: (percen/2)+"%", height: '100%'}
-    //     });
-    //
-    //     bar.animate(.2);
-    // }
 }
+function setupArticleClick(){
+    $( ".article").unbind( "click" );
+    // $(".article").click(function(e){
+    //     $(".article").removeClass("article-selected");
+    //     $(this).addClass("article-selected");
+    //     openArticle($(this).attr("link"));
+    // });
+    $(".keyword-button").unbind("click");
+    $(".keyword-button").click(function(){
+        showKeywords($(this).attr("index"));
+    });
+    $(".bibliography-button").unbind("click");
+    $(".bibliography-button").click(function () {
+        showBibliography($(this).attr("index"));
+    });
+}
+function openArticle(link){
+    window.open(link);
+}
+
+function showKeywords(index){
+    console.log();
+    console.log(obj[index].apa);
+    $("#keyword-list").empty();
+    var str = "";
+    for(a = 0; a<obj[index].keywords.length; a++){
+        str += '<div class="keyword-entry"><div class="keyword-container">';
+        str += '<div class="keyword">' + obj[index].keywords[a] +'</div></div>';
+        str += '<div class="keyword-def">' + obj[index].keywords[a] + '</div></div>';
+    }
+    for(b = 0; b<obj[index].concepts.length; b++){
+        str += '<div class="keyword-entry"><div class="keyword-container">';
+        str += '<div class="keyword">' + obj[index].concepts[b] +'</div></div>';
+        str += '<div class="keyword-def">' + obj[index].concepts[b] + '</div></div>';
+    }
+    $("#keyword-list").append($(str));
+    $("#dictionary").show();
+    $("#bibliography").hide();
+    $("#popup-view").show();
+}
+function showBibliography(index){
+    $("#apa").html(obj[index].apa);
+    $("#mla").html(obj[index].mla);
+    $("#chicago").html(obj[index].chicago);
+    $("#dictionary").hide();
+    $("#bibliography").show();
+    $("#popup-view").show();
+}
+
 function showFullArticle(idd){
     var art = obj[idd.substring(1)];
     if(art.title == null){
