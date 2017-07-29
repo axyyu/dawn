@@ -261,33 +261,34 @@ function setupData(){
 function appendArticleList(){
     var item = "";
     if(obj != null) {
-        for (i = 0; i < obj.length; i++) {
+        console.log(obj)
+        for (i = 0; i < obj['data'].length; i++) {
             item += '<div class="article click" id="A' + i + '"><div class="article-name-container article-list-elements">';
-            item += '<h3 class="article-name">' + obj[i].title + '</h3>';
-            item += '<div class="article-journal ' + obj[i].journal.charAt(0) + '">' + obj[i].journal.charAt(0) + '</div>';
+            item += '<h3 class="article-name">' + obj['data'][i].title + '</h3>';
+            item += '<div class="article-journal ' + obj['data'][i].journal.charAt(0) + '">' + obj['data'][i].journal.charAt(0) + '</div>';
             item += '</div>';
-            if (obj[i].summary) {
-                item += '<h4 class="article-desc article-list-elements">' + obj[i].summary + '</h4>';
+            if (obj['data'][i].summary) {
+                item += '<h4 class="article-desc article-list-elements">' + obj['data'][i].summary + '</h4>';
             }
             else {
                 item += '<h4 class="article-desc article-list-elements">' + 'Summary not found.' + '</h4>';
             }
             item += '<div class="article-keywords article-list-elements">';
-            if (obj[i].keywords != null && obj[i].keywords.length >= 1) {
+            if (obj['data'][i].keywords != null && obj['data'][i].keywords.length >= 1) {
                 var l = 5;
-                if (obj[i].keywords.length < 5) {
-                    l = obj[i].keywords.length;
+                if (obj['data'][i].keywords.length < 5) {
+                    l = obj['data'][i].keywords.length;
                 }
                 for (a = 0; a < l; a++) {
-                    item += '<h4 class="mini-keyword">' + obj[i].keywords[a] + '</h4>';
+                    item += '<h4 class="mini-keyword">' + obj['data'][i].keywords[a] + '</h4>';
                 }
             }
             else {
                 item += '<h4 class="article-desc">' + 'No Keywords Found' + '</h4>';
             }
             item += '</div><div class="article-reliability" id="R' + i + '">';
-            if (obj[i].sentiment) {
-                item += 'Bias: ' + parseInt(Math.abs((obj[i].sentiment) * 100));
+            if (obj['data'][i].sentiment) {
+                item += 'Bias: ' + parseInt(Math.abs((obj['data'][i].sentiment) * 100));
             }
             else {
                 item += 'Can\'t Determine Reliability';
@@ -318,7 +319,7 @@ function appendArticleList(){
     // }
 }
 function showFullArticle(idd){
-    var art = obj[idd.substring(1)];
+    var art = obj['data'][idd.substring(1)];
     if(art.title == null){
         $(".article-title").html("No Article Title");
     }

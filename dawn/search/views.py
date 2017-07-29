@@ -66,6 +66,35 @@ def get_bib(style, title, pub, year, authors):
         blank = {}
         return json.dumps(blank)
 
+'''
+function getFullArticle(url, callback) {
+    request("https://api.diffbot.com/v3/article?token=" + DIFF_key + "&url=" + article, function(error, resp, body) {
+        if (!error && resp.statusCode == 200) {
+            console.log("diffbot");
+            var body = JSON.parse(body);
+            var text = body.text;
+            callback(text);
+        } else {
+            console.log(error);
+            callback(null);
+        }
+    });
+}
+'''
+def get_full_article(url):
+    r = requests.get(
+        'https://api.diffbot.com/v3/article?token=' + 
+         DIFF_key + '&url=' + article)
+
+    blank = {}
+    if r.status_code == requests.codes.ok:
+        try:
+            body = r.json()
+            return body
+        except:
+            return json.dumps(blank)
+
+    return json.dumps(blank)
 
 def get_nature_journal(question):
     ARTICLE_COUNT = 3
@@ -80,7 +109,6 @@ def get_nature_journal(question):
         try:
             body = r.json()
         except:
-            console.log("Bad data from Nature")
             return None
 
         entity_array = []
