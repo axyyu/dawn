@@ -28,25 +28,18 @@
 							</div>
 						</div>
 					</div>
-					<div id="login" class="login-bars">
+					<form method="post" id="login" class="login-bars">
+                        {% csrf_token %}
 						<h1 class="login-title">Welcome Back</h1>
-                        <h4 id="login-error" class="error" style="display: none;"></h4>
-						<div class="input-row">
-							<div class="input-name">Email</div>
-							<input id="login-email" class="form-control input-bar login-input" type="email" name="email" placeholder="email@email.com" autocomplete="off" autofocus>
-						</div>
-						<div class="input-row">
-							<div class="input-name">Password</div>
-							<input id="login-pass" class="form-control input-bar login-input" type="password" name="password" placeholder="password123" autocomplete="off">
-						</div>
+                        {{ form.as_p }}
 						<div class="submit-button">
 							<div class="main-container">
 								<div class="main-content">
-									<div class="submit click" onclick="login()">Login</div>
+									<button type="submit" class="submit click">Login</div>
 								</div>
 							</div>
 						</div>
-					</div>
+					</form>
 					<div id="register" class="login-bars" style="display: none">
 						<h1 class="login-title">Welcome to Dawn</h1>
                         <h4 id="register-error" class="error" style="display: none;"></h4>
