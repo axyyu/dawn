@@ -7,6 +7,7 @@ var searchPage = false;
 var obj;
 var loggedIn = false;
 var searching = false;
+var dblist = [];
 
 var uid;
 var projectid;
@@ -19,6 +20,7 @@ $(document).ready(function(){
     firebaseChange();
     setupIconButtons();
     setupSearchBar();
+    setupDatabaseList();
 });
 function firebaseChange(){
     firebase.auth().onAuthStateChanged(function(user) {
@@ -71,6 +73,9 @@ function setupIconButtons(){
     logoicon.click(function(){
         window.location = '/';
     });
+    $(".popup-close").click(function () {
+        $("#popup-view").hide();
+    });
 }
 function setupSearchBar(){
     $("#search-bar").keydown(function(event){
@@ -83,6 +88,37 @@ function setupSearchBar(){
             search();
         }
     });
+    $("#search-again").click(function(){
+        getData();
+    });
+    $("#search-def").keydown(function(event){
+        if(event.which=="13")
+        {
+            addKeyword();
+        }
+    });
+    $("#related-terms").click(function(){
+        relatedTerms();
+    });
+    $(".list-input").keydown(function (e) {
+        // Allow: backspace, delete, tab, escape, enter and .
+        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+            // Allow: Ctrl/cmd+A
+            (e.keyCode == 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+            // Allow: Ctrl/cmd+C
+            (e.keyCode == 67 && (e.ctrlKey === true || e.metaKey === true)) ||
+            // Allow: Ctrl/cmd+X
+            (e.keyCode == 88 && (e.ctrlKey === true || e.metaKey === true)) ||
+            // Allow: home, end, left, right
+            (e.keyCode >= 35 && e.keyCode <= 39)) {
+            // let it happen, don't do anything
+            return;
+        }
+        // Ensure that it is a number and stop the keypress
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
+    });
 }
 function setupProjectList(){
     var location = firebase.database().ref(userlocation);
@@ -92,7 +128,7 @@ function setupProjectList(){
             $(project).appendTo(".project-list");
         });
     });
-    $( "#project-container").show();
+    $( "#project-dropdown").show();
 }
 function selectProject(projectkey, element){
     if(projectkey=="live"){
@@ -118,25 +154,17 @@ function selectProject(projectkey, element){
     }
     $(element).remove();
 }
-
-function search(){
-    $("#search-container").animate({
-        top:"30px",
-        "margin-top":"0",
-        'border-radius':"5px"
-    }, 1000);
-    $("#background-design").fadeOut("fast");
-    $('html, body').animate({
-        scrollTop: $("body").offset().top
-    }, 500, function(){
-        $("#introduction-view").hide();
-        $(".cssload-thecube").fadeIn("fast", function(){
-            var searchTerm = $("#search-bar").val();
-            getData(searchTerm);
-        });
+function setupDatabaseList(){
+    $(".database-list-element").click(function(){
+        if($(this).hasClass("selected-db")){
+            $(this).removeClass("selected-db");
+            dblist.splice(dblist.indexOf($(this.text())),1);
+        }
+        else{
+            $(this).addClass("selected-db");
+            dblist.push($(this).text());
+        }
     });
-    $("#project-container").fadeOut("fast");
-    // createNotepad();
 }
 
 function getCookie(name) {
@@ -154,46 +182,235 @@ function getCookie(name) {
     }
     return cookieValue;
 }
-
-
 function csrfSafeMethod(method) {
     // these HTTP methods do not require CSRF protection
     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
 }
 
-function getData(term){
+function search(){
+    $("#search-container").animate({
+        top:"30px",
+        "margin-top":"0",
+        'border-radius':"5px"
+    }, 1000);
+    $("#background-design").fadeOut("fast");
+    $('html, body').animate({
+        scrollTop: $("body").offset().top
+    }, 500, function(){
+        $("#introduction-view").hide();
+        $(".cssload-thecube").fadeIn("fast", function(){
+            getData();
+        });
+    });
+    $("#project-container").fadeOut("fast");
+}
+function getData(){
     $("#loading-view").fadeIn("fast");
     if(!searching){
         searching = true;
         console.log("Searching...");
+
+        var searchTerm = $("#search-bar").val();
+        var startDate = $("#date-begin").val();
+        var endDate = $("#date-end").val();
+        if(searchable(searchTerm)){
+            var csrftoken = getCookie('csrftoken');
+
+            $.ajaxSetup({
+                beforeSend: function(xhr, settings) {
+                    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    }
+                }
+            });
+            $.ajax({
+                type: "POST",
+                url: "/search/",
+                data: {
+                    question:searchTerm,
+                    start:startDate,
+                    end:endDate,
+                    db: dblist
+                }})
+                .done(function( result, textStatus, jqXHR ) {
+                    obj = result['data'];
+                    console.log(obj);
+                    $("#loading-view").fadeOut("fast", function(){
+                        $("#article-view").fadeIn("fast");
+                    });
+                    $("#article-list").empty();
+
+                    addToRecentSearches(term);
+                    setupData();
+                    searching = false;
+                })
+                .fail(function( e, textStatus, errorThrown ) {
+                    switch (e.status) {
+                        case 429:
+                            handleError('Currently we are only permitting 5 searches per hour. Please try again in an hour.');
+                            break;
+                        default:
+                            handleError('The server had an error. Please try again later.');
+                            break;
+                    }
+                })
+        }
+    }
+    else{
+        $("#loading-view").fadeOut("fast", function(){
+            $("#article-view").fadeIn("fast");
+        });
+        $("#article-list").empty();
+    }
+}
+function searchable(term){
+    return (term.replace(/ /g, 'x') != "");
+}
+function handleError(str){
+    alert(str);
+    window.location = 'index.html';
+}
+
+function addToRecentSearches(searchTerm){
+    if(projectid){
+        var recentKey = firebase.database().ref(userlocation + projectid +"/recent").push().key;
+        firebase.database().ref(userlocation + projectid +"/recent/"+recentKey).set(searchTerm);
+    }
+}
+function setupData(){
+    appendArticleList();
+    setupArticleClick();
+}
+
+function appendArticleList(){
+    var item = "";
+    if(obj != null) {
+        for (i = 0; i < obj.length; i++) {
+            item += '<div class="article">';
+            item += '<div class="article-name-container article-list-elements">';
+            item += '<h3 class="article-name">';
+            item += '<a class="article-link" href="'+ obj[i].url +'" target="_blank">';
+            item += obj[i].title + '</a></h3>';
+            item += '<div class="article-journal '+obj[i].journal.charAt(0)+'">'+obj[i].journal.charAt(0)+'</div></div>';
+            item += '<h4 class="article-date article-list-elements">' + obj[i].publicationDate + '</h4>';
+            item += '<h4 class="article-desc article-list-elements">' + obj[i].summary + '</h4>';
+            item += '<div class="article-info article-list-elements"><div class="article-keywords">';
+            if (obj[i].keywords != null && obj[i].keywords.length >= 1) {
+                for (a = 0; a < obj[i].keywords.length; a++) {
+                    item += '<h4 class="mini-keyword">' + obj[i].keywords[a] + '</h4>';
+                }
+            }
+            else {
+                item += '<h4 class="article-desc">' + 'No Keywords Found' + '</h4>';
+            }
+            item += '</div><div class="article-reliability">Bias: '+ parseInt(Math.abs((obj[i].sentiment) * 100)) +'</div></div>';
+            item += '<div class="article-buttons-container"><div class="article-tools article-buttons">';
+            item += '<div class="keyword-button glyphicon glyphicon-th-list article-tool-button" index="'+i+'"></div>';
+            item += '<div class="bibliography-button glyphicon glyphicon-book article-tool-button" index="'+i+'"></div></div>';
+            if(loggedIn){
+                item += '<div class="article-add article-buttons">';
+                item += '<div class="added glyphicon glyphicon-remove article-tool-button"></div>';
+                item += '<div class="notes glyphicon glyphicon-pencil article-tool-button"></div>';
+                item += '<div class="add glyphicon glyphicon-plus article-tool-button"></div></div>';
+            }
+            item += '</div></div>';
+        }
+    }
+    else{
+        item = "<h4>No Articles Found</h4>";
+    }
+    $(item).appendTo("#article-list");
+}
+function setupArticleClick(){
+    $(".keyword-button").unbind("click");
+    $(".keyword-button").click(function(){
+        showKeywords($(this).attr("index"));
+    });
+    $(".bibliography-button").unbind("click");
+    $(".bibliography-button").click(function () {
+        showBibliography($(this).attr("index"));
+    });
+}
+
+function showKeywords(index){
+    console.log();
+    $("#keyword-list").empty();
+    if(obj[index].keywords != null) {
+        var str = "";
+        for (a = 0; a < obj[index].keywords.length; a++) {
+            str += '<div class="keyword-entry"><div class="keyword-container">';
+            str += '<div class="keyword">' + obj[index].keywords[a] + '</div></div>';
+            str += '<div class="keyword-def">' + obj[index].keywords[a] + '</div></div>';
+        }
+        for (b = 0; b < obj[index].concepts.length; b++) {
+            str += '<div class="keyword-entry"><div class="keyword-container">';
+            str += '<div class="keyword">' + obj[index].concepts[b] + '</div></div>';
+            str += '<div class="keyword-def">' + obj[index].concepts[b] + '</div></div>';
+        }
+        $("#keyword-list").append($(str));
+    }
+    $(".popup-div").hide();
+    $("#dictionary").show();
+    $("#popup-view").show();
+}
+function showBibliography(index){
+    if(obj[index].apa != null){
+        $("#apa").html(obj[index].apa['data']);
+        $(".apa").show();
+    }
+    else{
+        $(".apa").hide();
+    }
+    if(obj[index].mla != null){
+        $("#mla").html(obj[index].mla['data']);
+        $(".mla").show();
+    }
+    else{
+        $(".mla").hide();
+    }
+    if(obj[index].chicago != null){
+        $("#chicago").html(obj[index].chicago['data']);
+        $(".chicago").show();
+    }
+    else{
+        $(".chicago").hide();
+    }
+    $(".popup-div").hide();
+    $("#bibliography").show();
+    $("#popup-view").show();
+}
+
+function addKeyword(){
+    var searchTerm = $("#search-def").val();
+
+    if(searchable(searchTerm)) {
         var csrftoken = getCookie('csrftoken');
-		
+
         $.ajaxSetup({
-			beforeSend: function(xhr, settings) {
-				if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-					xhr.setRequestHeader("X-CSRFToken", csrftoken);
-				}
-			}
-		});
-	
+            beforeSend: function (xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
         $.ajax({
             type: "POST",
-            url: "/search/",
-            data: {question:term}})
-            .done(function( result, textStatus, jqXHR ) {
-                obj = result;
+            url: "/define/",
+            data: {
+                term: searchTerm
+            }
+        })
+            .done(function (result, textStatus, jqXHR) {
+                obj = result['data'];
                 console.log(obj);
-                $("#loading-view").fadeOut("fast", function(){
-                    $("#article-view").fadeIn("fast");
-                });
-                // resetInfo();
-                setupSearchAgain(term);
 
-                addToRecentSearches(term);
-                setupData();
-                searching = false;
+                var str = "";
+                str += '<div class="keyword-entry"><div class="keyword-container">';
+                str += '<div class="keyword">' + searchTerm + '</div></div>';
+                str += '<div class="keyword-def">' + obj.definition + '</div></div>';
+                $("#keyword-list").append($(str));
             })
-            .fail(function( e, textStatus, errorThrown ) {
+            .fail(function (e, textStatus, errorThrown) {
                 switch (e.status) {
                     case 429:
                         handleError('Currently we are only permitting 5 searches per hour. Please try again in an hour.');
@@ -205,121 +422,67 @@ function getData(term){
             })
     }
 }
-function handleError(str){
-    alert(str);
-    window.location = '/';
-}
+function relatedTerms(){
+    var searchTerm = $("#search-bar").val();
 
-function resetInfo(){
-    $("#article-list").empty();
-}
-function setupSearchAgain(searchTerm){
-    $( "#search-again").unbind( "click" );
-    $("#search-again").click(function(){
-        getData(searchTerm);
-    })
-}
+    if(searchable(searchTerm)) {
+        var csrftoken = getCookie('csrftoken');
 
-function setupKeywordSearch(){
-    $(".list-keyword").mousedown(function(e){
-        if( e.button == 0 ){
-            $(".list-keyword").removeClass("list-keyword-selected");
-            $(this).addClass("list-keyword-selected");
-            $('.article-text').removeHighlight();
-            $('.article-text').highlight($(this).text());
-        }
-        if( e.button == 2 ) {
-            e.preventDefault();
-            var val = $(this).text();
-            getData(val);
-            $("#search-bar").val(val);
-        }
-    });
-    $('.list-keyword').on('contextmenu', function(){
-        return false;
-    });
-}
-function setupArticleClick(){
-    $( ".article").unbind( "click" );
-    $(".article").click(function(e){
-        $(".article").removeClass("article-selected");
-        $(this).addClass("article-selected");
-        showFullArticle($(this).attr("id"));
-    });
-}
-
-function addToRecentSearches(searchTerm){
-    if(projectid){
-        var recentKey = firebase.database().ref(userlocation + projectid +"/recent").push().key;
-        firebase.database().ref(userlocation + projectid +"/recent/"+recentKey).set(searchTerm);
-    }
-}
-function setupData(){
-    appendArticleList();
-}
-
-function appendArticleList(){
-    var item = "";
-    if(obj != null) {
-        console.log(obj)
-        for (i = 0; i < obj['data'].length; i++) {
-            item += '<div class="article click" id="A' + i + '"><div class="article-name-container article-list-elements">';
-            item += '<h3 class="article-name">' + obj['data'][i].title + '</h3>';
-            item += '<div class="article-journal ' + obj['data'][i].journal.charAt(0) + '">' + obj['data'][i].journal.charAt(0) + '</div>';
-            item += '</div>';
-            if (obj['data'][i].summary) {
-                item += '<h4 class="article-desc article-list-elements">' + obj['data'][i].summary + '</h4>';
-            }
-            else {
-                item += '<h4 class="article-desc article-list-elements">' + 'Summary not found.' + '</h4>';
-            }
-            item += '<div class="article-keywords article-list-elements">';
-            if (obj['data'][i].keywords != null && obj['data'][i].keywords.length >= 1) {
-                var l = 5;
-                if (obj['data'][i].keywords.length < 5) {
-                    l = obj['data'][i].keywords.length;
-                }
-                for (a = 0; a < l; a++) {
-                    item += '<h4 class="mini-keyword">' + obj['data'][i].keywords[a] + '</h4>';
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
                 }
             }
-            else {
-                item += '<h4 class="article-desc">' + 'No Keywords Found' + '</h4>';
+        });
+        $.ajax({
+            type: "POST",
+            url: "/related/",
+            data: {
+                term: searchTerm
             }
-            item += '</div><div class="article-reliability" id="R' + i + '">';
-            if (obj['data'][i].sentiment) {
-                item += 'Bias: ' + parseInt(Math.abs((obj['data'][i].sentiment) * 100));
-            }
-            else {
-                item += 'Can\'t Determine Reliability';
-            }
-            item += '</div></div>';
-        }
+        })
+            .done(function (result, textStatus, jqXHR) {
+                obj = result['data'];
+                console.log(obj);
+
+                $("#related-list").empty();
+                var str = "";
+                str += '<div class="related-row"><div class="related-term">';
+                str += searchTerm+'</div></div>';
+
+                for(a=0; a<obj.length; a++){
+                    str += '<div class="related-row">';
+                    for(b=0; b<obj[a].length; b++){
+                        str += '<div class="related-term">'+obj[a][b]+'</div>';
+                    }
+                    str +='div';
+                }
+                $("#recent-terms").append($(str));
+
+                $(".popup-div").hide();
+                $("#recent-terms").show();
+                $("#popup-view").show();
+            })
+            .fail(function (e, textStatus, errorThrown) {
+                switch (e.status) {
+                    case 429:
+                        handleError('Currently we are only permitting 5 searches per hour. Please try again in an hour.');
+                        break;
+                    default:
+                        handleError('The server had an error. Please try again later.');
+                        break;
+                }
+            })
     }
     else{
-        item = "<h4>No Articles Found</h4>";
-    }
-    $(item).appendTo("#article-list");
-    setupArticleClick();
 
-    // for(c = 0; c<obj.length;c++){
-    //     var percen = parseInt(Math.abs((obj[c].sentiment)*100));
-    //     var bar = new ProgressBar.Line("#R"+i, {
-    //         strokeWidth: 4,
-    //         easing: 'easeInOut',
-    //         duration: 1400,
-    //         color: '#ffca82',
-    //         fill: 'rgba(255, 255, 255, 0.1)',
-    //         trailColor: '#eee',
-    //         trailWidth: 1,
-    //         svgStyle: {width: (percen/2)+"%", height: '100%'}
-    //     });
-    //
-    //     bar.animate(.2);
-    // }
+    }
 }
+
+
 function showFullArticle(idd){
-    var art = obj['data'][idd.substring(1)];
+    var art = obj[idd.substring(1)];
     if(art.title == null){
         $(".article-title").html("No Article Title");
     }

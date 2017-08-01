@@ -15,7 +15,6 @@
         <img class="small-icon" src="{% static 'img/dawn.png' %}">
     </div>
 
-
     <div title="Log In" class="click icons" id = "account-icon">
         <img class="small-icon" src="{% static 'img/account.png' %}">
     </div>
@@ -37,7 +36,7 @@
         <div id="database-dropdown">
             <h3 class="selected-database click">Database</h3>
             <div class="database-list scrollbar style-1">
-                <h3 class="database-list-element selected-db click">Nature</h3>
+                <h3 class="database-list-element click">Nature</h3>
                 <h3 class="database-list-element click">Proquest</h3>
                 <h3 class="database-list-element click">CORES</h3>
                 <h3 class="database-list-element click">Science Direct</h3>
@@ -95,7 +94,7 @@
         <div class="main-container">
             <div class="main-content">
                 <div id="popup-container">
-                    <div id="bibliography" >
+                    <div id="bibliography" class="popup-div" style="display: none;">
                         <div class="popup-title-container">
                             <h3 class="popup-title">Citation Formats</h3>
                             <span class="glyphicon glyphicon-remove popup-close click"></span>
@@ -121,7 +120,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="dictionary" style="display: none;">
+                    <div id="dictionary" class="popup-div" style="display: none;">
                         <div class="popup-title-container">
                             <h3 class="popup-title">Key Word Dictionary</h3>
                             <span class="glyphicon glyphicon-remove popup-close click"></span>
@@ -135,6 +134,31 @@
                                     <div class="keyword">genes</div>
                                 </div>
                                 <div class="keyword-def"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="related" class="popup-div">
+                        <div class="popup-title-container">
+                            <h3 class="popup-title">Related Terms</h3>
+                            <span class="glyphicon glyphicon-remove popup-close click"></span>
+                        </div>
+                        <div id="related-list" class="scrollbar style-1">
+                            <div class="related-row">
+                                <div class="related-term">genes</div>
+                            </div>
+                            <div class="related-row">
+                                <div class="related-term">genes</div>
+                                <div class="related-term">genes</div>
+                                <div class="related-term">genes</div>
+                            </div>
+                            <div class="related-row">
+                                <div class="related-term">genes</div>
+                                <div class="related-term">genes</div>
+                                <div class="related-term">genes</div>
+                                <div class="related-term">genes</div>
+                                <div class="related-term">genes</div>
+                                <div class="related-term">genes</div>
+                                <div class="related-term">genes</div>
                             </div>
                         </div>
                     </div>
@@ -154,14 +178,16 @@
                 </div>
                 <div class="list-field">
                     To:
-                    <input id="date-end" class="list-input" title="Start Year" placeholder="ALL">
+                    <input id="date-end" class="list-input" title="End Year" placeholder="ALL">
                 </div>
             </div>
             <div id="article-list" class="scrollbar style-1">
-                <div class="article click">
+                <div class="article">
                     <div class="article-name-container article-list-elements">
                         <h3 class="article-name">
-                            Article Name
+                            <a class="article-link" href="https://www.google.com/" target="_blank">
+                                Article Name
+                            </a>
                         </h3>
                         <div class="article-journal N">N</div>
                     </div>

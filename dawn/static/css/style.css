@@ -43,6 +43,15 @@ h2,h3,h4,h5{
     cursor: pointer;
 }
 
+.article-link {
+    color: white !important;
+    text-decoration: none !important;
+}
+.article-link:hover {
+    color: rgba(255,255,255,0.7) !important;
+    text-decoration: none !important;
+}
+
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
     color:    whitesmoke !important;
 }
