@@ -7,15 +7,16 @@ import json
 import re
 
 
-@ensure_csrf_cookie
+# @ensure_csrf_cookie
 def index(request):
-    if request.method == 'POST':
-        question = request.POST.get('question')
+    if request.method == 'GET':
+        question = request.GET.get('q',None)
         if question is None:
-            return HttpResponseBadRequest
+            return render(request, 'index.html')
         question = question.replace("+", " ")
         output = json.dumps({'data': get_nature_journal(question)})
-        return HttpResponse(output, content_type='application/json')
+        return render(request,'search.html')
+        # return HttpResponse(output, content_type='application/json')
 
     return render(request, 'index.html')
 

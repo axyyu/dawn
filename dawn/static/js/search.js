@@ -240,7 +240,7 @@ function getData(){
                     });
                     $("#article-list").empty();
 
-                    addToRecentSearches(term);
+                    addToRecentSearches(searchTerm);
                     setupData();
                     searching = false;
                 })
@@ -268,7 +268,7 @@ function searchable(term){
 }
 function handleError(str){
     alert(str);
-    window.location = 'index.html';
+    window.location = '/';
 }
 
 function addToRecentSearches(searchTerm){
@@ -356,24 +356,24 @@ function showKeywords(index){
 function showBibliography(index){
     if(obj[index].apa != null){
         $("#apa").html(obj[index].apa['data']);
-        $(".apa").show();
+        $("#apa").parent().show();
     }
     else{
-        $(".apa").hide();
+        $("#apa").parent().hide();
     }
     if(obj[index].mla != null){
         $("#mla").html(obj[index].mla['data']);
-        $(".mla").show();
+        $("#mla").parent().show();
     }
     else{
-        $(".mla").hide();
+        $("#mla").parent().hide();
     }
     if(obj[index].chicago != null){
         $("#chicago").html(obj[index].chicago['data']);
-        $(".chicago").show();
+        $("#chicago").parent().show();
     }
     else{
-        $(".chicago").hide();
+        $("#chicago").parent().hide();
     }
     $(".popup-div").hide();
     $("#bibliography").show();

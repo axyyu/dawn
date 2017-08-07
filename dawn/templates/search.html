@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <title>Dawn</title>
+    {% include 'head.html' %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/search.css' %}">
+
+    <script type="text/javascript" src="{% static 'js/search.js' %}" defer></script>
+</head>
+<body class="scrollbar style-1">
+<div title="Home" class="click icons" id="logo-icon">
+    <img class="small-icon" src="{% static 'img/dawn.png' %}">
+</div>
+<div title="Log In" class="click icons" id = "account-icon">
+    <img class="small-icon" src="{% static 'img/account.png' %}">
+</div>
+<div title="Log Out" class="click icons" id = "account-logout" style="display: none">
+    <img class="small-icon" src="{% static 'img/logout.png' %}">
+</div>
+
+<div id="search-container">
+    <div id="project-dropdown">
+        <h3 class="selected-project click" id="live">Live Project</h3>
+        <div class="project-list scrollbar style-1">
+            <!--<h3 class="project-list-element click">Your Project</h3>-->
+        </div>
+    </div>
+    <input id="search-bar" class = "form-control" type="text" name="search-term" placeholder="type something" autocomplete="off" autofocus>
+    <div id="database-dropdown">
+        <h3 class="selected-database click">Database</h3>
+        <div class="database-list scrollbar style-1">
+            <h3 class="database-list-element click">Nature</h3>
+            <h3 class="database-list-element click">Proquest</h3>
+            <h3 class="database-list-element click">CORES</h3>
+            <h3 class="database-list-element click">Science Direct</h3>
+            <h3 class="database-list-element click">Gale Cengage</h3>
+        </div>
+    </div>
+</div>
+
+<div id="loading-view" class="view">
+    <div class="main-container">
+        <div class="main-content">
+            <div class="cssload-thecube" style="display: none;">
+                <div class="cssload-cube cssload-c1"></div>
+                <div class="cssload-cube cssload-c2"></div>
+                <div class="cssload-cube cssload-c4"></div>
+                <div class="cssload-cube cssload-c3"></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div id="introduction-view">
+    <div class="main-container">
+        <div class="main-content">
+            <h2 id="catchphrase">New horizons for research</h2>
+            <hr id="intro-break"/>
+            <div id="intro-container">
+                <div class="intro-panel" data-scroll>
+                    <img class="intro-image" src="{% static 'img/keywords.png' %}">
+                    <h3 class="intro-key">Key Words</h3>
+                    <h4 class="intro-desc">Generates important key words for each article, highlighting them in the text for easy reading.</h4>
+                </div>
+                <div class="intro-panel" data-scroll>
+                    <img class="intro-image" src="{% static 'img/notes.png' %}">
+                    <h3 class="intro-key">Notes</h3>
+                    <h4 class="intro-desc">Saves notes to each project, enabling you to take notes while searching through articles.</h4>
+                </div>
+                <div class="intro-panel" data-scroll>
+                    <img class="intro-image" src="{% static 'img/citation.png' %}">
+                    <h3 class="intro-key">Citations</h3>
+                    <h4 class="intro-desc">Automatically cites documents for you, exporting a bibliography in MLA & APA formatting.</h4>
+                </div>
+                <div class="intro-panel" data-scroll>
+                    <img class="intro-image" src="{% static 'img/search.png' %}">
+                    <h3 class="intro-key">Search</h3>
+                    <h4 class="intro-desc">Offers concept searching and allows you to find important concepts related to the search term.</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="popup-view" class="view">
+    <div class="main-container">
+        <div class="main-content">
+            <div id="popup-container">
+                <div id="bibliography" class="popup-div" style="display: none;">
+                    <div class="popup-title-container">
+                        <h3 class="popup-title">Citation Formats</h3>
+                        <span class="glyphicon glyphicon-remove popup-close click"></span>
+                    </div>
+                    <div id="citation-list" class="scrollbar style-1">
+                        <div class="citation-container">
+                            <div class="citation">
+                                <div class="citation-title">APA</div>
+                                <div id="apa" class="citation-content"></div>
+                            </div>
+                        </div>
+                        <div class="citation-container">
+                            <div class="citation">
+                                <div class="citation-title">MLA</div>
+                                <div id="mla" class="citation-content"></div>
+                            </div>
+                        </div>
+                        <div class="citation-container">
+                            <div class="citation">
+                                <div class="citation-title">Chicago</div>
+                                <div id="chicago" class="citation-content"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="dictionary" class="popup-div" style="display: none;">
+                    <div class="popup-title-container">
+                        <h3 class="popup-title">Key Word Dictionary</h3>
+                        <span class="glyphicon glyphicon-remove popup-close click"></span>
+                    </div>
+                    <div id="search-def-container">
+                        <input id="search-def" title="Search" placeholder="type keyword">
+                    </div>
+                    <div id="keyword-list" class="scrollbar style-1">
+                        <div class="keyword-entry">
+                            <div class="keyword-container">
+                                <div class="keyword">genes</div>
+                            </div>
+                            <div class="keyword-def"></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="related" class="popup-div">
+                    <div class="popup-title-container">
+                        <h3 class="popup-title">Related Terms</h3>
+                        <span class="glyphicon glyphicon-remove popup-close click"></span>
+                    </div>
+                    <div id="related-list" class="scrollbar style-1">
+                        <div class="related-row">
+                            <div class="related-term">genes</div>
+                        </div>
+                        <div class="related-row">
+                            <div class="related-term">genes</div>
+                            <div class="related-term">genes</div>
+                            <div class="related-term">genes</div>
+                        </div>
+                        <div class="related-row">
+                            <div class="related-term">genes</div>
+                            <div class="related-term">genes</div>
+                            <div class="related-term">genes</div>
+                            <div class="related-term">genes</div>
+                            <div class="related-term">genes</div>
+                            <div class="related-term">genes</div>
+                            <div class="related-term">genes</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="article-view" class="view" style="display: none">
+    <div id="article-list-container">
+        <div id="list-buttons">
+            <div id="search-again" title="Search Again" class="list-button glyphicon glyphicon-refresh click"></div>
+            <div id="related-terms" title="Related Terms" class="list-button glyphicon glyphicon-cloud click"></div>
+            <div class="list-field">
+                From:
+                <input id="date-begin" class="list-input" title="Start Year" placeholder="ALL">
+            </div>
+            <div class="list-field">
+                To:
+                <input id="date-end" class="list-input" title="End Year" placeholder="ALL">
+            </div>
+        </div>
+        <div id="article-list" class="scrollbar style-1">
+            <div class="article">
+                <div class="article-name-container article-list-elements">
+                    <h3 class="article-name">
+                        <a class="article-link" href="https://www.google.com/" target="_blank">
+                            Article Name
+                        </a>
+                    </h3>
+                    <div class="article-journal N">N</div>
+                </div>
+                <h4 class="article-date article-list-elements">
+                    4/7/2017
+                </h4>
+                <h4 class="article-desc article-list-elements">
+                    Article Desc
+                </h4>
+                <div class="article-info article-list-elements">
+                    <div class="article-keywords">
+                        <h4 class="mini-keyword">agent orange</h4>
+                        <h4 class="mini-keyword">orange</h4>
+                    </div>
+                    <div class="article-reliability">Bias: 90</div>
+                </div>
+                <div class="article-buttons-container">
+                    <div class="article-tools article-buttons">
+                        <div id="keyword-button" class="glyphicon glyphicon-th-list article-tool-button"></div>
+                        <div id="bibliography-button" class="glyphicon glyphicon-book article-tool-button"></div>
+                    </div>
+                    <div class="article-add article-buttons">
+                        <div id="add" class="glyphicon glyphicon-plus article-tool-button"></div>
+                        <div id="added" class="glyphicon glyphicon-ok article-tool-button"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

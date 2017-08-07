@@ -11,7 +11,9 @@
 
 * `pip install -r requirements.txt` will install the required packages.
 
-* Copy and rename examplesettings.py to settings.py and add the postgresql database uri and the secret key.
+* Install postgres sql and create a user. Start the server.
+
+* Copy and rename examplesettings.py to settings.py and add the postgresql database uri and the secret key (can skip this step).
 
 * Run migrations to populate the postgresql database with `python manage.py migrate`.
 
@@ -19,3 +21,5 @@
 
 ## Configuration ##
 * `config.json` contains API keys and the port number the app runs on.
+
+* Use 'pip freeze' to maintain requirements
