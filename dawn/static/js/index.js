@@ -203,16 +203,8 @@ function getData(){
                     db: dblist
                 }})
                 .done(function( result, textStatus, jqXHR ) {
+                    console.log(result);
                     obj = result['data'];
-                    console.log(obj);
-                    $("#loading-view").fadeOut("fast", function(){
-                        $("#article-view").fadeIn("fast");
-                    });
-                    $("#article-list").empty();
-
-                    addToRecentSearches(searchTerm);
-                    setupData();
-                    searching = false;
                 })
                 .fail(function( e, textStatus, errorThrown ) {
                     switch (e.status) {

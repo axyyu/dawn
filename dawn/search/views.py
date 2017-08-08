@@ -6,6 +6,10 @@ import requests
 import json
 import re
 
+from databases import *
+from analysis import *
+from other import *
+from bibliography import *
 
 # @ensure_csrf_cookie
 def index(request):
@@ -15,87 +19,8 @@ def index(request):
             return render(request, 'index.html')
         question = question.replace("+", " ")
         output = json.dumps({'data': get_nature_journal(question)})
-        return render(request,'search.html')
-        # return HttpResponse(output, content_type='application/json')
-
+        return render(request,'search.html', output)
     return render(request, 'index.html')
-
-
-def filter_article(string):
-    if string is None:
-        return ''
-    string = re.sub(r'<(?:.|\n)*?>', '', string)
-    return string
-
-
-def get_bib(style, title, pub, year, authors):
-    auth = []
-    if authors is None or len(authors) == 0:
-        auth.append(json.dumps({}))
-    else:
-        for a in authors:
-            author = {}
-            author['function'] = 'author'
-            space = a.find(" ")
-            lspace = a.rfind(" ")
-            if space == -1:
-                author['first'] = ''
-                author['middle'] = ''
-                author['last'] = ''
-            else:
-                author['first'] = a[0:space]
-                author['middle'] = a[space:lspace]
-                author['last'] = a[lspace:]
-            auth.append(json.dumps(author))
-
-    payload = {}
-    payload['key'] = 'e8d16813ad492175b055390bd9d62c2b'
-    payload['source'] = 'journal'
-    payload['style'] = style
-    payload['journal'] = {'title': filter_article(title)}
-    payload['pubtype'] = {'main': 'pubjournal'}
-    payload['pubjournal'] = {'title': filter_article(pub), 'year': year}
-    payload['contributors'] = auth
-    output = json.dumps(payload)
-    r = requests.post(
-        'https://api.citation-api.com/2.1/rest/cite',
-        data=output)
-
-    if r.status_code == requests.codes.ok:
-        return r.json()
-    else:
-        blank = {}
-        return json.dumps(blank)
-
-'''
-function getFullArticle(url, callback) {
-    request("https://api.diffbot.com/v3/article?token=" + DIFF_key + "&url=" + article, function(error, resp, body) {
-        if (!error && resp.statusCode == 200) {
-            console.log("diffbot");
-            var body = JSON.parse(body);
-            var text = body.text;
-            callback(text);
-        } else {
-            console.log(error);
-            callback(null);
-        }
-    });
-}
-'''
-def get_full_article(url):
-    r = requests.get(
-        'https://api.diffbot.com/v3/article?token=' + 
-         DIFF_key + '&url=' + article)
-
-    blank = {}
-    if r.status_code == requests.codes.ok:
-        try:
-            body = r.json()
-            return body
-        except:
-            return json.dumps(blank)
-
-    return json.dumps(blank)
 
 def get_nature_journal(question):
     ARTICLE_COUNT = 3
