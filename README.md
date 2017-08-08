@@ -22,4 +22,4 @@
 ## Configuration ##
 * `config.json` contains API keys and the port number the app runs on.
 
-* Use 'pip freeze' to maintain requirements
+* Use `pip freeze > requirements.txt` to maintain requirements
