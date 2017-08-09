@@ -139,26 +139,6 @@ function setupDatabaseList(){
     });
 }
 
-// function getCookie(name) {
-//     var cookieValue = null;
-//     if (document.cookie && document.cookie !== '') {
-//         var cookies = document.cookie.split(';');
-//         for (var i = 0; i < cookies.length; i++) {
-//             var cookie = jQuery.trim(cookies[i]);
-//             // Does this cookie string begin with the name we want?
-//             if (cookie.substring(0, name.length + 1) === (name + '=')) {
-//                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-//                 break;
-//             }
-//         }
-//     }
-//     return cookieValue;
-// }
-// function csrfSafeMethod(method) {
-//     // these HTTP methods do not require CSRF protection
-//     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-// }
-
 function search(){
     $("#search-container").animate({
         top:"30px",
@@ -181,8 +161,12 @@ function getData(){
         console.log("Searching...");
 
         var searchTerm = $("#search-bar").val();
-        var startDate = $("#date-begin").val();
-        var endDate = $("#date-end").val();
+        var dbstring = "";
+        for(a = 0; a<dblist.length; a++){
+            dbstring += dblist[a]+",";
+        }
+        console.log(dblist);
+        console.log(dbstring);
         if(searchable(searchTerm)){
             // var csrftoken = getCookie('csrftoken');
             //
@@ -198,9 +182,7 @@ function getData(){
                 url: "/search/",
                 data: {
                     question:searchTerm,
-                    start:startDate,
-                    end:endDate,
-                    db: dblist
+                    db: dbstring
                 }})
                 .done(function( result, textStatus, jqXHR ) {
                     console.log(result);

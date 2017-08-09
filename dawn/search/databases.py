@@ -9,7 +9,7 @@ def get_nature_journal(question, count):
     r = requests.get(
         'http://www.nature.com/opensearch/request?query=' +
         question +
-        '&httpAccept=application/json&maximumRecords=' +
+        '&httpAccept=application/json&sortKeys=publicationDate,pam,0&maximumRecords=' +
         str(count))
     if r.status_code == requests.codes.ok:
         try:

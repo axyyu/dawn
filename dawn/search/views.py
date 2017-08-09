@@ -6,77 +6,82 @@ import requests
 import json
 import re
 
-from databases import *
-from analysis import *
-from other import *
-from bibliography import *
+from . import databases
+from . import analysis
+from . import other
+from . import bibliography
 
 # @ensure_csrf_cookie
 def index(request):
     if request.method == 'GET':
-        question = request.GET.get('q',None)
-        if question is None:
-            return render(request, 'index.html')
+        question = request.GET.get('question',None)
+        databases = request.GET.get('db', None)
+        if question is None or databases is None:
+            return render(request, 'index.html') #Maybe change
         question = question.replace("+", " ")
-        output = json.dumps({'data': get_nature_journal(question)})
-        return render(request,'search.html', output)
+        databases = databases.replace("+", " ")
+        databases = databases.split(",")[:-1]
+        return render(request,'search.html', {'question':question, 'databases':databases, 'data': get_data(question, databases)})
+        # return render(request, 'index.html')
     return render(request, 'index.html')
 
-def get_nature_journal(question):
-    ARTICLE_COUNT = 3
-    KEYWORD_COUNT = 2
+def define(request):
+    if request.method == 'GET':
+        question = request.GET.get('question',None)
+        if question is None:
+            return HttpResponseBadRequest
+        question = question.replace("+", " ")
+        output = json.dumps({'data': get_definition(question)})
+        return HttpResponse(output, content_type='application/json')
+    return render(request, 'index.html')
 
-    r = requests.get(
-        'http://www.nature.com/opensearch/request?query=' +
-        question +
-        '&httpAccept=application/json&maximumRecords=' +
-        str(ARTICLE_COUNT))
-    if r.status_code == requests.codes.ok:
-        try:
-            body = r.json()
-        except:
-            return None
+def related(request):
+    if request.method == 'GET':
+        question = request.GET.get('question',None)
+        if question is None:
+            return HttpResponseBadRequest
+        question = question.replace("+", " ")
+        output = json.dumps({'data': get_related(question)})
+        return HttpResponse(output, content_type='application/json')
+    return render(request, 'index.html')
 
-        entity_array = []
-        if body.get('feed') and body.get('feed').get('entry'):
-            for i in body['feed']['entry']:
-                item = {}
-                item['title'] = i['title']
-                item['url'] = i['link']
-                item['abstract'] = i['sru:recordData']['pam:message'][
-                    'pam:article']['xhtml:head']['dc:description']
-                item['authors'] = i['sru:recordData']['pam:message'][
-                    'pam:article']['xhtml:head']['dc:creator']
-                item['publisher'] = i['sru:recordData']['pam:message'][
-                    'pam:article']['xhtml:head']['dc:publisher']
-                item['publicationDate'] = i['sru:recordData']['pam:message'][
-                    'pam:article']['xhtml:head']['prism:publicationDate']
-                item['journal'] = 'Nature'
-                entity_array.append(item)
-            if len(entity_array) == 0:
-                return entity_array
-            for e in entity_array:
-                # FIX HTML TAGS SHOWING UP
-                pubdate = e['publicationDate']
-                e['mla'] = get_bib(
-                    'mla7', e['title'], e['publisher'], pubdate[
-                        0:4], e['authors'])
-                e['apa'] = get_bib(
-                    'apa', e['title'], e['publisher'], pubdate[
-                        0:4], e['authors'])
-                e['abstract'] = filter_article(e['abstract'])
-            return entity_array
+def get_data(question, databases):
+    entity_array = []
+    for d in databases:
+        if d == "Nature":
+            body = get_nature_journal(question, 3)
+            if body:
+                if body.get('feed') and body.get('feed').get('entry'):
+                    for i in body['feed']['entry']:
+                        item = {}
+                        item['title'] = i['title']
+                        item['url'] = i['link']
+                        item['abstract'] = i['sru:recordData']['pam:message'][
+                            'pam:article']['xhtml:head']['dc:description']
+                        item['authors'] = i['sru:recordData']['pam:message'][
+                            'pam:article']['xhtml:head']['dc:creator']
+                        item['publisher'] = i['sru:recordData']['pam:message'][
+                            'pam:article']['xhtml:head']['dc:publisher']
+                        item['publicationDate'] = i['sru:recordData']['pam:message'][
+                            'pam:article']['xhtml:head']['prism:publicationDate']
+                        item['journal'] = 'Nature'
 
-            '''languageAnalysis(entry.abstract, function(s, k, c) {
-                            entry.sentiment = s;
-                            entry.keywords = k;
-                            entry.concepts = c;
-                            getSummary(entry.abstract, entry.title, 1, function(s) {
-                                console.log("\t\t\tgot summary");
-                                entry.summary = s;
-                                --wait;
-                                if (wait == 0) {
-                                    response.send(entityArray);
-                                }
-          });'''
+                        pubdate = item['publicationDate']
+                        item['mla'] = get_easy_bib(
+                            'mla7', item['title'], item['publisher'], pubdatitem[
+                                                                0:4], item['authors'])
+                        item['apa'] = get_easy_bib(
+                            'apa', item['title'], item['publisher'], pubdatitem[
+                                                               0:4], item['authors'])
+                        item['abstract'] = filter_article(item['abstract'])
+
+                        item['keywords']=get_entities(item['abstract'])
+                        item['concepts']=get_concepts(item['abstract'])
+                        item['sentiment']=get_sentiment(item['abstract'])
+                        item['summary']=get_summary(item['abstract'])
+
+                        entity_array.append(item)
+                    return entity_array
+        elif d == "CORES":
+            pass
     return None

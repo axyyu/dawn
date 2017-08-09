@@ -1,6 +1,7 @@
 import requests
 import json
 import re
+from . import other
 
 def get_easy_bib(style, title, pub, year, authors):
     auth = []
