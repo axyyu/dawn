@@ -15,13 +15,13 @@ from . import bibliography
 def index(request):
     if request.method == 'GET':
         question = request.GET.get('question',None)
-        databases = request.GET.get('db', None)
-        if question is None or databases is None:
+        if question is None:
             return render(request, 'index.html') #Maybe change
         question = question.replace("+", " ")
-        databases = databases.replace("+", " ")
-        databases = databases.split(",")[:-1]
-        return render(request,'search.html', {'question':question, 'databases':databases, 'data': get_data(question, databases)})
+        databases = ["Nature"]
+        val = get_data(question, databases)
+        print(val)
+        return render(request,'search.html', {'question':question, 'data': val})
         # return render(request, 'index.html')
     return render(request, 'index.html')
 
@@ -31,7 +31,7 @@ def define(request):
         if question is None:
             return HttpResponseBadRequest
         question = question.replace("+", " ")
-        output = json.dumps({'data': get_definition(question)})
+        output = json.dumps({'data': other.get_definition(question)})
         return HttpResponse(output, content_type='application/json')
     return render(request, 'index.html')
 
@@ -41,15 +41,15 @@ def related(request):
         if question is None:
             return HttpResponseBadRequest
         question = question.replace("+", " ")
-        output = json.dumps({'data': get_related(question)})
+        output = json.dumps({'data': analysis.get_related(question)})
         return HttpResponse(output, content_type='application/json')
     return render(request, 'index.html')
 
-def get_data(question, databases):
+def get_data(question, dbs):
     entity_array = []
-    for d in databases:
+    for d in dbs:
         if d == "Nature":
-            body = get_nature_journal(question, 3)
+            body = databases.get_nature_journal(question, 3)
             if body:
                 if body.get('feed') and body.get('feed').get('entry'):
                     for i in body['feed']['entry']:
@@ -67,18 +67,18 @@ def get_data(question, databases):
                         item['journal'] = 'Nature'
 
                         pubdate = item['publicationDate']
-                        item['mla'] = get_easy_bib(
-                            'mla7', item['title'], item['publisher'], pubdatitem[
+                        item['mla'] = bibliography.get_easy_bib(
+                            'mla7', item['title'], item['publisher'], item['publicationDate'][
                                                                 0:4], item['authors'])
-                        item['apa'] = get_easy_bib(
-                            'apa', item['title'], item['publisher'], pubdatitem[
+                        item['apa'] = bibliography.get_easy_bib(
+                            'apa', item['title'], item['publisher'], item['publicationDate'][
                                                                0:4], item['authors'])
-                        item['abstract'] = filter_article(item['abstract'])
+                        item['abstract'] = other.filter_article(item['abstract'])
 
-                        item['keywords']=get_entities(item['abstract'])
-                        item['concepts']=get_concepts(item['abstract'])
-                        item['sentiment']=get_sentiment(item['abstract'])
-                        item['summary']=get_summary(item['abstract'])
+                        # item['keywords']=analysis.get_entities(item['abstract'])
+                        # item['concepts']=analysis.get_concepts(item['abstract'])
+                        # item['sentiment']=analysis.get_sentiment(item['abstract'])
+                        # item['summary']=analysis.get_summary(item['abstract'])
 
                         entity_array.append(item)
                     return entity_array

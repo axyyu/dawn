@@ -7,7 +7,6 @@ var searchPage = false;
 var obj;
 var loggedIn = false;
 var searching = false;
-var dblist = [];
 
 var uid;
 var projectid;
@@ -20,7 +19,6 @@ $(document).ready(function(){
     firebaseChange();
     setupIconButtons();
     setupSearchBar();
-    setupDatabaseList();
 });
 function firebaseChange(){
     firebase.auth().onAuthStateChanged(function(user) {
@@ -150,19 +148,6 @@ function selectProject(projectkey, element){
     }
     $(element).remove();
 }
-function setupDatabaseList(){
-    $(".database-list-element").click(function(){
-        if($(this).hasClass("selected-db")){
-            $(this).removeClass("selected-db");
-            dblist.splice(dblist.indexOf($(this.text())),1);
-        }
-        else{
-            $(this).addClass("selected-db");
-            dblist.push($(this).text());
-        }
-    });
-}
-
 // function getCookie(name) {
 //     var cookieValue = null;
 //     if (document.cookie && document.cookie !== '') {
@@ -225,8 +210,7 @@ function getData(){
                 data: {
                     question:searchTerm,
                     start:startDate,
-                    end:endDate,
-                    db: dblist
+                    end:endDate
                 }})
                 .done(function( result, textStatus, jqXHR ) {
                     obj = result['data'];

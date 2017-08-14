@@ -27,45 +27,7 @@
             <!--<h3 class="project-list-element click">Your Project</h3>-->
         </div>
     </div>
-    <input id="search-bar" class = "form-control" type="text" name="search-term" placeholder="type something" autocomplete="off" autofocus>
-    <div id="database-dropdown">
-        <h3 class="selected-database click">Database</h3>
-        <div class="database-list scrollbar style-1">
-            <h3 class="database-list-element click">Nature</h3>
-            <h3 class="database-list-element click">CORES</h3>
-        </div>
-    </div>
-</div>
-
-<div id="introduction-view">
-    <div class="main-container">
-        <div class="main-content">
-            <h2 id="catchphrase">New horizons for research</h2>
-            <hr id="intro-break"/>
-            <div id="intro-container">
-                <div class="intro-panel" data-scroll>
-                    <img class="intro-image" src="{% static 'img/keywords.png' %}">
-                    <h3 class="intro-key">Key Words</h3>
-                    <h4 class="intro-desc">Generates important key words for each article, highlighting them in the text for easy reading.</h4>
-                </div>
-                <div class="intro-panel" data-scroll>
-                    <img class="intro-image" src="{% static 'img/notes.png' %}">
-                    <h3 class="intro-key">Notes</h3>
-                    <h4 class="intro-desc">Saves notes to each project, enabling you to take notes while searching through articles.</h4>
-                </div>
-                <div class="intro-panel" data-scroll>
-                    <img class="intro-image" src="{% static 'img/citation.png' %}">
-                    <h3 class="intro-key">Citations</h3>
-                    <h4 class="intro-desc">Automatically cites documents for you, exporting a bibliography in MLA & APA formatting.</h4>
-                </div>
-                <div class="intro-panel" data-scroll>
-                    <img class="intro-image" src="{% static 'img/search.png' %}">
-                    <h3 class="intro-key">Search</h3>
-                    <h4 class="intro-desc">Offers concept searching and allows you to find important concepts related to the search term.</h4>
-                </div>
-            </div>
-        </div>
-    </div>
+    <input id="search-bar" class = "form-control" type="text" name="search-term" placeholder="type something" autocomplete="off" value="{{question}}" autofocus>
 </div>
 
 <div id="popup-view" class="view">
@@ -161,37 +123,72 @@
         </div>
         <div id="article-list" class="scrollbar style-1">
             <div class="article">
-                <div class="article-name-container article-list-elements">
-                    <h3 class="article-name">
-                        <a class="article-link" href="https://www.google.com/" target="_blank">
-                            Article Name
-                        </a>
-                    </h3>
-                    <div class="article-journal N">N</div>
-                </div>
-                <h4 class="article-date article-list-elements">
-                    4/7/2017
-                </h4>
-                <h4 class="article-desc article-list-elements">
-                    Article Desc
-                </h4>
-                <div class="article-info article-list-elements">
-                    <div class="article-keywords">
-                        <h4 class="mini-keyword">agent orange</h4>
-                        <h4 class="mini-keyword">orange</h4>
+                {% for v in data %}
+                    <div class="article-name-container article-list-elements">
+                        <h3 class="article-name">
+                            <a class="article-link" href="{{v.url}}" target="_blank">
+                                {{v.title}}
+                            </a>
+                        </h3>
+                        <div class="article-journal N">{{v.journal}}</div>
                     </div>
-                    <div class="article-reliability">Bias: 90</div>
-                </div>
-                <div class="article-buttons-container">
-                    <div class="article-tools article-buttons">
-                        <div id="keyword-button" class="glyphicon glyphicon-th-list article-tool-button"></div>
-                        <div id="bibliography-button" class="glyphicon glyphicon-book article-tool-button"></div>
+                    <h4 class="article-date article-list-elements">
+                        {{v.publicationDate}}
+                    </h4>
+                    <h4 class="article-desc article-list-elements">
+                        {{v.abstract}}
+                    </h4>
+                    <div class="article-info article-list-elements">
+                        <div class="article-keywords">
+                            {% for v in v.keyword %}
+                                <h4 class="mini-keyword">agent orange</h4>
+                                <h4 class="mini-keyword">orange</h4>
+                            {% endfor %}
+                        </div>
+                        <div class="article-reliability">{{v.sentiment}}</div>
                     </div>
-                    <div class="article-add article-buttons">
-                        <div id="add" class="glyphicon glyphicon-plus article-tool-button"></div>
-                        <div id="added" class="glyphicon glyphicon-ok article-tool-button"></div>
+                    <div class="article-buttons-container">
+                        <div class="article-tools article-buttons">
+                            <div id="keyword-button" class="glyphicon glyphicon-th-list article-tool-button"></div>
+                            <div id="bibliography-button" class="glyphicon glyphicon-book article-tool-button"></div>
+                        </div>
+                        <div class="article-add article-buttons">
+                            <div id="add" class="glyphicon glyphicon-plus article-tool-button"></div>
+                            <div id="added" class="glyphicon glyphicon-ok article-tool-button"></div>
+                        </div>
                     </div>
-                </div>
+                {% endfor %}
+                <!--<div class="article-name-container article-list-elements">-->
+                    <!--<h3 class="article-name">-->
+                        <!--<a class="article-link" href="https://www.google.com/" target="_blank">-->
+                            <!--Article Name-->
+                        <!--</a>-->
+                    <!--</h3>-->
+                    <!--<div class="article-journal N">N</div>-->
+                <!--</div>-->
+                <!--<h4 class="article-date article-list-elements">-->
+                    <!--4/7/2017-->
+                <!--</h4>-->
+                <!--<h4 class="article-desc article-list-elements">-->
+                    <!--Article Desc-->
+                <!--</h4>-->
+                <!--<div class="article-info article-list-elements">-->
+                    <!--<div class="article-keywords">-->
+                        <!--<h4 class="mini-keyword">agent orange</h4>-->
+                        <!--<h4 class="mini-keyword">orange</h4>-->
+                    <!--</div>-->
+                    <!--<div class="article-reliability">Bias: 90</div>-->
+                <!--</div>-->
+                <!--<div class="article-buttons-container">-->
+                    <!--<div class="article-tools article-buttons">-->
+                        <!--<div id="keyword-button" class="glyphicon glyphicon-th-list article-tool-button"></div>-->
+                        <!--<div id="bibliography-button" class="glyphicon glyphicon-book article-tool-button"></div>-->
+                    <!--</div>-->
+                    <!--<div class="article-add article-buttons">-->
+                        <!--<div id="add" class="glyphicon glyphicon-plus article-tool-button"></div>-->
+                        <!--<div id="added" class="glyphicon glyphicon-ok article-tool-button"></div>-->
+                    <!--</div>-->
+                <!--</div>-->
             </div>
         </div>
     </div>

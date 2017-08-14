@@ -10,7 +10,6 @@ var searchPage = false;
 var obj;
 var loggedIn = false;
 var searching = false;
-var dblist = [];
 
 var uid;
 var projectid;
@@ -23,7 +22,6 @@ $(document).ready(function(){
     firebaseChange();
     setupIconButtons();
     setupSearchBar();
-    setupDatabaseList();
 });
 function firebaseChange(){
     firebase.auth().onAuthStateChanged(function(user) {
@@ -126,18 +124,6 @@ function selectProject(projectkey, element){
     }
     $(element).remove();
 }
-function setupDatabaseList(){
-    $(".database-list-element").click(function(){
-        if($(this).hasClass("selected-db")){
-            $(this).removeClass("selected-db");
-            dblist.splice(dblist.indexOf($(this.text())),1);
-        }
-        else{
-            $(this).addClass("selected-db");
-            dblist.push($(this).text());
-        }
-    });
-}
 
 function search(){
     $("#search-container").animate({
@@ -161,12 +147,6 @@ function getData(){
         console.log("Searching...");
 
         var searchTerm = $("#search-bar").val();
-        var dbstring = "";
-        for(a = 0; a<dblist.length; a++){
-            dbstring += dblist[a]+",";
-        }
-        console.log(dblist);
-        console.log(dbstring);
         if(searchable(searchTerm)){
             // var csrftoken = getCookie('csrftoken');
             //
@@ -181,8 +161,7 @@ function getData(){
                 type: "GET",
                 url: "/search/",
                 data: {
-                    question:searchTerm,
-                    db: dbstring
+                    question:searchTerm
                 }})
                 .done(function( result, textStatus, jqXHR ) {
                     console.log(result);
