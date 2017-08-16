@@ -9,11 +9,11 @@
 
 * Change to the project root directory, the environment should automatically activate, with a "(dawn-env)" in front of the PS1.
 
-* `pip install -r requirements.txt` will install the required packages.
+* `python setup.py install` will install the required packages.
 
-* Install postgres sql and create a user. Start the server.
+* Install postgresql and create a user. Start the postgres server.
 
-* Copy and rename examplesettings.py to settings.py and add the postgresql database uri and the secret key (can skip this step).
+* Copy and rename examplesettings.py to settings.py and add the postgresql database uri and the secret key.
 
 * Run migrations to populate the postgresql database with `python manage.py migrate`.
 
