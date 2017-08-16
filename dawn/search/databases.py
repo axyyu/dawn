@@ -5,6 +5,7 @@ from havenondemand.hodclient import *
 
 haven_client = HODClient("beb65937-16e4-4015-ad44-77a7f4e41e0c", version="v2")
 
+
 def get_nature_journal(question, count):
     r = requests.get(
         'http://www.nature.com/opensearch/request?query=' +
@@ -18,8 +19,13 @@ def get_nature_journal(question, count):
             return None
     return None
 
+
 def callback(res, **context):
     return json.dumps(res)
 
+
 def get_wikipedia(query):
-    haven_client.get_request({'text':query}, HODApps.FIND_SIMILAR, async=False, callback=callback)
+    haven_client.get_request({'text': query},
+                             HODApps.FIND_SIMILAR,
+                             async=False,
+                             callback=callback)

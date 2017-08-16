@@ -1,7 +1,8 @@
 import requests
 import json
 import re
-from . import other
+from . import helpers
+
 
 def get_easy_bib(style, title, pub, year, authors):
     auth = []
@@ -27,9 +28,11 @@ def get_easy_bib(style, title, pub, year, authors):
     payload['key'] = 'e8d16813ad492175b055390bd9d62c2b'
     payload['source'] = 'journal'
     payload['style'] = style
-    payload['journal'] = {'title': other.filter_article(title)}
+    payload['journal'] = {'title': helpers.filter_article(title)}
     payload['pubtype'] = {'main': 'pubjournal'}
-    payload['pubjournal'] = {'title': other.filter_article(pub), 'year': year}
+    payload['pubjournal'] = {
+        'title': helpers.filter_article(pub),
+        'year': year}
     payload['contributors'] = auth
     output = json.dumps(payload)
     r = requests.post(

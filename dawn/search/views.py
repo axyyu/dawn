@@ -8,42 +8,49 @@ import re
 
 from . import databases
 from . import analysis
-from . import other
+from . import helpers
 from . import bibliography
 
 # @ensure_csrf_cookie
+
+
 def index(request):
     if request.method == 'GET':
-        question = request.GET.get('question',None)
+        question = request.GET.get('question', None)
         if question is None:
-            return render(request, 'index.html') #Maybe change
+            return render(request, 'index.html')  # Maybe change
         question = question.replace("+", " ")
         databases = ["Nature"]
         val = get_data(question, databases)
         print(val)
-        return render(request,'search.html', {'question':question, 'data': val})
+        return render(
+            request, 'search.html', {
+                'question': question, 'data': val})
         # return render(request, 'index.html')
     return render(request, 'index.html')
 
+
 def define(request):
     if request.method == 'GET':
-        question = request.GET.get('question',None)
+        question = request.GET.get('question', None)
         if question is None:
             return HttpResponseBadRequest
         question = question.replace("+", " ")
-        output = json.dumps({'data': other.get_definition(question)})
+        output = json.dumps({'data': helpers.get_definition(question)})
         return HttpResponse(output, content_type='application/json')
     return render(request, 'index.html')
 
+
 def related(request):
     if request.method == 'GET':
-        question = request.GET.get('question',None)
+        question = request.GET.get('question', None)
         if question is None:
             return HttpResponseBadRequest
         question = question.replace("+", " ")
         output = json.dumps({'data': analysis.get_related(question)})
         return HttpResponse(output, content_type='application/json')
     return render(request, 'index.html')
+
 
 def get_data(question, dbs):
     entity_array = []
@@ -69,11 +76,12 @@ def get_data(question, dbs):
                         pubdate = item['publicationDate']
                         item['mla'] = bibliography.get_easy_bib(
                             'mla7', item['title'], item['publisher'], item['publicationDate'][
-                                                                0:4], item['authors'])
+                                0:4], item['authors'])
                         item['apa'] = bibliography.get_easy_bib(
                             'apa', item['title'], item['publisher'], item['publicationDate'][
-                                                               0:4], item['authors'])
-                        item['abstract'] = other.filter_article(item['abstract'])
+                                0:4], item['authors'])
+                        item['abstract'] = helpers.filter_article(
+                            item['abstract'])
 
                         # item['keywords']=analysis.get_entities(item['abstract'])
                         # item['concepts']=analysis.get_concepts(item['abstract'])
