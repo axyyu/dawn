@@ -16,23 +16,24 @@ from . import bibliography
 
 def index(request):
     if request.method == 'GET':
-        question = request.GET.get('question', None)
+        question = request.GET.get('q', None)
         if question is None:
             return render(request, 'index.html')  # Maybe change
         question = question.replace("+", " ")
         databases = ["Nature"]
-        val = get_data(question, databases)
-        print(val)
+        req = {'question': question,
+               'related':analysis.get_related(question),
+               'data': get_data(question, databases)}
+        print(req)
         return render(
-            request, 'search.html', {
-                'question': question, 'data': val})
+            request, 'search.html', req )
         # return render(request, 'index.html')
     return render(request, 'index.html')
 
 
 def define(request):
     if request.method == 'GET':
-        question = request.GET.get('question', None)
+        question = request.GET.get('q', None)
         if question is None:
             return HttpResponseBadRequest
         question = question.replace("+", " ")
@@ -43,7 +44,7 @@ def define(request):
 
 def related(request):
     if request.method == 'GET':
-        question = request.GET.get('question', None)
+        question = request.GET.get('q', None)
         if question is None:
             return HttpResponseBadRequest
         question = question.replace("+", " ")
@@ -71,7 +72,7 @@ def get_data(question, dbs):
                             'pam:article']['xhtml:head']['dc:publisher']
                         item['publicationDate'] = i['sru:recordData']['pam:message'][
                             'pam:article']['xhtml:head']['prism:publicationDate']
-                        item['journal'] = 'Nature'
+                        item['journal'] = 'N'
 
                         pubdate = item['publicationDate']
                         item['mla'] = bibliography.get_easy_bib(
@@ -83,10 +84,10 @@ def get_data(question, dbs):
                         item['abstract'] = helpers.filter_article(
                             item['abstract'])
 
-                        # item['keywords']=analysis.get_entities(item['abstract'])
-                        # item['concepts']=analysis.get_concepts(item['abstract'])
-                        # item['sentiment']=analysis.get_sentiment(item['abstract'])
-                        # item['summary']=analysis.get_summary(item['abstract'])
+                        item['keywords']=analysis.get_entities(str(item['abstract']))
+                        item['concepts']=analysis.get_concepts(str(item['abstract']))
+                        item['sentiment']=analysis.get_sentiment(str(item['abstract']))
+                        item['summary']=analysis.get_summary(str(item['title']),str(item['abstract']))
 
                         entity_array.append(item)
                     return entity_array

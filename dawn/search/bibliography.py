@@ -40,7 +40,7 @@ def get_easy_bib(style, title, pub, year, authors):
         data=output)
 
     if r.status_code == requests.codes.ok:
-        return r.json()
+        return r.json()['data']
     else:
         blank = {}
         return json.dumps(blank)

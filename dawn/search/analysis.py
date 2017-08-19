@@ -46,24 +46,33 @@ def callback(res, **context):
 
 def get_sentiment(query):
     sentiment = aylien_client.Sentiment({'text': query})
-    return sentiment
+    return ("%.2f" % sentiment['polarity_confidence'])
 
 
 def get_related(query):
     related = aylien_client.Related({"phrase": query})
-    return related
+    temp = [a['phrase'] for a in related['related']]
+    return temp
 
 
 def get_entities(query):
     entities = aylien_client.Entities({"text": query})
-    return entities
+    temp = entities['entities']['keyword'][:7]
+    return temp
 
 
 def get_concepts(query):
     concepts = aylien_client.Concepts({"text": query})
-    return concepts
+    temp = [concepts['concepts'][k]['surfaceForms'][0]['string'] for k in concepts['concepts'] ]
+    return temp
 
 
-def get_summary(query):
-    summary = aylien_client.Summarize({'url': query, 'sentences_number': 2})
-    return summary
+def get_summary(title,query):
+    try:
+        summary = aylien_client.Summarize({'title':title, 'text': query, 'sentences_percentage': 30})
+        temp = ""
+        for sentence in summary['sentences']:
+            temp+=sentence
+        return temp
+    except RuntimeError:
+        return query

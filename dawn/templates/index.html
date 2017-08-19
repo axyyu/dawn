@@ -12,27 +12,37 @@
 <body class="scrollbar style-1">
     <img id="background-design" src="{% static 'img/pattern.png' %}">
     <div title="Home" class="click icons" id="logo-icon">
-        <img class="small-icon" src="{% static 'img/dawn.png' %}">
+        <a href="/">
+            <img class="small-icon" src="{% static 'img/dawn.png' %}">
+        </a>
     </div>
 
     <div title="Log In" class="click icons" id = "account-icon">
-        <img class="small-icon" src="{% static 'img/account.png' %}">
+        <a href="/login">
+            <img class="small-icon" src="{% static 'img/account.png' %}">
+        </a>
     </div>
     <div title="Log Out" class="click icons" id = "account-logout" style="display: none">
-        <img class="small-icon" src="{% static 'img/logout.png' %}">
+        <a href="/logout">
+            <img class="small-icon" src="{% static 'img/logout.png' %}">
+        </a>
     </div>
 
     <div id="title-container">
         <h1 id="title-text">dawn</h1>
     </div>
     <div id="search-container">
-        <div id="project-dropdown">
-            <h3 class="selected-project click" id="live">Live Project</h3>
-            <div class="project-list scrollbar style-1">
-                <!--<h3 class="project-list-element click">Your Project</h3>-->
-            </div>
-        </div>
-        <input id="search-bar" class = "form-control" type="text" name="search-term" placeholder="type something" autocomplete="off" autofocus>
+        <form action="/search" method="get">
+            <!--<input id="project-dropdown" title="project" name="p" value="live" list="project-datalist">-->
+              <!--<datalist id="project-datalist">-->
+                  <!--<option value="live">Live</option>-->
+                <!--<option value="volvo">Volvo</option>-->
+                <!--<option value="saab">Saab</option>-->
+                <!--<option value="fiat">Fiat</option>-->
+                <!--<option value="audi">Audi</option>-->
+              <!--</datalist>-->
+            <input id="search-bar" type="text" name="q" placeholder="type something" autocomplete="off" autofocus>
+        </form>
     </div>
 
     <div id="introduction-view">

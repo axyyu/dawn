@@ -14,9 +14,8 @@
 
 /*Search*/
 #search-container {
-  position: absolute;
-  width: 100%;
-  top: 30px;
+  padding-bottom: 10px;
+  width: calc(100% - 10px);
   text-align: center;
   display: flex;
   flex-direction: row;
@@ -32,8 +31,23 @@
   border: none;
   width: 30vw;
   min-width: 300px;
-  padding: 30px;
-  border-radius: 5px; }
+  border-radius: 5px;
+padding: 5px;
+}
+
+#project-dropdown {
+  display: inline;
+  text-align: center;
+  font-size: 30px;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  min-width: 300px;
+  border-radius: 5px;
+  width: 200px;
+  margin: 0 10px;
+  padding: 5px;
+}
 
 #search-bar::-webkit-input-placeholder {
   color: lightgrey !important; }
@@ -52,7 +66,7 @@
 /*Article Menu*/
 #article-view {
   padding: 50px;
-  padding-top: 100px; }
+  padding-top: 30px; }
 
 .article-col {
   height: 100%;
@@ -173,6 +187,10 @@
   height: calc(100% - 60px);
   overflow: auto; }
 
+.articlecontent{
+  display: none;
+}
+
 /*Article List Buttons*/
 #list-buttons {
   order: 1;
@@ -211,250 +229,6 @@
   width: 60px;
   padding: 0 5px; }
 
-/*Toolbar*/
-.toolbar-button {
-  text-align: center;
-  font-size: 36px;
-  width: 48px;
-  height: 48px;
-  vertical-align: middle;
-  display: inline-block;
-  transition: font-size ease .2s; }
-
-.toolbar-button:hover {
-  margin: 0;
-  font-size: 40px;
-  vertical-align: middle; }
-
-.toolbar {
-  height: 100%;
-  overflow: auto; }
-
-#article-toolbox {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  width: 20%;
-  padding-left: 10px;
-  overflow: hidden;
-  justify-content: space-between; }
-
-#toolbar-container {
-  order: 1;
-  width: 100%;
-  height: calc(100% - 100px);
-  overflow: auto; }
-
-#toolbar-buttons {
-  order: 2;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around; }
-
-/*Toolbar Keywords*/
-.list-keyword {
-  display: inline-block;
-  font-size: 15px;
-  padding: 10px;
-  margin: 5px;
-  background: rgba(255, 255, 255, 0.1); }
-
-.list-keyword-selected {
-  font-weight: bold;
-  background: rgba(255, 255, 255, 0.2); }
-
-/*Project Dropdown*/
-#project-dropdown {
-  width: 200px;
-  text-align: center;
-  display: inline-block;
-  color: white;
-  border: none;
-  height: 60px;
-  margin: 0 10px; }
-
-.project-list {
-  display: none;
-  position: absolute;
-  min-width: 100%;
-  z-index: 1;
-  overflow: auto;
-  max-height: 200px; }
-
-#project-dropdown:hover .project-list {
-  display: block; }
-
-.selected-project {
-  width: 200px;
-  font-size: 20px;
-  height: 100%;
-  padding: 0 5px;
-  background: rgba(0, 0, 0, 0.5);
-  line-height: 60px; }
-
-.project-list-element {
-  width: 200px;
-  font-size: 16px;
-  height: 60px;
-  margin: 5px 0;
-  background: rgba(0, 0, 0, 0.4);
-  line-height: 60px;
-  transition: font-size .1s ease; }
-
-.project-list-element:hover {
-  font-size: 18px;
-  transition: font-size .1s ease; }
-
-/*Database Dropdown*/
-#database-dropdown {
-  width: 200px;
-  text-align: center;
-  display: inline-block;
-  color: white;
-  border: none;
-  height: 60px;
-  margin: 0 10px; }
-
-.database-list {
-  display: none;
-  /*position: absolute;*/
-  min-width: 100%;
-  z-index: 1;
-  overflow: auto;
-  max-height: 200px;
-  background: #808080; }
-
-#database-dropdown:hover .database-list {
-  display: block; }
-
-.selected-database {
-  width: 200px;
-  font-size: 20px;
-  height: 100%;
-  padding: 0 5px;
-  background: rgba(0, 0, 0, 0.5);
-  line-height: 60px; }
-
-.selected-db {
-  border-left: 5px solid white;
-  background: rgba(0, 0, 0, 0.5); }
-
-.database-list-element {
-  /*width: 200px;*/
-  font-size: 16px;
-  height: 60px;
-  margin-top: 5px;
-  background: rgba(0, 0, 0, 0.4);
-  line-height: 60px;
-  transition: all .1s ease; }
-
-.database-list-element:hover {
-  font-size: 18px;
-  transition: font-size .1s ease; }
-
-/*Bibliography*/
-#citation {
-  width: 100%;
-  margin-top: 30px;
-  word-wrap: break-word; }
-
-#citation-buttons {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  vertical-align: middle; }
-
-.citation-button {
-  text-align: center;
-  font-size: 20px;
-  height: 40px;
-  width: 60px;
-  padding: 5px 10px;
-  vertical-align: middle;
-  display: inline-block;
-  margin: 5px 5px;
-  background: rgba(0, 0, 0, 0.5);
-  transition: width ease .2s; }
-
-.citation-button-selected {
-  font-weight: bold; }
-
-.citation-button:hover {
-  width: 70px;
-  transition: width ease .2s; }
-
-/*Notes Panel*/
-#notes-container {
-  height: 100%;
-  width: 100%;
-  color: white;
-  background: rgba(0, 0, 0, 0.5); }
-
-#notes-panel {
-  overflow: hidden; }
-
-/*Introduction*/
-#introduction-view {
-  height: 100vh;
-  min-height: 100vh;
-  width: 100%;
-  max-height: 100%;
-  max-width: 100%; }
-
-#catchphrase {
-  font-size: 40px;
-  padding-bottom: 30px; }
-
-#intro-break {
-  color: white;
-  width: 70vw;
-  padding: 0; }
-
-#intro-container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  padding: 0 30px; }
-
-.intro-panel {
-  margin: 30px;
-  width: calc(calc(100% - 240px) / 4);
-  min-width: 170px; }
-
-.intro-image {
-  max-height: 100%;
-  max-width: 100%; }
-
-.intro-key {
-  padding: 20px;
-  font-size: 30px; }
-
-.intro-desc {
-  padding: 0 20px;
-  font-size: 20px; }
-
-/*Scroll Animations*/
-.invisible {
-  transition: opacity 1s ease, margin 1s ease;
-  margin-top: 50px;
-  opacity: 0.0; }
-
-.visible {
-  transition: opacity 1s ease, margin 1s ease;
-  margin-top: 30px;
-  opacity: 1.0; }
-
-/*Tooltip*/
-.tooltip-items {
-  color: black;
-  display: none; }
-
 /* Popup */
 #popup-view {
   position: fixed;
@@ -487,6 +261,9 @@
   font-size: 26px; }
 
 /*Bibliography*/
+.bibcontent{
+  display: none;
+}
 #bibliography {
   height: 100%; }
 
@@ -518,6 +295,9 @@
   word-wrap: break-word; }
 
 /*Keyword*/
+.keywordcontent{
+  display: none !important;
+}
 #dictionary {
   height: 100%; }
 

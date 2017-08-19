@@ -19,7 +19,6 @@ var idTracker = 0;
 var highlightedSpan = null;
 
 $(document).ready(function(){
-    firebaseChange();
     setupIconButtons();
     setupSearchBar();
 });
@@ -69,11 +68,6 @@ function firebaseChange(){
     });
 }
 function setupIconButtons(){
-    var logoicon = $( "#logo-icon");
-    logoicon.unbind( "click" );
-    logoicon.click(function(){
-        window.location = '/';
-    });
     $(".popup-close").click(function () {
         $("#popup-view").hide();
     });
@@ -82,11 +76,20 @@ function setupSearchBar(){
     $("#search-bar").keydown(function(event){
         if(!searchPage){
             $("#title-container").fadeOut("fast");
+            $("#search-container").animate({
+                top:"30px",
+                "margin-top":"0",
+                'border-radius':"5px"
+            }, 1000);
+            $("#background-design").fadeOut("fast");
+            $('html, body').animate({
+                scrollTop: $("body").offset().top
+            }, 500, function(){
+                $("#introduction-view").hide();
+            });
+            $("#project-container").fadeOut("fast");
+
             searchPage = true;
-        }
-        if(event.which=="13")
-        {
-            search();
         }
     });
 }
@@ -123,67 +126,4 @@ function selectProject(projectkey, element){
         $(project).appendTo(".project-list");
     }
     $(element).remove();
-}
-
-function search(){
-    $("#search-container").animate({
-        top:"30px",
-        "margin-top":"0",
-        'border-radius':"5px"
-    }, 1000);
-    $("#background-design").fadeOut("fast");
-    $('html, body').animate({
-        scrollTop: $("body").offset().top
-    }, 500, function(){
-        $("#introduction-view").hide();
-        getData();
-    });
-    $("#project-container").fadeOut("fast");
-}
-function getData(){
-    $("#loading-view").fadeIn("fast");
-    if(!searching){
-        searching = true;
-        console.log("Searching...");
-
-        var searchTerm = $("#search-bar").val();
-        if(searchable(searchTerm)){
-            // var csrftoken = getCookie('csrftoken');
-            //
-            // $.ajaxSetup({
-            //     beforeSend: function(xhr, settings) {
-            //         if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-            //             xhr.setRequestHeader("X-CSRFToken", csrftoken);
-            //         }
-            //     }
-            // });
-            $.ajax({
-                type: "GET",
-                url: "/search/",
-                data: {
-                    question:searchTerm
-                }})
-                .done(function( result, textStatus, jqXHR ) {
-                    console.log(result);
-                    obj = result['data'];
-                })
-                .fail(function( e, textStatus, errorThrown ) {
-                    switch (e.status) {
-                        case 429:
-                            handleError('Currently we are only permitting 5 searches per hour. Please try again in an hour.');
-                            break;
-                        default:
-                            handleError('The server had an error. Please try again later.');
-                            break;
-                    }
-                })
-        }
-    }
-}
-function searchable(term){
-    return (term.replace(/ /g, 'x') != "");
-}
-function handleError(str){
-    alert(str);
-    window.location = '/';
 }

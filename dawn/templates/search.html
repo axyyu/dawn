@@ -11,23 +11,19 @@
 </head>
 <body class="scrollbar style-1">
 <div title="Home" class="click icons" id="logo-icon">
-    <img class="small-icon" src="{% static 'img/dawn.png' %}">
+    <a href="/">
+        <img class="small-icon" src="{% static 'img/dawn.png' %}">
+    </a>
 </div>
 <div title="Log In" class="click icons" id = "account-icon">
-    <img class="small-icon" src="{% static 'img/account.png' %}">
+    <a href="/login">
+        <img class="small-icon" src="{% static 'img/account.png' %}">
+    </a>
 </div>
 <div title="Log Out" class="click icons" id = "account-logout" style="display: none">
-    <img class="small-icon" src="{% static 'img/logout.png' %}">
-</div>
-
-<div id="search-container">
-    <div id="project-dropdown">
-        <h3 class="selected-project click" id="live">Live Project</h3>
-        <div class="project-list scrollbar style-1">
-            <!--<h3 class="project-list-element click">Your Project</h3>-->
-        </div>
-    </div>
-    <input id="search-bar" class = "form-control" type="text" name="search-term" placeholder="type something" autocomplete="off" value="{{question}}" autofocus>
+    <a href="/logout">
+        <img class="small-icon" src="{% static 'img/logout.png' %}">
+    </a>
 </div>
 
 <div id="popup-view" class="view">
@@ -84,21 +80,12 @@
                     </div>
                     <div id="related-list" class="scrollbar style-1">
                         <div class="related-row">
-                            <div class="related-term">genes</div>
+                            <div class="related-term">{{question}}</div>
                         </div>
                         <div class="related-row">
-                            <div class="related-term">genes</div>
-                            <div class="related-term">genes</div>
-                            <div class="related-term">genes</div>
-                        </div>
-                        <div class="related-row">
-                            <div class="related-term">genes</div>
-                            <div class="related-term">genes</div>
-                            <div class="related-term">genes</div>
-                            <div class="related-term">genes</div>
-                            <div class="related-term">genes</div>
-                            <div class="related-term">genes</div>
-                            <div class="related-term">genes</div>
+                            {% for word in related %}
+                                <div class="related-term">{{word}}</div>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
@@ -107,27 +94,32 @@
     </div>
 </div>
 
-<div id="article-view" class="view" style="display: none">
+<div id="article-view" class="view">
+    <div id="search-container">
+    <form action="/search" method="get">
+            <!--<input id="project-dropdown" title="project" name="p" list="project-datalist">-->
+              <!--<datalist id="project-datalist">-->
+                <!--<option value="volvo">Volvo</option>-->
+                <!--<option value="saab">Saab</option>-->
+                <!--<option value="fiat">Fiat</option>-->
+                <!--<option value="audi">Audi</option>-->
+              <!--</datalist>-->
+            <input id="search-bar" type="text" name="q" placeholder="type something" autocomplete="off" value="{{question}}" autofocus>
+    </form>
+    </div>
     <div id="article-list-container">
         <div id="list-buttons">
-            <div id="search-again" title="Search Again" class="list-button glyphicon glyphicon-refresh click"></div>
-            <div id="related-terms" title="Related Terms" class="list-button glyphicon glyphicon-cloud click"></div>
-            <div class="list-field">
-                From:
-                <input id="date-begin" class="list-input" title="Start Year" placeholder="ALL">
-            </div>
-            <div class="list-field">
-                To:
-                <input id="date-end" class="list-input" title="End Year" placeholder="ALL">
-            </div>
+            <div id="search-again" title="Search Again" class="list-button glyphicon glyphicon-refresh click" onclick="searchAgain()"></div>
+            <div id="related-terms" title="Related Terms" class="list-button glyphicon glyphicon-cloud click" onclick="relatedTerms()"></div>
+            <div id="advanced-search" title="Advanced-Search" class="list-button glyphicon glyphicon-cog click" onclick="advancedSearch()"></div>
         </div>
         <div id="article-list" class="scrollbar style-1">
-            <div class="article">
-                {% for v in data %}
+            {% for v in data %}
+                <div class="article">
                     <div class="article-name-container article-list-elements">
                         <h3 class="article-name">
                             <a class="article-link" href="{{v.url}}" target="_blank">
-                                {{v.title}}
+                                {{v.title | safe}}
                             </a>
                         </h3>
                         <div class="article-journal N">{{v.journal}}</div>
@@ -136,28 +128,46 @@
                         {{v.publicationDate}}
                     </h4>
                     <h4 class="article-desc article-list-elements">
-                        {{v.abstract}}
+                        {{v.summary}}
                     </h4>
+                    <div class="articlecontent">
+                            {{v.abstract}}
+                    </div>
                     <div class="article-info article-list-elements">
                         <div class="article-keywords">
-                            {% for v in v.keyword %}
-                                <h4 class="mini-keyword">agent orange</h4>
-                                <h4 class="mini-keyword">orange</h4>
+                            {% for word in v.keywords %}
+                                <h4 class="mini-keyword">{{word}}</h4>
                             {% endfor %}
                         </div>
-                        <div class="article-reliability">{{v.sentiment}}</div>
+                        <div class="article-reliability">Bias: {{v.sentiment}}</div>
                     </div>
                     <div class="article-buttons-container">
                         <div class="article-tools article-buttons">
-                            <div id="keyword-button" class="glyphicon glyphicon-th-list article-tool-button"></div>
-                            <div id="bibliography-button" class="glyphicon glyphicon-book article-tool-button"></div>
+                            <div class="keyword-button glyphicon glyphicon-th-list article-tool-button click" onclick="showKeywords(this)">
+                                <div class="keywordcontent">
+                                    {% for word in v.concepts %}
+                                        <p>{{word}}</p>
+                                    {% endfor %}
+                                    {% for word in v.keywords %}
+                                        <p>{{word}}</p>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="bibliography-button glyphicon glyphicon-book article-tool-button click" onclick="showBibliography(this)">
+                                <div class="bibcontent">
+                                    <p class="mlacontent">{{v.mla | safe}}</p>
+                                    <p class="apacontent">{{v.apa | safe}}</p>
+                                    <p class="chicagocontent">{{v.chicago | safe}}</p>
+                                </div>
+                            </div>
                         </div>
                         <div class="article-add article-buttons">
-                            <div id="add" class="glyphicon glyphicon-plus article-tool-button"></div>
-                            <div id="added" class="glyphicon glyphicon-ok article-tool-button"></div>
+                            <div class="add glyphicon glyphicon-plus article-tool-button click"></div>
+                            <div class="added glyphicon glyphicon-ok article-tool-button click"></div>
                         </div>
                     </div>
-                {% endfor %}
+                </div>
+            {% endfor %}
                 <!--<div class="article-name-container article-list-elements">-->
                     <!--<h3 class="article-name">-->
                         <!--<a class="article-link" href="https://www.google.com/" target="_blank">-->
@@ -189,7 +199,7 @@
                         <!--<div id="added" class="glyphicon glyphicon-ok article-tool-button"></div>-->
                     <!--</div>-->
                 <!--</div>-->
-            </div>
+
         </div>
     </div>
 </div>

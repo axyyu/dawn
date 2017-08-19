@@ -47,7 +47,23 @@
   border: none;
   width: 30vw;
   min-width: 300px;
-  padding: 30px; }
+  border-radius: 5px;
+  padding: 5px;
+}
+
+#project-dropdown {
+  display: inline;
+  text-align: center;
+  font-size: 30px;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  min-width: 300px;
+  border-radius: 5px;
+  width: 200px;
+  margin: 0 10px;
+  padding: 5px;
+}
 
 #search-bar::-webkit-input-placeholder {
   color: lightgrey !important; }
@@ -62,95 +78,6 @@
 
 #search-bar:-ms-input-placeholder {
   color: lightgrey !important; }
-
-/*Project Dropdown*/
-#project-dropdown {
-  width: 200px;
-  text-align: center;
-  display: inline-block;
-  color: white;
-  border: none;
-  height: 60px;
-  margin: 0 10px; }
-
-.project-list {
-  display: none;
-  position: absolute;
-  min-width: 100%;
-  z-index: 1;
-  overflow: auto;
-  max-height: 200px; }
-
-#project-dropdown:hover .project-list {
-  display: block; }
-
-.selected-project {
-  width: 200px;
-  font-size: 20px;
-  height: 100%;
-  padding: 0 5px;
-  background: rgba(0, 0, 0, 0.5);
-  line-height: 60px; }
-
-.project-list-element {
-  width: 200px;
-  font-size: 16px;
-  height: 60px;
-  margin: 5px 0;
-  background: rgba(0, 0, 0, 0.4);
-  line-height: 60px;
-  transition: font-size .1s ease; }
-
-.project-list-element:hover {
-  font-size: 18px;
-  transition: font-size .1s ease; }
-
-/*Database Dropdown*/
-#database-dropdown {
-  width: 200px;
-  text-align: center;
-  display: inline-block;
-  color: white;
-  border: none;
-  height: 60px;
-  margin: 0 10px; }
-
-.database-list {
-  display: none;
-  /*position: absolute;*/
-  min-width: 100%;
-  z-index: 1;
-  overflow: auto;
-  max-height: 200px;
-  background: #808080; }
-
-#database-dropdown:hover .database-list {
-  display: block; }
-
-.selected-database {
-  width: 200px;
-  font-size: 20px;
-  height: 100%;
-  padding: 0 5px;
-  background: rgba(0, 0, 0, 0.5);
-  line-height: 60px; }
-
-.selected-db {
-  border-left: 5px solid white;
-  background: rgba(0, 0, 0, 0.5); }
-
-.database-list-element {
-  /*width: 200px;*/
-  font-size: 16px;
-  height: 60px;
-  margin-top: 5px;
-  background: rgba(0, 0, 0, 0.4);
-  line-height: 60px;
-  transition: all .1s ease; }
-
-.database-list-element:hover {
-  font-size: 18px;
-  transition: font-size .1s ease; }
 
 /*Introduction*/
 #introduction-view {
