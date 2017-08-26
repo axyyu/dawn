@@ -58,7 +58,7 @@
                 </div>
                 <div id="dictionary" class="popup-div" style="display: none;">
                     <div class="popup-title-container">
-                        <h3 class="popup-title">Key Word Dictionary</h3>
+                        <h3 class="popup-title">Keyword Dictionary</h3>
                         <span class="glyphicon glyphicon-remove popup-close click"></span>
                     </div>
                     <div id="search-def-container">
@@ -80,11 +80,8 @@
                     </div>
                     <div id="related-list" class="scrollbar style-1">
                         <div class="related-row">
-                            <div class="related-term">{{question}}</div>
-                        </div>
-                        <div class="related-row">
                             {% for word in related %}
-                                <div class="related-term">{{word}}</div>
+                                <div class="related-term click" onclick="search({{word}})">{{word}}</div>
                             {% endfor %}
                         </div>
                     </div>
@@ -136,7 +133,7 @@
                     <div class="article-info article-list-elements">
                         <div class="article-keywords">
                             {% for word in v.keywords %}
-                                <h4 class="mini-keyword">{{word}}</h4>
+                                <h4 class="mini-keyword">{{word.word}}</h4>
                             {% endfor %}
                         </div>
                         <div class="article-reliability">Bias: {{v.sentiment}}</div>
@@ -146,10 +143,12 @@
                             <div class="keyword-button glyphicon glyphicon-th-list article-tool-button click" onclick="showKeywords(this)">
                                 <div class="keywordcontent">
                                     {% for word in v.concepts %}
-                                        <p>{{word}}</p>
+                                        <p class="kword">{{word.word}}</p>
+                                        <p class="kdef">{{word.def}}</p>
                                     {% endfor %}
                                     {% for word in v.keywords %}
-                                        <p>{{word}}</p>
+                                        <p class="kword">{{word.word}}</p>
+                                        <p class="kdef">{{word.def}}</p>
                                     {% endfor %}
                                 </div>
                             </div>
@@ -168,38 +167,6 @@
                     </div>
                 </div>
             {% endfor %}
-                <!--<div class="article-name-container article-list-elements">-->
-                    <!--<h3 class="article-name">-->
-                        <!--<a class="article-link" href="https://www.google.com/" target="_blank">-->
-                            <!--Article Name-->
-                        <!--</a>-->
-                    <!--</h3>-->
-                    <!--<div class="article-journal N">N</div>-->
-                <!--</div>-->
-                <!--<h4 class="article-date article-list-elements">-->
-                    <!--4/7/2017-->
-                <!--</h4>-->
-                <!--<h4 class="article-desc article-list-elements">-->
-                    <!--Article Desc-->
-                <!--</h4>-->
-                <!--<div class="article-info article-list-elements">-->
-                    <!--<div class="article-keywords">-->
-                        <!--<h4 class="mini-keyword">agent orange</h4>-->
-                        <!--<h4 class="mini-keyword">orange</h4>-->
-                    <!--</div>-->
-                    <!--<div class="article-reliability">Bias: 90</div>-->
-                <!--</div>-->
-                <!--<div class="article-buttons-container">-->
-                    <!--<div class="article-tools article-buttons">-->
-                        <!--<div id="keyword-button" class="glyphicon glyphicon-th-list article-tool-button"></div>-->
-                        <!--<div id="bibliography-button" class="glyphicon glyphicon-book article-tool-button"></div>-->
-                    <!--</div>-->
-                    <!--<div class="article-add article-buttons">-->
-                        <!--<div id="add" class="glyphicon glyphicon-plus article-tool-button"></div>-->
-                        <!--<div id="added" class="glyphicon glyphicon-ok article-tool-button"></div>-->
-                    <!--</div>-->
-                <!--</div>-->
-
         </div>
     </div>
 </div>

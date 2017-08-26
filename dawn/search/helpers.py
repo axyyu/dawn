@@ -14,4 +14,11 @@ def filter_article(string):
 
 
 def get_definition(query):
-    return dictionary.meaning(query)
+    temp = ""
+    val = dictionary.meaning(query)
+    if val is None:
+        temp = "None"
+    else:
+        for k in val:
+            temp += k + ": " + val[k][0]
+    return temp

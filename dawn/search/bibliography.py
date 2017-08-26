@@ -22,8 +22,7 @@ def get_easy_bib(style, title, pub, year, authors):
                 author['first'] = a[0:space]
                 author['middle'] = a[space:lspace]
                 author['last'] = a[lspace:]
-            auth.append(json.dumps(author))
-
+            auth.append(author)
     payload = {}
     payload['key'] = 'e8d16813ad492175b055390bd9d62c2b'
     payload['source'] = 'journal'

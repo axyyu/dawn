@@ -57,22 +57,25 @@ def get_related(query):
 
 def get_entities(query):
     entities = aylien_client.Entities({"text": query})
-    temp = entities['entities']['keyword'][:7]
+    temp = [x for x in entities['entities']['keyword'] if len(x) < 25]
     return temp
 
 
 def get_concepts(query):
     concepts = aylien_client.Concepts({"text": query})
     temp = [concepts['concepts'][k]['surfaceForms'][0]['string'] for k in concepts['concepts'] ]
+    temp = [x for x in temp if len(x) < 20]
     return temp
 
 
 def get_summary(title,query):
     try:
-        summary = aylien_client.Summarize({'title':title, 'text': query, 'sentences_percentage': 30})
+        summary = aylien_client.Summarize({'title':title, 'text': query, 'sentences_number': 2})
         temp = ""
         for sentence in summary['sentences']:
             temp+=sentence
+        if len(temp) < 10:
+            return query
         return temp
     except RuntimeError:
         return query

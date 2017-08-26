@@ -131,10 +131,12 @@ function showKeywords(obj){
     var childs = $($(obj).find(".keywordcontent")[0]).children();
 
     var str = "";
-    for (a = 0; a < childs.length; a++) {
-        str += '<div class="keyword-entry"><div class="keyword-container">';
-        str += '<div class="keyword">' + $(childs[a]).text() + '</div></div>';
-        str += '<div class="keyword-def">' + $(childs[a]).text() + '</div></div>';
+    for (a = 0; a < childs.length; a+=2) {
+        if($(childs[a+1]).text()!="None") {
+            str += '<div class="keyword-entry"><div class="keyword-container">';
+            str += '<div class="keyword">' + $(childs[a]).text() + '</div></div>';
+            str += '<div class="keyword-def">' + $(childs[a + 1]).text() + '</div></div>';
+        }
     }
     $("#keyword-list").append($(str));
     $(".popup-div").hide();
@@ -145,8 +147,6 @@ function showBibliography(obj){
     var childs = $($(obj).find(".bibcontent")[0]);
 
     var apa = $($(childs).find(".apacontent")[0]).html();
-    console.log($(childs).find(".apacontent")[0]);
-    console.log(apa);
     var mla = $($(childs).find(".mlacontent")[0]).html();
     var chicago = $($(childs).find(".chicagocontent")[0]).html();
 
@@ -177,43 +177,39 @@ function showBibliography(obj){
 }
 function addKeyword(){
     var searchTerm = $("#search-def").val();
-
     if(searchable(searchTerm)) {
-        var csrftoken = getCookie('csrftoken');
-
-        $.ajaxSetup({
-            beforeSend: function (xhr, settings) {
-                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
-                }
-            }
-        });
         $.ajax({
-            type: "POST",
-            url: "/define/",
+            type: "GET",
+            url: "/search/define/",
             data: {
-                term: searchTerm
+                q: searchTerm
             }
         })
             .done(function (result, textStatus, jqXHR) {
                 obj = result['data'];
                 console.log(obj);
+                $("#search-def").val('');
 
                 var str = "";
                 str += '<div class="keyword-entry"><div class="keyword-container">';
                 str += '<div class="keyword">' + searchTerm + '</div></div>';
-                str += '<div class="keyword-def">' + obj.definition + '</div></div>';
+                str += '<div class="keyword-def">' + obj + '</div></div>';
                 $("#keyword-list").append($(str));
             })
             .fail(function (e, textStatus, errorThrown) {
                 switch (e.status) {
-                    case 429:
-                        handleError('Currently we are only permitting 5 searches per hour. Please try again in an hour.');
-                        break;
                     default:
                         handleError('The server had an error. Please try again later.');
                         break;
                 }
             })
     }
+}
+
+function searchable(term){
+    return (term.replace(/ /g, 'x') != "");
+}
+function handleError(str){
+    alert(str);
+    window.location = '/';
 }

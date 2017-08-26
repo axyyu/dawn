@@ -11,6 +11,7 @@ from . import analysis
 from . import helpers
 from . import bibliography
 
+
 # @ensure_csrf_cookie
 
 
@@ -22,13 +23,16 @@ def index(request):
         question = question.replace("+", " ")
         databases = ["Nature"]
         req = {'question': question,
-               'related':analysis.get_related(question),
+               'related': analysis.get_related(question),
                'data': get_data(question, databases)}
-        print(req)
         return render(
-            request, 'search.html', req )
+            request, 'search.html', req)
         # return render(request, 'index.html')
     return render(request, 'index.html')
+
+
+def profile(request):
+    return render(request, 'profile.html')
 
 
 def define(request):
@@ -39,7 +43,6 @@ def define(request):
         question = question.replace("+", " ")
         output = json.dumps({'data': helpers.get_definition(question)})
         return HttpResponse(output, content_type='application/json')
-    return render(request, 'index.html')
 
 
 def related(request):
@@ -57,7 +60,7 @@ def get_data(question, dbs):
     entity_array = []
     for d in dbs:
         if d == "Nature":
-            body = databases.get_nature_journal(question, 3)
+            body = databases.get_nature_journal(question, 1)
             if body:
                 if body.get('feed') and body.get('feed').get('entry'):
                     for i in body['feed']['entry']:
@@ -77,17 +80,29 @@ def get_data(question, dbs):
                         pubdate = item['publicationDate']
                         item['mla'] = bibliography.get_easy_bib(
                             'mla7', item['title'], item['publisher'], item['publicationDate'][
-                                0:4], item['authors'])
+                                                                      0:4], item['authors'])
                         item['apa'] = bibliography.get_easy_bib(
                             'apa', item['title'], item['publisher'], item['publicationDate'][
-                                0:4], item['authors'])
-                        item['abstract'] = helpers.filter_article(
-                            item['abstract'])
+                                                                     0:4], item['authors'])
+                        item['chicago'] = bibliography.get_easy_bib(
+                            'chicagob', item['title'], item['publisher'], item['publicationDate'][
+                                                                     0:4], item['authors'])
+                        item['abstract'] = helpers.filter_article(item['abstract'])
 
-                        item['keywords']=analysis.get_entities(str(item['abstract']))
-                        item['concepts']=analysis.get_concepts(str(item['abstract']))
-                        item['sentiment']=analysis.get_sentiment(str(item['abstract']))
-                        item['summary']=analysis.get_summary(str(item['title']),str(item['abstract']))
+                        item['keywords'] = analysis.get_entities(str(item['abstract']))
+                        item['concepts'] = analysis.get_concepts(str(item['abstract']))
+
+                        # item['keywords'] = [{'word': word, 'def': helpers.get_definition(word)} for word in
+                        #                     item['keywords']]
+                        # item['concepts'] = [{'word': word, 'def': helpers.get_definition(word)} for word in
+                        #                     item['concepts']]
+                        item['keywords'] = [{'word': word, 'def': ""} for word in
+                                            item['keywords']]
+                        item['concepts'] = [{'word': word, 'def': ""} for word in
+                                            item['concepts']]
+
+                        item['sentiment'] = analysis.get_sentiment(str(item['abstract']))
+                        item['summary'] = analysis.get_summary(str(item['title']), str(item['abstract']))
 
                         entity_array.append(item)
                     return entity_array

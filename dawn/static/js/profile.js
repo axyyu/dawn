@@ -11,15 +11,6 @@ $(document).ready(function(){
     setupIconButtons();
 });
 function setupFirebase(){
-    firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-            uid = user.uid;
-            userlocation = 'users/' + uid +'/';
-            retrieveProjects();
-        } else {
-            window.location = 'login.html';
-        }
-    });
 }
 function retrieveProjects(){
     var location = firebase.database().ref(userlocation);

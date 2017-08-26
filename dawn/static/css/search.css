@@ -25,7 +25,7 @@
 #search-bar {
   display: inline;
   text-align: center;
-  font-size: 30px;
+  font-size: 2.0em;
   background: rgba(0, 0, 0, 0.5);
   color: white;
   border: none;
@@ -38,7 +38,7 @@ padding: 5px;
 #project-dropdown {
   display: inline;
   text-align: center;
-  font-size: 30px;
+  font-size: 100%;
   background: rgba(0, 0, 0, 0.5);
   color: white;
   border: none;
@@ -127,7 +127,7 @@ padding: 5px;
   display: inline-block;
   font-size: 15px;
   padding: 10px;
-  margin-right: 5px;
+  margin: 5px;
   background: rgba(255, 255, 255, 0.2); }
 
 .article-selected {
@@ -142,6 +142,7 @@ padding: 5px;
 
 .article-reliability {
   margin-top: 10px;
+  margin-left: 5px;
   font-size: 18px; }
 
 .article-buttons-container {
@@ -352,19 +353,31 @@ padding: 5px;
 #related-list {
   height: calc(100% - 50px);
   overflow: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around; }
+}
 
 .related-row {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-around; }
+  min-height: 50px;
+  justify-content: flex-start;
+}
 
 .related-term {
+  margin: 10px;
   padding: 10px;
   font-size: 16px;
   background: rgba(255, 255, 255, 0.2); }
 
 /*# sourceMappingURL=search.css.map */
+
+/*RESPONSIVE*/
+@media screen and (max-width: 500px) {
+  #article-view{
+    margin-top:70px;
+  }
+  #popup-container{
+    height: 100vh;
+    width: 100vw;
+  }
+}
