@@ -19,6 +19,8 @@
 
 * To run the development server, run `python manage.py runserver`.
 
+* If using nginx, make sure to add the line `rewrite ^/(.*)/$ /$1 permanent;` to the config.
+
 ## Configuration ##
 * `config.json` contains API keys and the port number the app runs on.
 
