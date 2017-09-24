@@ -9,166 +9,102 @@
 
     <script type="text/javascript" src="{% static 'js/search.js' %}" defer></script>
 </head>
-<body class="scrollbar style-1">
-<div title="Home" class="click icons" id="logo-icon">
-    <a href="/">
-        <img class="small-icon" src="{% static 'img/dawn.png' %}">
-    </a>
-</div>
-<div title="Log In" class="click icons" id = "account-icon">
-    <a href="/login">
-        <img class="small-icon" src="{% static 'img/account.png' %}">
-    </a>
-</div>
-<div title="Log Out" class="click icons" id = "account-logout" style="display: none">
-    <a href="/logout">
-        <img class="small-icon" src="{% static 'img/logout.png' %}">
-    </a>
-</div>
+<body>
+    <form action="/search" method="get">
+        <input id="search-bar" type="text" name="q" placeholder="What would you like to learn about today?" autofocus>
+        <input type="submit" value="Search" class="click">
+    </form>
 
-<div id="popup-view" class="view">
-    <div class="main-container">
-        <div class="main-content">
-            <div id="popup-container">
-                <div id="bibliography" class="popup-div" style="display: none;">
-                    <div class="popup-title-container">
-                        <h3 class="popup-title">Citation Formats</h3>
-                        <span class="glyphicon glyphicon-remove popup-close click"></span>
-                    </div>
-                    <div id="citation-list" class="scrollbar style-1">
-                        <div class="citation-container">
-                            <div class="citation">
-                                <div class="citation-title">APA</div>
-                                <div id="apa" class="citation-content"></div>
-                            </div>
-                        </div>
-                        <div class="citation-container">
-                            <div class="citation">
-                                <div class="citation-title">MLA</div>
-                                <div id="mla" class="citation-content"></div>
-                            </div>
-                        </div>
-                        <div class="citation-container">
-                            <div class="citation">
-                                <div class="citation-title">Chicago</div>
-                                <div id="chicago" class="citation-content"></div>
-                            </div>
-                        </div>
+    <div id="search-content">
+        <div id="search-info">
+            <div id="search-term">
+                <h2>search term</h2>
+                <span class="fa fa-refresh click"></span>
+            </div>
+            <div class="info">
+                <h2>Definition</h2>
+                <p>Food is any substance consumed to
+                    provide nutritional support for an organism.
+                    The substance is ingested by an
+                    organism and assimilated by the organism's
+                    cells to provide energy, maintain life, or
+                    stimulate growth.</p>
+            </div>
+            <div class="info">
+                <h2>Related Terms</h2>
+                <div id="related-terms">
+                    <div class="related-term">
+                        <h4>Example Term</h4>
+                        <span class="fa fa-filter click"></span>
+                        <span class="fa fa-search click"></span>
                     </div>
                 </div>
-                <div id="dictionary" class="popup-div" style="display: none;">
-                    <div class="popup-title-container">
-                        <h3 class="popup-title">Keyword Dictionary</h3>
-                        <span class="glyphicon glyphicon-remove popup-close click"></span>
-                    </div>
-                    <div id="search-def-container">
-                        <input id="search-def" title="Search" placeholder="type keyword">
-                    </div>
-                    <div id="keyword-list" class="scrollbar style-1">
-                        <div class="keyword-entry">
-                            <div class="keyword-container">
-                                <div class="keyword">genes</div>
-                            </div>
-                            <div class="keyword-def"></div>
-                        </div>
-                    </div>
+            </div>
+        </div>
+        <div id="search-click" class="click">
+            <span class="fa fa-caret-left"></span>
+        </div>
+        <div class="space"></div>
+        <div id="search-results">
+            <div id="search-toolbar">
+                <div id="database-dropdown">
+                    <span class="database">N</span>
+                    <span class="database">PQ</span>
+                    <span class="fa fa-caret-down click"></span>
                 </div>
-                <div id="related" class="popup-div">
-                    <div class="popup-title-container">
-                        <h3 class="popup-title">Related Terms</h3>
-                        <span class="glyphicon glyphicon-remove popup-close click"></span>
+                <div id="database-time">
+                    <h4>Time:</h4>
+                    <input type="text" value="None">
+                    <h4>-</h4>
+                    <input type="text" value="None">
+                </div>
+                <div id="database-sort">
+                    <span class="fa fa-sort-alpha-asc click"></span>
+                    <span class="fa fa-sort-alpha-desc click"></span>
+                    <span class="fa fa-sort-numeric-asc click"></span>
+                    <span class="fa fa-sort-numeric-desc click"></span>
+                </div>
+            </div>
+            <div class="space"></div>
+            <div id="search-list">
+                <div class="search-entry">
+                    <div class="entry-title">
+                        <h2>Sample Title</h2>
+                        <span>Nature Journal</span>
                     </div>
-                    <div id="related-list" class="scrollbar style-1">
-                        <div class="related-row">
-                            {% for word in related %}
-                                <div class="related-term click" onclick="search({{word}})">{{word}}</div>
-                            {% endfor %}
+                    <div class="entry-info">
+                        <h3>Sample Title</h3>
+                        <h3>Sample Date</h3>
+                    </div>
+                    <p class="entry-summary">Food is any substance[1] consumed to
+                        provide nutritional support for an organism.
+                        The substance is ingested by an
+                        organism and assimilated by the organism's
+                        cells to provide energy, maintain life, or
+                        stimulate growth.</p>
+                    <div class="entry-action">
+                        <div class="entry-terms">
+                            <div class="entry-term">
+                                <h4>Example Term</h4>
+                                <span class="fa fa-search click"></span>
+                            </div>
+                        </div>
+                        <div class="entry-icons">
+                            <span class="fa fa-info-circle click"></span>
+                            <span class="fa fa-bookmark click"></span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<div id="article-view" class="view">
-    <div id="search-container">
-    <form action="/search" method="get">
-            <!--<input id="project-dropdown" title="project" name="p" list="project-datalist">-->
-              <!--<datalist id="project-datalist">-->
-                <!--<option value="volvo">Volvo</option>-->
-                <!--<option value="saab">Saab</option>-->
-                <!--<option value="fiat">Fiat</option>-->
-                <!--<option value="audi">Audi</option>-->
-              <!--</datalist>-->
-            <input id="search-bar" type="text" name="q" placeholder="type something" autocomplete="off" value="{{question}}" autofocus>
-    </form>
-    </div>
-    <div id="article-list-container">
-        <div id="list-buttons">
-            <div id="search-again" title="Search Again" class="list-button glyphicon glyphicon-refresh click" onclick="searchAgain()"></div>
-            <div id="related-terms" title="Related Terms" class="list-button glyphicon glyphicon-cloud click" onclick="relatedTerms()"></div>
-            <div id="advanced-search" title="Advanced-Search" class="list-button glyphicon glyphicon-cog click" onclick="advancedSearch()"></div>
+    <footer>
+        <div id="information">
+            <h4>What is Delve?</h4>
+            <h4>About Us</h4>
         </div>
-        <div id="article-list" class="scrollbar style-1">
-            {% for v in data %}
-                <div class="article">
-                    <div class="article-name-container article-list-elements">
-                        <h3 class="article-name">
-                            <a class="article-link" href="{{v.url}}" target="_blank">
-                                {{v.title | safe}}
-                            </a>
-                        </h3>
-                        <div class="article-journal N">{{v.journal}}</div>
-                    </div>
-                    <h4 class="article-date article-list-elements">
-                        {{v.publicationDate}}
-                    </h4>
-                    <h4 class="article-desc article-list-elements">
-                        {{v.summary}}
-                    </h4>
-                    <div class="articlecontent">
-                            {{v.abstract}}
-                    </div>
-                    <div class="article-info article-list-elements">
-                        <div class="article-keywords">
-                            {% for word in v.keywords %}
-                                <h4 class="mini-keyword">{{word.word}}</h4>
-                            {% endfor %}
-                        </div>
-                        <div class="article-reliability">Bias: {{v.sentiment}}</div>
-                    </div>
-                    <div class="article-buttons-container">
-                        <div class="article-tools article-buttons">
-                            <div class="keyword-button glyphicon glyphicon-th-list article-tool-button click" onclick="showKeywords(this)">
-                                <div class="keywordcontent">
-                                    {% for word in v.concepts %}
-                                        <p class="kword">{{word.word}}</p>
-                                        <p class="kdef">{{word.def}}</p>
-                                    {% endfor %}
-                                    {% for word in v.keywords %}
-                                        <p class="kword">{{word.word}}</p>
-                                        <p class="kdef">{{word.def}}</p>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                            <div class="bibliography-button glyphicon glyphicon-book article-tool-button click" onclick="showBibliography(this)">
-                                <div class="bibcontent">
-                                    <p class="mlacontent">{{v.mla | safe}}</p>
-                                    <p class="apacontent">{{v.apa | safe}}</p>
-                                    <p class="chicagocontent">{{v.chicago | safe}}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="article-add article-buttons">
-                            <div class="add glyphicon glyphicon-plus article-tool-button click"></div>
-                            <div class="added glyphicon glyphicon-ok article-tool-button click"></div>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-    </div>
-</div>
+        <h4>&copy; 2017 Delve Inc. All Rights Reserved.</h4>
+    </footer>
 </body>
 </html>

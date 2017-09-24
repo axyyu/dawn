@@ -2,78 +2,31 @@
 <html lang="en">
 {% load static %}
 <head>
-    <title>Dawn</title>
+    <title>Delve</title>
     {% include 'head.html' %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/index.css' %}">
 
-    <script type="text/javascript" src="{% static 'js/index.js' %}" defer></script>
+    <!--<script type="text/javascript" src="{% static 'js/index.js' %}" defer></script>-->
 </head>
-<body class="scrollbar style-1">
-    <img id="background-design" src="{% static 'img/pattern.png' %}">
-    <div title="Home" class="click icons" id="logo-icon">
-        <a href="/">
-            <img class="small-icon" src="{% static 'img/dawn.png' %}">
-        </a>
-    </div>
-
-    <div title="Log In" class="click icons" id = "account-icon">
-        <a href="/login">
-            <img class="small-icon" src="{% static 'img/account.png' %}">
-        </a>
-    </div>
-    <div title="Log Out" class="click icons" id = "account-logout" style="display: none">
-        <a href="/logout">
-            <img class="small-icon" src="{% static 'img/logout.png' %}">
-        </a>
-    </div>
-
-    <div id="title-container">
-        <h1 id="title-text">dawn</h1>
-    </div>
-    <div id="search-container">
+<body>
+    <div id="search">
+        <h1>Delve</h1>
         <form action="/search" method="get">
-            <!--<input id="project-dropdown" title="project" name="p" value="live" list="project-datalist">-->
-              <!--<datalist id="project-datalist">-->
-                  <!--<option value="live">Live</option>-->
-                <!--<option value="volvo">Volvo</option>-->
-                <!--<option value="saab">Saab</option>-->
-                <!--<option value="fiat">Fiat</option>-->
-                <!--<option value="audi">Audi</option>-->
-              <!--</datalist>-->
-            <input id="search-bar" type="text" name="q" placeholder="type something" autocomplete="off" autofocus>
+            <input id="search-bar" type="text" name="q" placeholder="What would you like to learn about today?" autofocus>
+            <input type="submit" value="Search" class="click">
         </form>
-    </div>
-
-    <div id="introduction-view">
-        <div class="main-container">
-            <div class="main-content">
-                <h2 id="catchphrase">New horizons for research</h2>
-                <hr id="intro-break"/>
-                <div id="intro-container">
-                    <div class="intro-panel" data-scroll>
-                        <img class="intro-image" src="{% static 'img/keywords.png' %}">
-                        <h3 class="intro-key">Key Words</h3>
-                        <h4 class="intro-desc">Generates important key words for each article, highlighting them in the text for easy reading.</h4>
-                    </div>
-                    <div class="intro-panel" data-scroll>
-                        <img class="intro-image" src="{% static 'img/notes.png' %}">
-                        <h3 class="intro-key">Notes</h3>
-                        <h4 class="intro-desc">Saves notes to each project, enabling you to take notes while searching through articles.</h4>
-                    </div>
-                    <div class="intro-panel" data-scroll>
-                        <img class="intro-image" src="{% static 'img/citation.png' %}">
-                        <h3 class="intro-key">Citations</h3>
-                        <h4 class="intro-desc">Automatically cites documents for you, exporting a bibliography in MLA & APA formatting.</h4>
-                    </div>
-                    <div class="intro-panel" data-scroll>
-                        <img class="intro-image" src="{% static 'img/search.png' %}">
-                        <h3 class="intro-key">Search</h3>
-                        <h4 class="intro-desc">Offers concept searching and allows you to find important concepts related to the search term.</h4>
-                    </div>
-                </div>
-            </div>
+        <div id="trending-topics">
+            <h2>Trending Research:</h2>
+            <div id="trending-topic" class="click">TEMP THING</div>
         </div>
     </div>
+
+    <footer>
+        <div id="information">
+            <h4>What is Delve?</h4>
+            <h4>About Us</h4>
+        </div>
+        <h4>&copy; 2017 Delve Inc. All Rights Reserved.</h4>
+    </footer>
 </body>
 </html>

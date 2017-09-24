@@ -20,13 +20,13 @@ def index(request):
         question = request.GET.get('q', None)
         if question is None:
             return render(request, 'index.html')  # Maybe change
-        question = question.replace("+", " ")
-        databases = ["Nature"]
-        req = {'question': question,
-               'related': analysis.get_related(question),
-               'data': get_data(question, databases)}
+        #question = question.replace("+", " ")
+        #databases = ["Nature"]
+        #req = {'question': question,
+        #       'related': analysis.get_related(question),
+        #       'data': get_data(question, databases)}
         return render(
-            request, 'search.html', req)
+            request, 'search.html', {})
         # return render(request, 'index.html')
     return render(request, 'index.html')
 

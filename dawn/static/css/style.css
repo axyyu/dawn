@@ -1,93 +1,64 @@
-html {
-  width: 100vw;
-  /*background: linear-gradient(-50deg, #808080, rgb(0, 57, 115));*/
-  background: #808080; }
-
+html,body{
+  margin: 0;
+}
 body {
   width: 100vw;
-  height: 100%;
-  color: white;
-  /*font-family: 'Lato', sans-serif;*/
-  font-family: 'Source Sans Pro', sans-serif;
-  /*background: linear-gradient(-50deg, #808080, rgb(0, 57, 115));*/
-  background: #808080;
-  overflow: scroll;
-  overflow-x: hidden;
-  /*background: url("../img/sunrise4.jpg") no-repeat;*/
-  /*-webkit-background-size: cover;*/
-  /*-moz-background-size: cover;*/
-  /*-o-background-size: cover;*/
-  /*background-size: cover;*/ }
-
-#background-design {
-  position: absolute;
-  top: 0;
-  z-index: 0;
   height: 100vh;
-  width: 100vw; }
+  color: black;
+  font-family: 'Roboto';
+  overflow: hidden;
+}
 
-.main-content {
-  text-align: center;
-  display: table-cell;
-  vertical-align: middle; }
-
-.main-container {
-  display: table;
-  width: 100%;
-  height: 100%; }
-
-h2, h3, h4, h5 {
+h1, h2, h3, h4, h5 {
   margin: 0; }
+
+*{
+  transition: all 0.3s ease;
+}
 
 .click:hover {
   cursor: pointer; }
 
-.article-link {
-  color: white !important;
-  text-decoration: none !important; }
-
-.article-link:hover {
-  color: rgba(255, 255, 255, 0.7) !important;
-  text-decoration: none !important; }
-
 ::-webkit-input-placeholder {
   /* WebKit, Blink, Edge */
-  color: whitesmoke !important; }
+  color: #95989A !important; }
 
 :-moz-placeholder {
   /* Mozilla Firefox 4 to 18 */
-  color: whitesmoke !important;
+  color: #95989A !important;
   opacity: 1; }
 
 ::-moz-placeholder {
   /* Mozilla Firefox 19+ */
-  color: whitesmoke !important;
+  color: #95989A !important;
   opacity: 1; }
 
 :-ms-input-placeholder {
   /* Internet Explorer 10-11 */
-  color: whitesmoke !important; }
+  color: #95989A !important; }
 
 /*Layout*/
-.view {
-  height: 100vh;
+footer{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  position: absolute;
+  bottom:0;
   width: 100%;
-  max-height: 100vh;
-  max-width: 100%; }
-
-/*Scrollbar*/
-.scrollbar {
-  overflow-y: scroll; }
-
-.style-1::-webkit-scrollbar-track {
-  opacity: 0;
-  background-color: rgba(0, 0, 0, 0.5); }
-
-.style-1::-webkit-scrollbar {
-  width: 8px; }
-
-.style-1::-webkit-scrollbar-thumb {
-  background-color: whitesmoke; }
+}
+#information{
+  display: flex;
+}
+footer h4{
+  font-weight: 400;
+  padding: 20px;
+}
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+  outline: none;
+}
 
 /*Icons*/
 .small-icon {
