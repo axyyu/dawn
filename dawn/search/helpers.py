@@ -20,5 +20,5 @@ def get_definition(query):
         temp = "None"
     else:
         for k in val:
-            temp += k + ": " + val[k][0]
+            temp += k + ": " + val[k][0] + "\n"
     return temp

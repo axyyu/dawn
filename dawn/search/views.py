@@ -20,13 +20,13 @@ def index(request):
         question = request.GET.get('q', None)
         if question is None:
             return render(request, 'index.html')  # Maybe change
-        #question = question.replace("+", " ")
-        #databases = ["Nature"]
-        #req = {'question': question,
-        #       'related': analysis.get_related(question),
-        #       'data': get_data(question, databases)}
-        return render(
-            request, 'search.html', {})
+        question = question.replace("+", " ")
+        databases = ["Nature"]
+        req = {'question': question,
+               'definition':helpers.get_definition(question),
+               'related': analysis.get_related(question),
+               'data': get_data(question, databases)}
+        return render(request, 'search.html', req)
         # return render(request, 'index.html')
     return render(request, 'index.html')
 
@@ -71,11 +71,14 @@ def get_data(question, dbs):
                             'pam:article']['xhtml:head']['dc:description']
                         item['authors'] = i['sru:recordData']['pam:message'][
                             'pam:article']['xhtml:head']['dc:creator']
+
+                        item['authorString'] = ", ".join(item['authors'])
+
                         item['publisher'] = i['sru:recordData']['pam:message'][
                             'pam:article']['xhtml:head']['dc:publisher']
                         item['publicationDate'] = i['sru:recordData']['pam:message'][
                             'pam:article']['xhtml:head']['prism:publicationDate']
-                        item['journal'] = 'N'
+                        item['journal'] = 'Nature Journal'
 
                         pubdate = item['publicationDate']
                         item['mla'] = bibliography.get_easy_bib(
@@ -86,20 +89,11 @@ def get_data(question, dbs):
                                                                      0:4], item['authors'])
                         item['chicago'] = bibliography.get_easy_bib(
                             'chicagob', item['title'], item['publisher'], item['publicationDate'][
-                                                                     0:4], item['authors'])
+                                                                          0:4], item['authors'])
                         item['abstract'] = helpers.filter_article(item['abstract'])
 
                         item['keywords'] = analysis.get_entities(str(item['abstract']))
-                        item['concepts'] = analysis.get_concepts(str(item['abstract']))
-
-                        # item['keywords'] = [{'word': word, 'def': helpers.get_definition(word)} for word in
-                        #                     item['keywords']]
-                        # item['concepts'] = [{'word': word, 'def': helpers.get_definition(word)} for word in
-                        #                     item['concepts']]
-                        item['keywords'] = [{'word': word, 'def': ""} for word in
-                                            item['keywords']]
-                        item['concepts'] = [{'word': word, 'def': ""} for word in
-                                            item['concepts']]
+                        # item['concepts'] = analysis.get_concepts(str(item['abstract']))
 
                         item['sentiment'] = analysis.get_sentiment(str(item['abstract']))
                         item['summary'] = analysis.get_summary(str(item['title']), str(item['abstract']))

@@ -11,89 +11,84 @@
 </head>
 <body>
     <form action="/search" method="get">
-        <input id="search-bar" type="text" name="q" placeholder="What would you like to learn about today?" autofocus>
+        <input id="search-bar" type="text" name="q" placeholder="What would you like to learn about today?" value="{{question}}">
         <input type="submit" value="Search" class="click">
     </form>
 
     <div id="search-content">
-        <div id="search-info">
-            <div id="search-term">
-                <h2>search term</h2>
-                <span class="fa fa-refresh click"></span>
-            </div>
-            <div class="info">
-                <h2>Definition</h2>
-                <p>Food is any substance consumed to
-                    provide nutritional support for an organism.
-                    The substance is ingested by an
-                    organism and assimilated by the organism's
-                    cells to provide energy, maintain life, or
-                    stimulate growth.</p>
-            </div>
-            <div class="info">
-                <h2>Related Terms</h2>
-                <div id="related-terms">
-                    <div class="related-term">
-                        <h4>Example Term</h4>
-                        <span class="fa fa-filter click"></span>
-                        <span class="fa fa-search click"></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="search-click" class="click">
-            <span class="fa fa-caret-left"></span>
-        </div>
-        <div class="space"></div>
         <div id="search-results">
             <div id="search-toolbar">
-                <div id="database-dropdown">
-                    <span class="database">N</span>
-                    <span class="database">PQ</span>
-                    <span class="fa fa-caret-down click"></span>
+                <div id="database-list">
+                    <span class="database" onclick="toggleDatabase(this)">N</span>
+                    <span class="database unselected" onclick="toggleDatabase(this)">PQ</span>
                 </div>
                 <div id="database-time">
                     <h4>Time:</h4>
-                    <input type="text" value="None">
+                    <input type="text" placeholder="None" oninput="filterTime()">
                     <h4>-</h4>
-                    <input type="text" value="None">
+                    <input type="text" placeholder="None" oninput="filterTime()">
                 </div>
                 <div id="database-sort">
-                    <span class="fa fa-sort-alpha-asc click"></span>
-                    <span class="fa fa-sort-alpha-desc click"></span>
-                    <span class="fa fa-sort-numeric-asc click"></span>
-                    <span class="fa fa-sort-numeric-desc click"></span>
+                    <span class="fa fa-sort-alpha-asc click" onclick="sortAlpha(true)"></span>
+                    <span class="fa fa-sort-alpha-desc click" onclick="sortAlpha(false)"></span>
+                    <span class="fa fa-sort-numeric-asc click" onclick="sortDate(true)"></span>
+                    <span class="fa fa-sort-numeric-desc click" onclick="sortDate(false)"></span>
                 </div>
             </div>
             <div class="space"></div>
             <div id="search-list">
-                <div class="search-entry">
-                    <div class="entry-title">
-                        <h2>Sample Title</h2>
-                        <span>Nature Journal</span>
-                    </div>
-                    <div class="entry-info">
-                        <h3>Sample Title</h3>
-                        <h3>Sample Date</h3>
-                    </div>
-                    <p class="entry-summary">Food is any substance[1] consumed to
-                        provide nutritional support for an organism.
-                        The substance is ingested by an
-                        organism and assimilated by the organism's
-                        cells to provide energy, maintain life, or
-                        stimulate growth.</p>
-                    <div class="entry-action">
-                        <div class="entry-terms">
-                            <div class="entry-term">
-                                <h4>Example Term</h4>
-                                <span class="fa fa-search click"></span>
+                {% for v in data %}
+                    <div class="search-entry">
+                        <div class="entry-title">
+                            <h2>{{v.title | safe}}</h2>
+                            <span>{{v.journal}}</span>
+                        </div>
+                        <div class="entry-info">
+                            <h3>{{v.authorString}}</h3>
+                            <h3>{{v.publicationDate}}</h3>
+                        </div>
+                        <p class="entry-summary">{{v.summary}}</p>
+                        <div class="entry-action">
+                            <div class="entry-terms">
+                                {% for word in v.keywords %}
+                                <div class="entry-term">
+                                    <h4>{{word}}</h4>
+                                    <span class="fa fa-search click"></span>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <div class="entry-icons">
+                                <span class="fa fa-info-circle click" onclick="stats({{v.sentiment}})"></span>
+                                <span class="fa fa-bookmark click" onclick="cite('{{v.mla}}', '{{v.apa}}', '{{v.chicago}}')"></span>
                             </div>
                         </div>
-                        <div class="entry-icons">
-                            <span class="fa fa-info-circle click"></span>
-                            <span class="fa fa-bookmark click"></span>
-                        </div>
                     </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="space"></div>
+        <div id="search-click" class="click">
+            <span class="fa fa-caret-right"></span>
+        </div>
+        <div id="search-info">
+            <div id="search-term">
+                <h2>{{question}}</h2>
+                <span class="fa fa-refresh click" onclick="search({{question}})"></span>
+            </div>
+            <div class="info">
+                <h2>Definition</h2>
+                <p>{{definition | safe}}</p>
+            </div>
+            <div class="info">
+                <h2>Related Terms</h2>
+                <div id="related-terms">
+                    {% for word in related %}
+                        <div class="related-term">
+                            <h4>{{word}}</h4>
+                            <span class="fa fa-filter click" onclick="filter({{word}})"></span>
+                            <span class="fa fa-search click" onclick="search({{word}})"></span>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
