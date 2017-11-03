@@ -21,11 +21,6 @@ from django.views.generic import RedirectView
 urlpatterns = [
     url(r'^$', RedirectView.as_view(url='/search')),
     url(r'^search', include('search.urls')),
-    #url(r'^register/$', auth_views.login, {'template_name': 'login.html'}, name='login'),
-    url(r'^login',
-        auth_views.login,
-        {'template_name': 'login.html'},
-        name='login'),
-    url(r'^logout/$', auth_views.logout, {'next_page': '/'}, name='logout'),
     url(r'^admin/', admin.site.urls),
+    url(r'^accounts/', include('django.contrib.auth.urls'))
 ]
