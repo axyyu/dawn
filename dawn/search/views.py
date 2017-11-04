@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views.decorators.csrf import ensure_csrf_cookie
-from django.contrib.auth import authenticate, login
 
 import requests
 import json
@@ -104,16 +103,3 @@ def get_data(question, dbs):
         elif d == "CORES":
             pass
     return None
-
-
-def login(request):
-    username = request.POST['username']
-    password = request.POST['password']
-    user = authenticate(request, username=username, password=password)
-    if user is not None:
-        login_success(request, user)
-    else:
-        login_failed(request, user)
-
-def login_success(request, user):
-    return
