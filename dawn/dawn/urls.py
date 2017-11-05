@@ -23,4 +23,5 @@ urlpatterns = [
     url(r'^search/', include('search.urls')),
     url(r'^accounts/', include('accounts.urls')),
     url(r'^admin/', admin.site.urls),
+    url(r'^profile/', RedirectView.as_view(url='/accounts/profile')),
 ]

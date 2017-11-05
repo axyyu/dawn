@@ -23,7 +23,7 @@ def index(request):
         question = question.replace("+", " ")
         databases = ["Nature"]
         req = {'question': question,
-               'definition':helpers.get_definition(question),
+               'definition': helpers.get_definition(question),
                'related': analysis.get_related(question),
                'data': get_data(question, databases)}
         return render(request, 'search.html', req)
@@ -83,20 +83,24 @@ def get_data(question, dbs):
                         pubdate = item['publicationDate']
                         item['mla'] = bibliography.get_easy_bib(
                             'mla7', item['title'], item['publisher'], item['publicationDate'][
-                                                                      0:4], item['authors'])
+                                0:4], item['authors'])
                         item['apa'] = bibliography.get_easy_bib(
                             'apa', item['title'], item['publisher'], item['publicationDate'][
-                                                                     0:4], item['authors'])
+                                0:4], item['authors'])
                         item['chicago'] = bibliography.get_easy_bib(
                             'chicagob', item['title'], item['publisher'], item['publicationDate'][
-                                                                          0:4], item['authors'])
-                        item['abstract'] = helpers.filter_article(item['abstract'])
+                                0:4], item['authors'])
+                        item['abstract'] = helpers.filter_article(
+                            item['abstract'])
 
-                        item['keywords'] = analysis.get_entities(str(item['abstract']))
+                        item['keywords'] = analysis.get_entities(
+                            str(item['abstract']))
                         # item['concepts'] = analysis.get_concepts(str(item['abstract']))
 
-                        item['sentiment'] = analysis.get_sentiment(str(item['abstract']))
-                        item['summary'] = analysis.get_summary(str(item['title']), str(item['abstract']))
+                        item['sentiment'] = analysis.get_sentiment(
+                            str(item['abstract']))
+                        item['summary'] = analysis.get_summary(
+                            str(item['title']), str(item['abstract']))
 
                         entity_array.append(item)
                     return entity_array

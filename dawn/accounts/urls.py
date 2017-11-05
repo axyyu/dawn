@@ -5,13 +5,18 @@ from django.views.generic import RedirectView
 
 from . import views
 
-urlpatterns = [url(r'^login/$',
-                   auth_views.LoginView.as_view(template_name='accounts/login.html'),
-                   name='login'),
-               url(r'^logout/$',
-                   auth_views.LogoutView.as_view(next_page='/'),
-                   name='logout'),
-               url(r'^register/$',
-                   views.register,
-                   name='register'),
-               ]
+urlpatterns = [
+    url(r'^$', RedirectView.as_view(url='/search')),
+    url(r'^login/$',
+        auth_views.LoginView.as_view(template_name='accounts/login.html'),
+        name='login'),
+    url(r'^logout/$',
+        auth_views.LogoutView.as_view(next_page='/'),
+        name='logout'),
+    url(r'^register/$',
+        views.register,
+        name='register'),
+    url(r'^profile/$',
+        views.profile,
+        name='profile'),
+]

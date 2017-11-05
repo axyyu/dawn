@@ -63,17 +63,19 @@ def get_entities(query):
 
 def get_concepts(query):
     concepts = aylien_client.Concepts({"text": query})
-    temp = [concepts['concepts'][k]['surfaceForms'][0]['string'] for k in concepts['concepts'] ]
+    temp = [concepts['concepts'][k]['surfaceForms'][0]['string']
+            for k in concepts['concepts']]
     temp = [x for x in temp if len(x) < 20]
     return temp
 
 
-def get_summary(title,query):
+def get_summary(title, query):
     try:
-        summary = aylien_client.Summarize({'title':title, 'text': query, 'sentences_number': 4})
+        summary = aylien_client.Summarize(
+            {'title': title, 'text': query, 'sentences_number': 4})
         temp = ""
         for sentence in summary['sentences']:
-            temp+=sentence
+            temp += sentence
         if len(temp) < 10:
             return query
         return temp
