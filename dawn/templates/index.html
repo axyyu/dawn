@@ -5,6 +5,7 @@
     <title>Delve</title>
     {% include 'head.html' %}
     <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'css/searchbar.css' %}">
 
     <!--<script type="text/javascript" src="{% static 'js/index.js' %}" defer></script>-->
 </head>
@@ -12,7 +13,7 @@
     <div id="search">
         <h1>Delve</h1>
         <form action="/search" method="get">
-            <input id="search-bar" type="text" name="q" placeholder="What would you like to learn about today?" autofocus>
+            <input id="search-bar" type="text" name="q" placeholder="What would you like to learn about today?" autofocus required>
             <input type="submit" value="Search" class="click">
         </form>
         <div id="trending-topics">

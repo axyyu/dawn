@@ -5,13 +5,15 @@
     <title>Dawn</title>
     {% include 'head.html' %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/searchbar.css' %}">
     <link rel="stylesheet" href="{% static 'css/search.css' %}">
 
+    <script type="text/javascript" src="{% static 'js/jquery.js' %}" defer></script>
     <script type="text/javascript" src="{% static 'js/search.js' %}" defer></script>
 </head>
 <body>
     <form action="/search" method="get">
-        <input id="search-bar" type="text" name="q" placeholder="What would you like to learn about today?" value="{{question}}">
+        <input id="search-bar" type="text" name="q" placeholder="What would you like to learn about today?" value="{{question}}" required>
         <input type="submit" value="Search" class="click">
     </form>
 
@@ -67,7 +69,7 @@
             </div>
         </div>
         <div class="space"></div>
-        <div id="search-click" class="click">
+        <div id="search-click" class="click" onclick="toggleSidebar()">
             <span class="fa fa-caret-right"></span>
         </div>
         <div id="search-info">

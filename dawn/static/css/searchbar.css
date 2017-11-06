@@ -1,0 +1,21 @@
+input[type=text] {
+    text-align: left;
+    width: 500px;
+    border: 2px solid rgb(96, 174, 224);
+    box-shadow: none;
+    padding: 0 10px;
+}
+
+input[type=text]:focus {
+    background: rgb(232, 246, 255);
+}
+
+input[type=submit] {
+    text-align: center;
+    padding: 0 20px;
+    font-weight: 500;
+    background: rgb(96, 174, 224);
+    border: 2px solid rgb(96, 174, 224);
+    box-shadow: none !important;
+    font-size: 1em;
+}

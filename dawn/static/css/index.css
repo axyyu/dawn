@@ -19,27 +19,6 @@ form{
   justify-content: center;
   height: 50px;
 }
-input[type=text]{
-  text-align: center;
-  width: 600px;
-  border: 2px solid rgba(0, 123, 204, 0.5);
-  box-shadow: none;
-  padding: 0;
-}
-input[type=submit]{
-  text-align: center;
-  padding: 0 20px;
-  font-weight: 500;
-  background: rgba(0, 123, 204, 0.5);
-  border: 2px solid rgba(0, 123, 204, 0.5);
-  box-shadow: none;
-  font-size: 1em;
-}
-input[type=submit]:hover{
-  background: rgba(0, 123, 204, 0.3);
-  box-shadow: 0 0 5px #888888;
-}
-
 #trending-topics{
   margin: 10px;
   display: flex;
@@ -53,13 +32,10 @@ h2{
   font-size: 1.5em;
 }
 #trending-topic{
-  padding: 0 10px;
+  padding: 0 20px;
   line-height: 50px;
-  background: rgba(0, 123, 204, 0.5);
-  border: 2px solid rgba(0, 123, 204, 0.5);
+  background: rgb(96, 174, 224);
+  border: 2px solid rgb(96, 174, 224);
   font-size: 1em;
-}
-#trending-topic:hover{
-  background: rgba(0, 123, 204, 0.3);
-  box-shadow: 0 0 5px #888888;
+  box-shadow: none !important;
 }

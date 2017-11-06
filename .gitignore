@@ -15,3 +15,5 @@ __pycache__/
 migrations/
 *-env/
 settings.py
+bin
+lib

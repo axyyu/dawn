@@ -76,4 +76,20 @@ button:focus {
   font-size: 100%;
 }
 
-/*# sourceMappingURL=style.css.map */
+/* Scrollbar */
+::-webkit-scrollbar-track
+{
+	border: 1px solid #95989A;
+	background-color: rgba(0,0,0,0);
+}
+
+::-webkit-scrollbar
+{
+	width: 10px;
+	background-color: rgba(0,0,0,0);
+}
+
+::-webkit-scrollbar-thumb
+{
+	background-color: rgb(0, 123, 204);	
+}

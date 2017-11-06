@@ -6,32 +6,9 @@ form {
     height: 50px;
 }
 
-input[type=text] {
-    text-align: center;
-    width: 600px;
-    border: 2px solid rgba(0, 123, 204, 0.5);
-    box-shadow: none;
-    padding: 0;
-}
-
-input[type=submit] {
-    text-align: center;
-    padding: 0 20px;
-    font-weight: 500;
-    background: rgba(0, 123, 204, 0.5);
-    border: 2px solid rgba(0, 123, 204, 0.5);
-    box-shadow: none;
-    font-size: 1em;
-}
-
-input[type=submit]:hover {
-    background: rgba(0, 123, 204, 0.3);
-    box-shadow: 0 0 5px #888888;
-}
-
 #search-content {
     margin: 2vh 4vw;
-    height: calc(calc(100% - 60px) - 10vh);
+    height: calc(100vh - 150px);
     display: grid;
     grid-template-columns: auto 2vw 20px 300px;
 }
@@ -42,6 +19,8 @@ input[type=submit]:hover {
     padding: 20px;
     display: flex;
     flex-direction: column;
+    /* height: inherit; */
+    overflow-y: auto;
 }
 
 #search-term {
@@ -83,7 +62,7 @@ input[type=submit]:hover {
 #related-terms .related-term {
     display: flex;
     flex-direction: row;
-    background: rgba(0, 123, 204, 0.5);
+    background: rgb(96, 174, 224);
     margin: 5px 5px 5px 0;
     padding: 10px;
     font-size: 1.0em;
@@ -107,7 +86,7 @@ input[type=submit]:hover {
     border-right: none;
 }
 
-.fa-caret-left {
+#search-click span {
     font-size: 1.5em;
     margin: auto;
 }
@@ -118,17 +97,22 @@ input[type=submit]:hover {
 
 #search-results {
     display: grid;
-    grid-template-rows: 64px 1vh auto;
+    grid-template-rows: auto 1vh auto;
+    height: inherit;
 }
 
 #search-toolbar {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    height: 40px;
     padding: 10px 5px;
     margin: 0 5px;
     border: 2px solid #95989A;
+    flex-wrap: wrap;
+}
+
+#search-toolbar div{
+    padding: 10px 5px;
 }
 
 #database-list {
@@ -144,8 +128,8 @@ input[type=submit]:hover {
     height: 36px;
     width: 40px;
     line-height: 40px;
-    border: 2px solid rgba(0, 123, 204, 0.5);
-    background: rgba(0, 123, 204, 0.5)
+    border: 2px solid rgb(96, 174, 224);
+    background: rgb(96, 174, 224);
 }
 
 #database-list .database:hover {
@@ -169,6 +153,7 @@ input[type=submit]:hover {
 #database-time input {
     margin: 0 5px;
     width: 50px;
+    height: 40px;
 }
 
 #database-sort {
@@ -188,12 +173,14 @@ input[type=submit]:hover {
     display: flex;
     flex-direction: column;
     overflow-y: auto;
+    padding-right: 5px;
+    margin-right: 5px;
 }
 
 .search-entry {
     margin: 5px;
-    border: 2px solid #95989A;
     padding: 20px;
+    border: 2px solid #95989A;
 }
 
 .entry-title {
@@ -204,6 +191,7 @@ input[type=submit]:hover {
 }
 
 .entry-title h2 {
+    padding-right: 5px;
     padding-bottom: 10px;
     border-bottom: 4px solid rgb(0, 123, 204);
 }
@@ -213,6 +201,9 @@ input[type=submit]:hover {
     justify-content: space-between;
     margin-bottom: 10px;
     font-size: 1.0em;
+}
+.entry-info h3 {
+    padding-right: 5px;
 }
 
 .entry-summary {
