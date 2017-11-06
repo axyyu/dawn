@@ -4,28 +4,35 @@
 <head>
 	<title>Register</title>
     {% include 'head.html' %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/login.css' %}">
     <script type="text/javascript" src="{% static 'js/login.js' %}" defer></script>
 </head>
 <body>
-    {% block content %}
-  <h2>Register</h2>
-  <form method="post">
-    {% csrf_token %}
-    {% for field in form %}
-      <p>
-        {{ field.label_tag }}<br>
-        {{ field }}
-        {% if field.help_text %}
-          <small style="color: grey">{{ field.help_text }}</small>
-        {% endif %}
-        {% for error in field.errors %}
-          <p style="color: red">{{ error }}</p>
-        {% endfor %}
-      </p>
-    {% endfor %}
-    <button type="submit">Register</button>
-    </form>
-    {% endblock %}
+    <div id="login-container">
+        {% block content %}
+        <h2>Register</h2>
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+              <p>
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.help_text %}
+                  <small style="color: grey">{{ field.help_text }}</small>
+                {% endif %}
+                {% for error in field.errors %}
+                  <p style="color: red">{{ error }}</p>
+                {% endfor %}
+              </p>
+            {% endfor %}
+            <div id="buttons">
+                <button type="submit" class="click">Register</button>
+                <button class="click" onclick="switchPage('login')">Login</button>
+            </div>
+            
+            </form>
+        {% endblock %}
+    </div>
 </body>
 </html>

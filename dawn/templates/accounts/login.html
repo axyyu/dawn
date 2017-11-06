@@ -4,17 +4,23 @@
 <head>
 	<title>Login</title>
     {% include 'head.html' %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/login.css' %}">
     <script type="text/javascript" src="{% static 'js/login.js' %}" defer></script>
 </head>
 <body>
-    {% block content %}
-    <h2>Login</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Login</button>
-    </form>
-    {% endblock %}
+    <div id="login-container">
+        {% block content %}
+            <h2>Login</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div id="buttons">
+                    <button type="submit" class="click">Login</button>
+                    <button class="click" onclick="switchPage('register')">Register</button>
+                </div>
+            </form>
+        {% endblock %}
+    </div>
 </body>
 </html>
