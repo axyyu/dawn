@@ -15,7 +15,7 @@
 
 * Copy and rename examplesettings.py to settings.py and add the postgresql database uri and the secret key.
 
-* Run migrations to populate the postgresql database with `python manage.py migrate`.
+* Run migrations to populate the postgresql database with `python3 manage.py migrate`.
 
 * To run the development server, run `python manage.py runserver`.
 
@@ -23,4 +23,6 @@
 
 ## Configuration ##
 
-* Use `pip3 freeze > requirements.txt` to maintain requirements
+* Whenever there is a change in example\_settings.py, make sure to update your settings.py.
+
+* Use `pip3 freeze > requirements.txt` to maintain requirements.
