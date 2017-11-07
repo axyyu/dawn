@@ -38,7 +38,6 @@
                     <span class="fa fa-sort-numeric-desc click" onclick="sortDate(false)"></span>
                 </div>
             </div>
-            <div class="space"></div>
             <div id="search-list">
                 {% for v in data %}
                     <div class="search-entry">
@@ -70,28 +69,30 @@
             </div>
         </div>
         <div class="space"></div>
-        <div id="search-click" class="click" onclick="toggleSidebar()">
-            <span class="fa fa-caret-right"></span>
-        </div>
-        <div id="search-info">
-            <h2 id="search-term">{{question}}</h2>
-            <div class="info">
-                <h2>Definition</h2>
-                <p>{{definition | safe}}</p>
+        <nav id="search-sidebar">
+            <div id="search-click" class="click">
+                <span class="fa fa-caret-right"></span>
             </div>
-            <div class="info">
-                <h2>Related Terms</h2>
-                <div id="related-terms">
-                    {% for word in related %}
-                        <div class="related-term">
-                            <h4>{{word}}</h4>
-                            <span class="fa fa-filter click" onclick="filter({{word}})"></span>
-                            <span class="fa fa-search click" onclick="search({{word}})"></span>
-                        </div>
-                    {% endfor %}
+            <div id="search-info">
+                <h2 id="search-term">{{question}}</h2>
+                <div class="info">
+                    <h2>Definition</h2>
+                    <p>{{definition | safe}}</p>
+                </div>
+                <div class="info">
+                    <h2>Related Terms</h2>
+                    <div id="related-terms">
+                        {% for word in related %}
+                            <div class="related-term">
+                                <h4>{{word}}</h4>
+                                <span class="fa fa-filter click" onclick="filter({{word}})"></span>
+                                <span class="fa fa-search click" onclick="search({{word}})"></span>
+                            </div>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
-        </div>
+        </nav>
     </div>
 
     <footer>
