@@ -12,6 +12,7 @@
     <script type="text/javascript" src="{% static 'js/search.js' %}" defer></script>
 </head>
 <body>
+    {% include 'header.html' %}
     <form action="/search" method="get">
         <input id="search-bar" type="text" name="q" placeholder="What would you like to learn about today?" value="{{question}}" required>
         <input type="submit" value="Search" class="click">
