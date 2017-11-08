@@ -20,8 +20,10 @@ def index(request):
         question = request.GET.get('q', None)
         if question is None:
             return render(request, 'index.html')  # Maybe change
-        question = question.replace("+", " ")
-        databases = ["Nature"]
+        question = question.replace('+', ' ')
+        if question[-1] == ' ':
+            question = question[:-1]
+        databases = ['Nature']
         req = {'question': question,
                'definition': helpers.get_definition(question),
                'related': analysis.get_related(question),
@@ -40,7 +42,7 @@ def define(request):
         question = request.GET.get('q', None)
         if question is None:
             return HttpResponseBadRequest
-        question = question.replace("+", " ")
+        question = question.replace('+', ' ')
         output = json.dumps({'data': helpers.get_definition(question)})
         return HttpResponse(output, content_type='application/json')
 
@@ -50,7 +52,7 @@ def related(request):
         question = request.GET.get('q', None)
         if question is None:
             return HttpResponseBadRequest
-        question = question.replace("+", " ")
+        question = question.replace('+', ' ')
         output = json.dumps({'data': analysis.get_related(question)})
         return HttpResponse(output, content_type='application/json')
     return render(request, 'index.html')
