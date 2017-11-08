@@ -7,13 +7,13 @@ from . import views
 
 urlpatterns = [
     url(r'^$', RedirectView.as_view(url='profile')),
-    url(r'^login/$',
+    url(r'^login',
         auth_views.LoginView.as_view(template_name='accounts/login.html'),
         name='login'),
-    url(r'^logout/$',
+    url(r'^logout',
         auth_views.LogoutView.as_view(next_page='/'),
         name='logout'),
-    url(r'^register/$',
+    url(r'^register',
         views.register,
         name='register'),
     url(r'^profile/$',

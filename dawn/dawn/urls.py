@@ -23,6 +23,11 @@ urlpatterns = [
     url(r'^search/', RedirectView.as_view(url='/search')),
     url(r'^search', include('search.urls')),
     url(r'^accounts/', include('accounts.urls')),
+
+    url(r'^login', RedirectView.as_view(url='/accounts/login')),
+    url(r'^logout', RedirectView.as_view(url='/accounts/logout')),
+    url(r'^register', RedirectView.as_view(url='/accounts/register')),
+
     url(r'^admin/', admin.site.urls),
     url(r'^profile/', RedirectView.as_view(url='/accounts/profile')),
 ]
