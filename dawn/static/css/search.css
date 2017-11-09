@@ -11,7 +11,7 @@ form {
     display: flex;
     /*grid-template-columns: auto 2vw 20px minmax(0, 300px);*/
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-between;
 }
 
 nav#search-sidebar {
@@ -106,7 +106,7 @@ nav#search-sidebar {
 #search-results {
     width: 100%;
     height: inherit;
-    margin: 0 1vw;
+    margin: 0 1vw 0 0;
 }
 
 #search-toolbar {
@@ -114,7 +114,6 @@ nav#search-sidebar {
     flex-direction: row;
     justify-content: space-between;
     padding: 10px 5px;
-    margin: 0 5px;
     border: 2px solid #95989A;
     flex-wrap: wrap;
 }
@@ -186,7 +185,7 @@ nav#search-sidebar {
 }
 
 .search-entry {
-    margin: 5px;
+    margin: 1vh 0;
     padding: 20px;
     border: 2px solid #95989A;
 }
