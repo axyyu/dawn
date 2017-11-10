@@ -5,7 +5,6 @@ body {
   width: 100vw;
   height: 100vh;
   color: black;
-  font-family: 'Roboto';
   overflow-x: hidden;
 }
 
@@ -14,6 +13,8 @@ h1, h2, h3, h4, h5 {
 
 *{
   transition: all 0.3s ease;
+  font-family: Roboto, 'Helvetica Neue', Helvetica, sans-serif;
+  font-size: 100%;
 }
 
 .click:hover {
@@ -38,20 +39,23 @@ h1, h2, h3, h4, h5 {
   color: #95989A !important; }
 
 /*Layout*/
-footer{
+footer {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   position: relative;
   width: 100%;
 }
-#information{
+
+#information {
   display: flex;
 }
-footer h4{
+
+footer h4 {
   font-weight: 400;
   padding: 20px;
 }
+
 input:focus,
 select:focus,
 textarea:focus,
@@ -62,15 +66,13 @@ button:focus {
 /*Icons*/
 .small-icon {
   height: 60px;
-  width: 60px; }
+  width: 60px;
+}
 
 #logo-icon {
   position: absolute;
   top: 20px;
   left: 20px;
   text-align: center;
-  z-index: 3; }
-
-* {
-  font-size: 100%;
+  z-index: 3;
 }

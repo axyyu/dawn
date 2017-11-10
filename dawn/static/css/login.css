@@ -60,16 +60,18 @@ button[type=submit] {
     margin: 0 auto;
     margin-top: 20px;
 }
-#other{
+
+#other {
     margin-top: 20px;
     display: flex;
     justify-content: center;
     color: rgb(96, 174, 224);
 }
-#other span{
+#other span {
     margin: 0 10px;
 }
-a{
+
+a {
     font-size: 1.0em;
     color: rgb(96, 174, 224);
 }

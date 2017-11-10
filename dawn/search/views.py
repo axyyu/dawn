@@ -23,6 +23,7 @@ def index(request):
         question = question.replace('+', ' ')
         if question[-1] == ' ':
             question = question[:-1]
+        print(question)
         databases = ['Nature']
         req = {'question': question,
                'definition': helpers.get_definition(question),
@@ -62,7 +63,7 @@ def get_data(question, dbs):
     entity_array = []
     for d in dbs:
         if d == "Nature":
-            body = databases.get_nature_journal(question, 1)
+            body = databases.get_nature_journal(question, 3)
             if body:
                 if body.get('feed') and body.get('feed').get('entry'):
                     for i in body['feed']['entry']:
