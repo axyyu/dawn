@@ -6,12 +6,15 @@ body {
 
 #login-container {
     margin: 0 auto;
+    border: 2px solid rgb(96, 174, 224);
+    box-shadow: 0px 0px 10px #888888;
+    padding: 30px 10vw;
 }
 
 h2 {
     text-align: center;
-    font-size: 1.5em;
-    margin-bottom: 40px;
+    font-size: 1.7em;
+    margin: 10px auto;
 }
 
 form {
@@ -19,17 +22,16 @@ form {
     flex-direction: column;
 }
 
-label {
-    text-align: right;
-    padding: 10px;
-    display: inline-block;
-    width: 80px;
+p {
+    display: flex;
+    flex-direction: column;
+    margin: 10px auto;
 }
 
-p {
-    margin: 20px auto;
-    /* background: rgb(96, 174, 224); */
-    height: 50px;
+label {
+    text-align: left;
+    padding: 10px 0;
+    display: inline-block;
 }
 
 input {
@@ -38,26 +40,36 @@ input {
     border: 2px solid rgb(96, 174, 224);
     box-shadow: none;
     padding: 0 10px;
+    min-width: 200px;
+    width: 20vw;
 }
 
 input:focus {
     background: rgb(232, 246, 255);
 }
 
-button {
+button[type=submit] {
     text-align: center;
-    padding: 0 20px;
-    font-weight: 500;
+    padding: 0 40px;
+    font-weight: light;
     background: rgb(96, 174, 224);
     border: 2px solid rgb(96, 174, 224);
     box-shadow: none !important;
     font-size: 1em;
     height: 50px;
-    margin: 0 10px;
+    margin: 0 auto;
+    margin-top: 20px;
 }
-
-#buttons {
-    margin-top: 40px;
+#other{
+    margin-top: 20px;
     display: flex;
     justify-content: center;
+    color: rgb(96, 174, 224);
+}
+#other span{
+    margin: 0 10px;
+}
+a{
+    font-size: 1.0em;
+    color: rgb(96, 174, 224);
 }

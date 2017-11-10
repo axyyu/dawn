@@ -10,16 +10,21 @@
 </head>
 <body>
     <div id="login-container">
+        
         {% block content %}
             <h2>Login</h2>
             <form method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <div id="buttons">
-                    <button type="submit" class="click">Login</button>
-                </div>
+                <button type="submit" class="click">Login</button>
             </form>
         {% endblock %}
+
+        <div id="other">
+            <a href="/accounts/register">Register</a>
+            <span>|</span>
+            <a href="/accounts/forgot">Forgot Password</a>
+        </div>
     </div>
 </body>
 </html>
