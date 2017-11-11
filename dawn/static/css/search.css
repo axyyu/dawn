@@ -229,6 +229,11 @@ nav#search-sidebar {
     flex-wrap: wrap;
 }
 
+.entry-term > a, .related-term > a {
+    color: #000;
+    text-decoration: none;
+}
+
 .entry-term {
     display: flex;
     font-size: 1.0em;

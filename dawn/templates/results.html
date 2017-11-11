@@ -14,7 +14,7 @@
 <body>
     {% include 'header.html' %}
     <form action="/search" method="get">
-        <input id="search-bar" type="text" name="q" placeholder="What would you like to learn about today?" value="{{question}}" required>
+        <input id="search-bar" type="text" name="q" placeholder="What would you like to learn about today?" value="{{ question }}" required>
         <input type="submit" value="Search" class="click">
     </form>
 
@@ -42,26 +42,28 @@
                 {% for v in data %}
                     <div class="search-entry">
                         <div class="entry-title">
-                            <h2>{{v.title | safe}}</h2>
-                            <span>{{v.journal}}</span>
+                            <h2>{{ v.title | safe }}</h2>
+                            <span>{{ v.journal }}</span>
                         </div>
                         <div class="entry-info">
-                            <h3>{{v.authorString}}</h3>
-                            <h3>{{v.publicationDate}}</h3>
+                            <h3>{{ v.authorString }}</h3>
+                            <h3>{{ v.publicationDate }}</h3>
                         </div>
-                        <p class="entry-summary">{{v.summary}}</p>
+                        <p class="entry-summary">{{ v.summary }}</p>
                         <div class="entry-action">
                             <div class="entry-terms">
                                 {% for word in v.keywords %}
-                                <div class="entry-term">
-                                    <h4>{{word}}</h4>
-                                    <span class="fa fa-search click"></span>
-                                </div>
+                                    <div class="entry-term">
+                                        <h4>{{ word }}</h4>
+                                        <a href="/search?q={{ word.split | join:"+" }}">
+                                            <span class="fa fa-search click"></span>
+                                        </a>
+                                    </div>
                                 {% endfor %}
                             </div>
                             <div class="entry-icons">
-                                <span class="fa fa-info-circle click" onclick="stats({{v.sentiment}})"></span>
-                                <span class="fa fa-bookmark click" onclick="cite('{{v.mla}}', '{{v.apa}}', '{{v.chicago}}')"></span>
+                                <span class="fa fa-info-circle click" onclick="stats({{ v.sentiment }})"></span>
+                                <span class="fa fa-bookmark click" onclick="cite('{{ v.mla }}', '{{ v.apa }}', '{{ v.chicago }}')"></span>
                             </div>
                         </div>
                     </div>
@@ -74,19 +76,21 @@
                 <span class="fa fa-caret-right"></span>
             </div>
             <div id="search-info">
-                <h2 id="search-term">{{question}}</h2>
+                <h2 id="search-term">{{ question }}</h2>
                 <div class="info">
                     <h2>Definition</h2>
-                    <p>{{definition | safe}}</p>
+                    <p>{{ definition | safe }}</p>
                 </div>
                 <div class="info">
                     <h2>Related Terms</h2>
                     <div id="related-terms">
                         {% for word in related %}
                             <div class="related-term">
-                                <h4>{{word}}</h4>
-                                <span class="fa fa-filter click" onclick="filter({{word}})"></span>
-                                <span class="fa fa-search click" onclick="search({{word}})"></span>
+                                <h4>{{ word }}</h4>
+                                <span class="fa fa-filter click" onclick="filter({{ word }})"></span>
+                                <a href="/search?q={{ word.split | join:"+" }}">
+                                    <span class="fa fa-search click" onclick="search({{ word }})"></span>
+                                </a>
                             </div>
                         {% endfor %}
                     </div>
@@ -102,5 +106,6 @@
         </div>
         <h4>&copy; 2017 Delve Inc. All Rights Reserved.</h4>
     </footer>
+    {% include 'footer.html' %}
 </body>
 </html>

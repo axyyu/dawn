@@ -29,7 +29,7 @@ def index(request):
                'definition': helpers.get_definition(question),
                'related': analysis.get_related(question),
                'data': get_data(question, databases)}
-        return render(request, 'search.html', req)
+        return render(request, 'results.html', req)
         # return render(request, 'index.html')
     return render(request, 'index.html')
 
