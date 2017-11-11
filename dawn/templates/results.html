@@ -8,8 +8,6 @@
     <link rel="stylesheet" href="{% static 'css/searchbar.css' %}">
     <link rel="stylesheet" href="{% static 'css/search.css' %}">
 
-    <script type="text/javascript" src="{% static 'js/jquery.js' %}" defer></script>
-    <script type="text/javascript" src="{% static 'js/search.js' %}" defer></script>
 </head>
 <body>
     {% include 'header.html' %}
@@ -42,7 +40,9 @@
                 {% for v in data %}
                     <div class="search-entry">
                         <div class="entry-title">
-                            <h2>{{ v.title | safe }}</h2>
+                            <a href="{{ v.url }}">
+                                <h2>{{ v.title | safe }}</h2>
+                            </a>
                             <span>{{ v.journal }}</span>
                         </div>
                         <div class="entry-info">
@@ -98,14 +98,6 @@
             </div>
         </nav>
     </div>
-
-    <footer>
-        <div id="information">
-            <h4>What is Delve?</h4>
-            <h4>About Us</h4>
-        </div>
-        <h4>&copy; 2017 Delve Inc. All Rights Reserved.</h4>
-    </footer>
     {% include 'footer.html' %}
 </body>
 </html>

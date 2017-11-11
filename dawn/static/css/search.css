@@ -229,8 +229,8 @@ nav#search-sidebar {
     flex-wrap: wrap;
 }
 
-.entry-term > a, .related-term > a {
-    color: #000;
+.entry-title > a, .entry-term > a, .related-term > a {
+    color: inherit;
     text-decoration: none;
 }
 
