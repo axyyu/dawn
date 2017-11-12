@@ -1,26 +1,3 @@
-/*var sidebar = false;
-
-$(document).ready(function(){
-    
-});
-function toggleSidebar(){
-    if(sidebar){
-        console.log("Extend");
-        sidebar = false;
-        $("#search-content").css("grid-template-columns", "auto 2vw 20px 300px");
-        $("#search-info").show();
-        $("#search-click").empty();
-        $("#search-click").html('<span class="fa fa-caret-right"></span>');
-    }
-    else{
-        console.log("Hide");
-        sidebar = true;
-        $("#search-content").css("grid-template-columns", "auto 2vw 20px 0");
-        $("#search-info").hide();
-        $("#search-click").empty();
-        $("#search-click").html('<span class="fa fa-caret-left"></span>');
-    }
-}*/
 var tb = document.querySelector("#search-click"),
     sb = document.querySelector("#search-info"),
 	sc = document.querySelector("#search-content"),
@@ -36,13 +13,13 @@ tb.addEventListener("touchleave", function () {
 
 
 function toggleSidebar(toggleOpenAllowed) {
-    if (sb.style.right == "-300px") {
+    if (sb.style.right == "-400px") {
         sb.style.right = "0";
-        nav.style.width = "300px";
+        nav.style.width = "400px";
         tb.innerHTML = '<span class="fa fa-caret-right"></span>';
     } else {
-        sb.style.right = "-300px";
-        nav.style.width = "12px";
+        sb.style.right = "-400px";
+        nav.style.width = "14px";
         tb.innerHTML = '<span class="fa fa-caret-left"></span>';
     }
 }

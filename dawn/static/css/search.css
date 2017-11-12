@@ -15,7 +15,7 @@ form {
 }
 
 nav#search-sidebar {
-    width: 300px;
+    width:400px;
     height: 100%;
     display: flex;
     flex-direction: row;
@@ -23,7 +23,7 @@ nav#search-sidebar {
 }
 
 #search-info {
-    width: calc(300px - 40px);
+    min-width: 200px;
     position: relative;
     left: 0;
     right: 0;
@@ -83,7 +83,6 @@ nav#search-sidebar {
 }
 
 #search-click {
-    height: calc(100vh - 154px);
     position: relative;
     text-align: center;
     display: flex;
@@ -95,7 +94,8 @@ nav#search-sidebar {
 }
 
 #search-click span {
-    font-size: 1.5em;
+    padding: 0 3px;
+    font-size: 1.2em;
     margin: auto;
 }
 
@@ -198,6 +198,14 @@ nav#search-sidebar {
 }
 
 .entry-title h2 {
+    overflow-wrap: break-word;
+    padding-right: 5px;
+    padding-bottom: 10px;
+    border-bottom: 4px solid rgb(0, 123, 204);
+}
+
+.entry-title span {
+    white-space: nowrap;
     padding-right: 5px;
     padding-bottom: 10px;
     border-bottom: 4px solid rgb(0, 123, 204);
@@ -217,6 +225,7 @@ nav#search-sidebar {
     margin: 0;
     margin-bottom: 10px;
     font-size: 1.0em;
+    overflow-wrap: break-word;
 }
 
 .entry-action {
