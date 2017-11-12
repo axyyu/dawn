@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/searchbar.css' %}">
     <link rel="stylesheet" href="{% static 'css/search.css' %}">
-
 </head>
 <body>
     {% include 'header.html' %}
@@ -15,7 +14,6 @@
         <input id="search-bar" type="text" name="q" placeholder="What would you like to learn about today?" value="{{ question }}" required>
         <input type="submit" value="Search" class="click">
     </form>
-
     <div id="search-content">
         <div id="search-results">
             <div id="search-toolbar">
@@ -99,5 +97,6 @@
         </nav>
     </div>
     {% include 'footer.html' %}
+    <script type="text/javascript" src="{% static 'js/search.js' %}"></script>
 </body>
 </html>

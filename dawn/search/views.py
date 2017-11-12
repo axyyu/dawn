@@ -23,7 +23,6 @@ def index(request):
         question = question.replace('+', ' ')
         if question[-1] == ' ':
             question = question[:-1]
-        print(question)
         databases = ['Nature']
         req = {'question': question,
                'definition': helpers.get_definition(question),
