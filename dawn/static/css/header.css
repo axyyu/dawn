@@ -1,5 +1,13 @@
-header {
-    height: 48px;
+header{
+    position: absolute;
+    top: 0;
+    width: calc(100vw - 40px);
+    text-align: right;
+    padding: 20px;
 }
-
-
+a{
+    color:black;
+}
+a:hover{
+    color:black;
+}
