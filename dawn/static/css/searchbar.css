@@ -17,4 +17,5 @@ input[type=submit] {
     border: 2px solid rgb(96, 174, 224);
     box-shadow: none !important;
     font-size: 1em;
+    border-radius: 0;
 }

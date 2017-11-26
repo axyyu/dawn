@@ -5,9 +5,15 @@ header{
     text-align: right;
     padding: 20px;
 }
+
 a{
     color:black;
+    margin: 0 10px;
+    text-decoration: none !important;
 }
 a:hover{
     color:black;
+}
+header a{
+    font-size: 2em !important;
 }

@@ -30,4 +30,6 @@ urlpatterns = [
 
     url(r'^admin/', admin.site.urls),
     url(r'^profile/', RedirectView.as_view(url='/accounts/profile')),
+
+    url(r'^about', include('about.urls')),
 ]

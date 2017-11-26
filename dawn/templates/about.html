@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <title>About</title>
+    {% include 'head.html' %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/about.css' %}">
+</head>
+<body>
+    <section>
+        <h1>What is Coresearch?</h1>
+        <h4>A search engine built for students by students. Our goal has been to provide easy access to scientific and humanitarian resources to students that allows them to do what they do best: learn.</h4>
+    </section>
+    <section>
+        <h2>Features</h2>
+        <div class="panels">
+            <div class="panel">
+                <h3>Streamlined Research</h3>
+                <div class="feature-panel">
+                    <ul>
+                        <li>Search through multiple databases at once</li>
+                        <li>Read quick summaries for each article</li>
+                    </ul>
+                    <img class="graphic" src="{% static 'img/research.png' %}"/>
+                </div>
+            </div>
+            <div class="panel">
+                    <h3>Intelligent Keywords</h3>
+                    <div class="feature-panel">
+                        <ul>
+                            <li>See topics related to your search term</li>
+                            <li>View concepts discussed in every article</li>
+                        </ul>
+                        <img class="graphic" src="{% static 'img/keyword.png' %}"/>
+                    </div>
+                </div>
+            <div class="panel">
+                    <h3>Automatic Citations</h3>
+                    <div class="feature-panel">
+                        <ul>
+                            <li>Add articles to your bibliography during the search</li>
+                            <li>Add citations in MLA, APA, and Chicago formats</li>
+                        </ul>
+                        <img class="graphic" src="{% static 'img/citations.png' %}"/>
+                    </div>
+                </div>
+            <div class="panel">
+                    <h3>Personal Projects</h3>
+                    <div class="feature-panel">
+                        <ul>
+                            <li>Create projects with a list of articles</li>
+                            <li>Generate a bibliography that includes all the sources used</li>
+                        </ul>
+                        <img class="graphic" src="{% static 'img/projects.png' %}"/>
+                    </div>
+                </div>
+        </div>
+    </section>
+    <section id="pricing">
+        <h2>Pricing</h2>
+        <div class="panels">
+            <div class="panel">
+                <h3>Student</h3>
+                <h4>$0/Month</h4>
+                <p>Always Free. Forever.</p>
+                <button>Sign Up</button>
+            </div>
+            <div class="panel">
+                <h3>Researcher</h3>
+                <h4>$20/Month</h4>
+                <p>Add Custom Citations.</p>
+                <p>See Trending Topics.</p>
+                <button>Sign Up</button>
+            </div>
+            <div class="panel">
+                <h3>School</h3>
+                <h4>$10/Month ea.</h4>
+                <p>Prices are Negotiable.</p>
+                <button>Get A Quote</button>
+            </div>
+            <div class="panel">
+                <h3>School District</h3>
+                <h4>$5/Month ea.</h4>
+                <p>Prices are Negotiable.</p>
+                <button>Get A Quote</button>
+            </div>
+        </div>
+    </section>
+    <section>
+        <h2>Team</h2>
+        <div class="panels">
+            <img class="team"/>
+            <img class="team"/>
+        </div>
+    </section>
+</body>
+</html>
