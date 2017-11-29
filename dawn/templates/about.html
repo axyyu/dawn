@@ -8,12 +8,19 @@
     <link rel="stylesheet" href="{% static 'css/about.css' %}">
 </head>
 <body>
+    {% include 'header.html' %}
     <section>
         <h1>What is Coresearch?</h1>
         <h4>A search engine built for students by students. Our goal has been to provide easy access to scientific and humanitarian resources to students that allows them to do what they do best: learn.</h4>
+        <a href="/">
+            <button>
+                Start Searching
+            </button>
+        </a>
     </section>
     <section>
         <h2>Features</h2>
+
         <div class="panels">
             <div class="panel">
                 <h3>Streamlined Research</h3>
@@ -64,26 +71,35 @@
                 <h3>Student</h3>
                 <h4>$0/Month</h4>
                 <p>Always Free. Forever.</p>
-                <button>Sign Up</button>
+                <a href="/">
+                    <button>Sign Up</button>
+                </a>
+                
             </div>
             <div class="panel">
                 <h3>Researcher</h3>
                 <h4>$20/Month</h4>
                 <p>Add Custom Citations.</p>
                 <p>See Trending Topics.</p>
-                <button>Sign Up</button>
+                <a href="/">
+                    <button>Sign Up</button>
+                </a>
             </div>
             <div class="panel">
                 <h3>School</h3>
                 <h4>$10/Month ea.</h4>
                 <p>Prices are Negotiable.</p>
-                <button>Get A Quote</button>
+                <a href="/">
+                    <button>Get A Quote</button>
+                </a>
             </div>
             <div class="panel">
                 <h3>School District</h3>
                 <h4>$5/Month ea.</h4>
                 <p>Prices are Negotiable.</p>
-                <button>Get A Quote</button>
+                <a href="/">
+                    <button>Get A Quote</button>
+                </a>
             </div>
         </div>
     </section>

@@ -22,6 +22,19 @@ h4{
     line-height: 1.3em;
     margin: 40px auto;
 }
+a:hover{
+    cursor: pointer;
+}
+button{
+    height: 50px;
+    text-align: center;
+    padding: 0 20px;
+    background: rgb(96, 174, 224);
+    border: 2px solid rgb(96, 174, 224);
+    box-shadow: none !important;
+    font-size: 1em;
+    border-radius: 0;
+}
 
 /*
 Section
@@ -99,28 +112,21 @@ p{
     font-size: 2em;
     font-weight: normal;
 }
-button{
-    margin-top:20px;
-    height: 50px;
-    text-align: center;
-    padding: 0 20px;
-    background: rgb(96, 174, 224);
-    border: 2px solid rgb(96, 174, 224);
-    box-shadow: none !important;
-    font-size: 1em;
-    border-radius: 0;
+a{
+    display: block;
+    margin: 20px 0;
 }
 #pricing .panel:nth-child(odd){
     border-right: 1px solid rgb(0, 123, 204);
 }
 #pricing .panel:nth-child(3){
-    background: rgb(250, 250, 250);
+    /* background: rgb(250, 250, 250); */
 }
 #pricing .panel:nth-child(1){
     border-bottom: 1px solid rgb(0, 123, 204);
 }
 #pricing .panel:nth-child(2){
-    background: rgb(250, 250, 250);
+    /* background: rgb(250, 250, 250); */
     border-bottom: 1px solid rgb(0, 123, 204);
 }
 

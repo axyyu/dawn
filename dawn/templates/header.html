@@ -1,12 +1,15 @@
+{% load static %}
     <header>
+        <nav id="sidebar"></div>
         <nav id="menu">
-            <div id="sidebar"></div>
+            
+            
+            <a href="/">
+                <img src="{% static 'img/coresearchicon.png' %}">
+            </a>
 
             <a href="/login">
                 <span class="fa fa-sign-in"></span>
-            </a>
-            <a href="/logout">
-                <span class="fa fa-sign-out"></span>
             </a>
         </nav>
     </header>

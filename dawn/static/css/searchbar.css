@@ -4,6 +4,7 @@ input[type=text] {
     border: 2px solid rgb(96, 174, 224);
     box-shadow: none;
     padding: 0 10px;
+    z-index: 1000;
 }
 
 input[type=text]:focus {
@@ -11,6 +12,7 @@ input[type=text]:focus {
 }
 
 input[type=submit] {
+    z-index: 1000;
     text-align: center;
     padding: 0 20px;
     background: rgb(96, 174, 224);
