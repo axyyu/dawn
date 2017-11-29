@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
-from django.views.generic import RedirectView
+from django.views.generic import RedirectView, TemplateView
 
 urlpatterns = [
     url(r'^$', RedirectView.as_view(url='/search')),
@@ -31,5 +31,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^profile/', RedirectView.as_view(url='/accounts/profile')),
 
-    url(r'^about', include('about.urls')),
+    url(r'^about', TemplateView.as_view(template_name="about.html")),
 ]
