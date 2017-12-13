@@ -69,12 +69,13 @@ def get_data(question, dbs):
                         item = {}
                         item['title'] = i['title']
                         item['url'] = i['link']
-                        item['abstract'] = i['sru:recordData']['pam:message'][
-                            'pam:article']['xhtml:head']['dc:description']
-                        item['authors'] = i['sru:recordData']['pam:message'][
-                            'pam:article']['xhtml:head']['dc:creator']
+                        
+                        abstract = i['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:description']
 
-                        item['authorString'] = ", ".join(item['authors'])
+                        authors = i['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:creator']
+                        
+                        authors = [ ( a[:a.rfind(" ")] , a[a.rfind(" "):] ) for a in authors ]
+                        item['authorString'] = ", ".join( [ "{} {}".format(a[0], a[1]) for a in authors] )
 
                         item['publisher'] = i['sru:recordData']['pam:message'][
                             'pam:article']['xhtml:head']['dc:publisher']
@@ -84,28 +85,60 @@ def get_data(question, dbs):
 
                         pubdate = item['publicationDate']
                         item['mla'] = bibliography.get_easy_bib(
-                            'mla7', item['title'], item['publisher'], item['publicationDate'][
-                                0:4], item['authors'])
+                            'mla7', item['title'], item['publisher'], pubdate[0:4], item['authors'])
                         item['apa'] = bibliography.get_easy_bib(
-                            'apa', item['title'], item['publisher'], item['publicationDate'][
-                                0:4], item['authors'])
+                            'apa', item['title'], item['publisher'], pubdate[0:4], item['authors'])
                         item['chicago'] = bibliography.get_easy_bib(
-                            'chicagob', item['title'], item['publisher'], item['publicationDate'][
-                                0:4], item['authors'])
-                        item['abstract'] = helpers.filter_article(
-                            item['abstract'])
+                            'chicagob', item['title'], item['publisher'], pubdate[0:4], item['authors'])
+                        abstract = helpers.filter_article(abstract)
 
-                        item['keywords'] = analysis.get_entities(
-                            str(item['abstract']))
-                        # item['concepts'] = analysis.get_concepts(str(item['abstract']))
+                        item['keywords'] = analysis.get_entities(str(abstract))
 
-                        item['sentiment'] = analysis.get_sentiment(
-                            str(item['abstract']))
-                        item['summary'] = analysis.get_summary(
-                            str(item['title']), str(item['abstract']))
+                        item['sentiment'] = analysis.get_sentiment(str(abstract))
+                        item['summary'] = analysis.get_summary(str(item['title']), str(abstract))
 
                         entity_array.append(item)
-                    return entity_array
+        elif d == "ScienceDirect":
+            body = databases.get_science_direct(question)
+            if body:
+                if body.get('search-results') and body.get('search-results').get('entry'):
+                    for i in body['search-results']['entry']:
+                        item = {}
+                        item['title'] = i['dc:title']
+                        item['url'] = i['link'][1]["@href"]
+
+                        doi = i['prism:doi']
+                        article = databases.get_science_direct_article(doi)
+
+                        abstract = ""
+                        if article and article.get('full-text-retrieval-response') and article.get('full-text-retrieval-response').get('coredata'):
+                            abstract = article['full-text-retrieval-response']['coredata']['dc:description']
+                            abstract = helpers.filter_article(abstract)
+                            item['summary'] = analysis.get_summary(str(item['title']), str(abstract))
+                        else:
+                            abstract = helpers.filter_article( i['prism:teaser'] )
+                            item['summary'] = abstract
+
+                        authors = [ (a['given-name'],a['surname']) for a in i['authors']['author'] ]
+
+                        item['authorString'] = ", ".join( [ "{} {}".format(a[0], a[1]) for a in authors] )
+
+                        item['publisher'] = i['prism:publicationName']
+                        item['publicationDate'] = i['prism:coverDate'][0]['$']
+                        item['journal'] = 'Science Direct'
+
+                        pubdate = item['publicationDate']
+                        item['mla'] = bibliography.get_easy_bib(
+                            'mla7', item['title'], item['publisher'], pubdate[0:4], item['authors'])
+                        item['apa'] = bibliography.get_easy_bib(
+                            'apa', item['title'], item['publisher'], pubdate[0:4], item['authors'])
+                        item['chicago'] = bibliography.get_easy_bib(
+                            'chicagob', item['title'], item['publisher'], pubdate[0:4], item['authors'])
+
+                        item['keywords'] = analysis.get_entities(str(abstract))
+                        item['sentiment'] = analysis.get_sentiment(str(abstract))
+
+                        entity_array.append(item)
         elif d == "CORES":
             pass
-    return None
+    return entity_array

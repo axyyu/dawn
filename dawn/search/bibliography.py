@@ -12,16 +12,9 @@ def get_easy_bib(style, title, pub, year, authors):
         for a in authors:
             author = {}
             author['function'] = 'author'
-            space = a.find(" ")
-            lspace = a.rfind(" ")
-            if space == -1:
-                author['first'] = ''
-                author['middle'] = ''
-                author['last'] = ''
-            else:
-                author['first'] = a[0:space]
-                author['middle'] = a[space:lspace]
-                author['last'] = a[lspace:]
+            author['first'] = a[0]
+            author['middle'] = ''
+            author['last'] = a[1]
             auth.append(author)
     payload = {}
     payload['key'] = 'e8d16813ad492175b055390bd9d62c2b'
