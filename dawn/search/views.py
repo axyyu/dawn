@@ -75,7 +75,7 @@ def get_data(question, dbs):
                         authors = i['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:creator']
                         
                         authors = [ ( a[:a.rfind(" ")] , a[a.rfind(" "):] ) for a in authors ]
-                        item['authorString'] = ", ".join( [ "{} {}".format(a[0], a[1]) for a in authors] )
+                        #item['authorString'] = ", ".join( [ "{} {}".format(a[0], a[1]) for a in authors] )
 
                         item['publisher'] = i['sru:recordData']['pam:message'][
                             'pam:article']['xhtml:head']['dc:publisher']
@@ -85,11 +85,14 @@ def get_data(question, dbs):
 
                         pubdate = item['publicationDate']
                         item['mla'] = bibliography.get_easy_bib(
-                            'mla7', item['title'], item['publisher'], pubdate[0:4], item['authors'])
+                            'mla7', item['title'], item['publisher'], pubdate[0:4], authors)
+
                         item['apa'] = bibliography.get_easy_bib(
-                            'apa', item['title'], item['publisher'], pubdate[0:4], item['authors'])
+                            'apa', item['title'], item['publisher'], pubdate[0:4], authors)
+
                         item['chicago'] = bibliography.get_easy_bib(
-                            'chicagob', item['title'], item['publisher'], pubdate[0:4], item['authors'])
+                            'chicagob', item['title'], item['publisher'], pubdate[0:4], authors)
+
                         abstract = helpers.filter_article(abstract)
 
                         item['keywords'] = analysis.get_entities(str(abstract))
