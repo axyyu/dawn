@@ -14,9 +14,10 @@ h1 {
 }
 
 #logo{
-  width: 400px;
+  width: 37.5vw;
+  min-width: 400px;
   /* height: 120px; */
-  margin: 20px auto;
+  margin: 0px auto;
 }
 
 form {
