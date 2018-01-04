@@ -23,7 +23,7 @@ def index(request):
         question = question.replace('+', ' ')
         if question[-1] == ' ':
             question = question[:-1]
-        databases = ['Nature']
+        databases = ['Nature','ScienceDirect']
         req = {'question': question,
                'definition': helpers.get_definition(question),
                'related': analysis.get_related(question),
@@ -60,6 +60,7 @@ def related(request):
 
 def get_data(question, dbs):
     entity_array = []
+    threshold = 4
     for d in dbs:
         if d == "Nature":
             body = databases.get_nature_journal(question, 3)
@@ -85,11 +86,11 @@ def get_data(question, dbs):
 
                         pubdate = item['publicationDate']
                         item['mla'] = bibliography.get_easy_bib(
-                            'mla7', item['title'], item['publisher'], pubdate[0:4], item['authors'])
+                            'mla7', item['title'], item['publisher'], pubdate[0:4], authors)
                         item['apa'] = bibliography.get_easy_bib(
-                            'apa', item['title'], item['publisher'], pubdate[0:4], item['authors'])
+                            'apa', item['title'], item['publisher'], pubdate[0:4], authors)
                         item['chicago'] = bibliography.get_easy_bib(
-                            'chicagob', item['title'], item['publisher'], pubdate[0:4], item['authors'])
+                            'chicagob', item['title'], item['publisher'], pubdate[0:4], authors)
                         abstract = helpers.filter_article(abstract)
 
                         item['keywords'] = analysis.get_entities(str(abstract))
@@ -102,13 +103,20 @@ def get_data(question, dbs):
             body = databases.get_science_direct(question)
             if body:
                 if body.get('search-results') and body.get('search-results').get('entry'):
+                    count = 0
                     for i in body['search-results']['entry']:
+                        count+=1
+                        if count > threshold:
+                            break
+
                         item = {}
                         item['title'] = i['dc:title']
                         item['url'] = i['link'][1]["@href"]
 
                         doi = i['prism:doi']
+                        print(doi)
                         article = databases.get_science_direct_article(doi)
+                        print(article)
 
                         abstract = ""
                         if article and article.get('full-text-retrieval-response') and article.get('full-text-retrieval-response').get('coredata'):
@@ -129,11 +137,11 @@ def get_data(question, dbs):
 
                         pubdate = item['publicationDate']
                         item['mla'] = bibliography.get_easy_bib(
-                            'mla7', item['title'], item['publisher'], pubdate[0:4], item['authors'])
+                            'mla7', item['title'], item['publisher'], pubdate[0:4], authors)
                         item['apa'] = bibliography.get_easy_bib(
-                            'apa', item['title'], item['publisher'], pubdate[0:4], item['authors'])
+                            'apa', item['title'], item['publisher'], pubdate[0:4], authors)
                         item['chicago'] = bibliography.get_easy_bib(
-                            'chicagob', item['title'], item['publisher'], pubdate[0:4], item['authors'])
+                            'chicagob', item['title'], item['publisher'], pubdate[0:4], authors)
 
                         item['keywords'] = analysis.get_entities(str(abstract))
                         item['sentiment'] = analysis.get_sentiment(str(abstract))

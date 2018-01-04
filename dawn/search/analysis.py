@@ -56,10 +56,12 @@ def get_related(query):
 
 
 def get_entities(query):
+    print(query)
     entities = aylien_client.Entities({"text": query})
-    temp = [x for x in entities['entities']['keyword'] if len(x) < 25]
-    return filterExtra(query, temp)
-
+    if entities.get('entities') and entities.get('entities').get('keyword'):
+        temp = [x for x in entities['entities']['keyword'] if len(x) < 25]
+        return filterExtra(query, temp)
+    return []
 
 def get_concepts(query):
     concepts = aylien_client.Concepts({"text": query})
