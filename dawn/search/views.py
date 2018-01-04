@@ -76,7 +76,7 @@ def get_data(question, dbs):
                         authors = i['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:creator']
                         
                         authors = [ ( a[:a.rfind(" ")] , a[a.rfind(" "):] ) for a in authors ]
-                        item['authorString'] = ", ".join( [ "{} {}".format(a[0], a[1]) for a in authors] )
+                        #item['authorString'] = ", ".join( [ "{} {}".format(a[0], a[1]) for a in authors] )
 
                         item['publisher'] = i['sru:recordData']['pam:message'][
                             'pam:article']['xhtml:head']['dc:publisher']
