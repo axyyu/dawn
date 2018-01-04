@@ -15,7 +15,7 @@ header{
 
 header a{
     margin: 0;
-    z-index: 1000;
+    z-index: 2;
     color:black;
     margin: 0 10px;
     text-decoration: none !important;

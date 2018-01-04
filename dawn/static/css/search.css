@@ -204,21 +204,26 @@ nav#search-sidebar {
     border-bottom: 4px solid rgb(0, 123, 204);
 }
 
-.entry-title span {
+.entry-title .journal {
     white-space: nowrap;
     padding-right: 5px;
     padding-bottom: 10px;
     border-bottom: 4px solid rgb(0, 123, 204);
+    margin-left:20px;
 }
 
 .entry-info {
-    display: flex;
-    justify-content: space-between;
+    /* display: flex; */
+    /* justify-content: space-between; */
     margin-bottom: 10px;
     font-size: 1.0em;
 }
 .entry-info h3 {
     padding-right: 5px;
+}
+.entry-info .date{
+    width: 200px;
+    margin-top:10px;
 }
 
 .entry-summary {
@@ -268,4 +273,85 @@ nav#search-sidebar {
     line-height: 1.0em;
     padding: 10px 0;
     margin-left: 10px;
+}
+
+
+/*
+
+MODALS
+
+*/
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 3; /* Sit on top */
+    padding-top: 20vh; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    position: relative;
+    background-color: white;
+    margin: auto;
+    padding: 0;
+    border: 1px solid rgb(0, 123, 204);
+    width: 80%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+    from {top:-300px; opacity:0} 
+    to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+}
+
+/* The Close Button */
+.close {
+    color: black;
+    float: right;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-header {
+    padding: 20px;
+    font-size: 2em;
+    background-color: rgb(0, 123, 204);
+    color: black;
+}
+
+.modal-body {padding: 0 20px;}
+.modal-body p {
+    font-size:1.2em;
+    margin: 20px 0;
+}
+
+.modal-footer {
+    font-size: 1.2em;
+    padding: 20px;
+    background-color: rgb(0, 123, 204);
+    color: white;
 }

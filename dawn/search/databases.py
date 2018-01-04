@@ -33,11 +33,16 @@ def get_science_direct(question):
             return None
     return None
 
-def get_science_direct_article(doi):
+def get_science_direct_article(pii):
+    print( '\n\t https://api.elsevier.com/content/article/pii/' +
+        pii +
+        '?apiKey=' +
+        science_direct +
+        '&httpAccept=application/json' )
     r = requests.get(
-        'https://api.elsevier.com/content/article/doi/' +
-        doi +
-        '&apiKey=' +
+        'https://api.elsevier.com/content/article/pii/' +
+        pii +
+        '?apiKey=' +
         science_direct +
         '&httpAccept=application/json')
     if r.status_code == requests.codes.ok:

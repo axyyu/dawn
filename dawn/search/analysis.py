@@ -56,7 +56,6 @@ def get_related(query):
 
 
 def get_entities(query):
-    print(query)
     entities = aylien_client.Entities({"text": query})
     if entities.get('entities') and entities.get('entities').get('keyword'):
         temp = [x for x in entities['entities']['keyword'] if len(x) < 25]
@@ -74,7 +73,7 @@ def get_concepts(query):
 def get_summary(title, query):
     try:
         summary = aylien_client.Summarize(
-            {'title': title, 'text': query, 'sentences_number': 4})
+            {'title': title, 'text': query, 'sentences_number': 2})
         temp = ""
         for sentence in summary['sentences']:
             temp += sentence

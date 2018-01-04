@@ -14,6 +14,28 @@
         <input id="search-bar" type="text" name="q" placeholder="What would you like to learn about today?" value="{{ question }}" required>
         <input type="submit" value="Search" class="click">
     </form>
+    <div id="stats-modal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <p>Some text in the Modal..</p>
+        </div>
+    </div>
+    <div id="bib-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span id="bib-close" class="close">&times;</span>
+                <h2>Citations</h2>
+            </div>
+            <div class="modal-body">
+                <p id="mla"></p>
+                <p id="apa"></p>
+                <p id="chicago"></p>
+            </div>
+            <div class="modal-footer">
+                <h3>Citations incorrect? Contact us!</h3>
+            </div>
+        </div>
+    </div>
     <div id="search-content">
         <div id="search-results">
             <div id="search-toolbar">
@@ -41,11 +63,11 @@
                             <a href="{{ v.url }}" target="_blank">
                                 <h2>{{ v.title | safe }}</h2>
                             </a>
-                            <span>{{ v.journal }}</span>
+                            <span class="journal">{{ v.journal }}</span>
                         </div>
                         <div class="entry-info">
                             <h3>{{ v.authorString }}</h3>
-                            <h3>{{ v.publicationDate }}</h3>
+                            <h3 class="date">{{ v.publicationDate }}</h3>
                         </div>
                         <p class="entry-summary">{{ v.summary }}</p>
                         <div class="entry-action">
@@ -97,6 +119,7 @@
         </nav>
     </div>
     {% include 'footer.html' %}
+    <script type="text/javascript" src="{% static 'js/hc-sticky.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/search.js' %}"></script>
 </body>
 </html>

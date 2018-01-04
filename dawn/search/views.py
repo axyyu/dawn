@@ -76,7 +76,7 @@ def get_data(question, dbs):
                         authors = i['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:creator']
                         
                         authors = [ ( a[:a.rfind(" ")] , a[a.rfind(" "):] ) for a in authors ]
-                        #item['authorString'] = ", ".join( [ "{} {}".format(a[0], a[1]) for a in authors] )
+                        item['authorString'] = ", ".join( [ "{} {}".format(a[0], a[1]) for a in authors] )
 
                         item['publisher'] = i['sru:recordData']['pam:message'][
                             'pam:article']['xhtml:head']['dc:publisher']
@@ -113,19 +113,29 @@ def get_data(question, dbs):
                         item['title'] = i['dc:title']
                         item['url'] = i['link'][1]["@href"]
 
-                        doi = i['prism:doi']
-                        print(doi)
-                        article = databases.get_science_direct_article(doi)
-                        print(article)
+                        pii = i['pii']
+                        article = databases.get_science_direct_article(pii)
 
                         abstract = ""
-                        if article and article.get('full-text-retrieval-response') and article.get('full-text-retrieval-response').get('coredata'):
+                        try:
+                            print("\n\n NEW CITATIONS\n")
+                            print(article)
                             abstract = article['full-text-retrieval-response']['coredata']['dc:description']
                             abstract = helpers.filter_article(abstract)
                             item['summary'] = analysis.get_summary(str(item['title']), str(abstract))
-                        else:
+                            print("\nHELLO\n")
+                        except:
                             abstract = helpers.filter_article( i['prism:teaser'] )
                             item['summary'] = abstract
+                            print("\nNUMBER 2\n")
+
+                        # if article and article.get('full-text-retrieval-response') and article.get('full-text-retrieval-response').get('coredata'):
+                        #     abstract = article['full-text-retrieval-response']['coredata']['dc:description']
+                        #     abstract = helpers.filter_article(abstract)
+                        #     item['summary'] = analysis.get_summary(str(item['title']), str(abstract))
+                        # else:
+                        #     abstract = helpers.filter_article( i['prism:teaser'] )
+                        #     item['summary'] = abstract
 
                         authors = [ (a['given-name'],a['surname']) for a in i['authors']['author'] ]
 
