@@ -52,14 +52,14 @@ def get_sentiment(query):
 def get_related(query):
     related = aylien_client.Related({"phrase": query})
     temp = [a['phrase'] for a in related['related']]
-    return filterExtra(query, temp)
+    return filter_extra(query, temp)
 
 
 def get_entities(query):
     entities = aylien_client.Entities({"text": query})
     if entities.get('entities') and entities.get('entities').get('keyword'):
         temp = [x for x in entities['entities']['keyword'] if len(x) < 25]
-        return filterExtra(query, temp)
+        return filter_extra(query, temp)
     return []
 
 def get_concepts(query):
@@ -86,7 +86,7 @@ def get_summary(title, query):
 
 # HELPER FUNCTIONS
 
-def filterExtra(query, array):
+def filter_extra(query, array):
     final = []
     for phrase in array:
         if len(final) > 5:
