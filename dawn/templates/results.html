@@ -106,7 +106,7 @@
                     <div id="related-terms">
                         {% for word in related %}
                             <div class="related-term">
-                                <h4>{{ word }}</h4>
+                                <h4>{{ word | safe }}</h4>
                                 <span class="fa fa-filter click" onclick="filter({{ word }})"></span>
                                 <a href="/search?q={{ word.split | join:"+" }}">
                                     <span class="fa fa-search click" onclick="search({{ word }})"></span>

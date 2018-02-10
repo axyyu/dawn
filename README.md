@@ -26,3 +26,5 @@
 * Whenever there is a change in example\_settings.py, make sure to update your settings.py.
 
 * Use `pip3 freeze > requirements.txt` to maintain requirements.
+
+* Run `python3 -m spacy download en` to install spacy's English kit.

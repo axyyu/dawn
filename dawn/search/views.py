@@ -75,8 +75,11 @@ def get_data(question, dbs):
 
                         authors = i['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:creator']
                         
-                        authors = [ ( a[:a.rfind(" ")] , a[a.rfind(" "):] ) for a in authors ]
-                        item['authorString'] = ", ".join( [ "{} {}".format(a[0], a[1]) for a in authors] )
+                        if authors:
+                            authors = [ ( a[:a.rfind(" ")] , a[a.rfind(" "):] ) for a in authors ]
+                            item['authorString'] = ", ".join( [ "{} {}".format(a[0], a[1]) for a in authors] )
+                        else:
+                            item['authorString'] = "No Authors"
 
                         item['publisher'] = i['sru:recordData']['pam:message'][
                             'pam:article']['xhtml:head']['dc:publisher']
@@ -118,16 +121,12 @@ def get_data(question, dbs):
 
                         abstract = ""
                         try:
-                            print("\n\n NEW CITATIONS\n")
-                            print(article)
                             abstract = article['full-text-retrieval-response']['coredata']['dc:description']
                             abstract = helpers.filter_article(abstract)
                             item['summary'] = analysis.get_summary(str(item['title']), str(abstract))
-                            print("\nHELLO\n")
                         except:
                             abstract = helpers.filter_article( i['prism:teaser'] )
                             item['summary'] = abstract
-                            print("\nNUMBER 2\n")
 
                         # if article and article.get('full-text-retrieval-response') and article.get('full-text-retrieval-response').get('coredata'):
                         #     abstract = article['full-text-retrieval-response']['coredata']['dc:description']
