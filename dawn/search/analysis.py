@@ -118,20 +118,25 @@ appropriate_entities = [
     'LAW'
 ]
 
+
 def get_sentiment(query):
     doc = nlp(query)
     return doc.sentiment
+
 
 def get_related(query):
     related = aylien_client.Related({"phrase": query})
     temp = [a['phrase'] for a in related['related']]
     return filter_extra(query, temp)
 
+
 def get_entities(query):
     doc = nlp(query)
-    results = [ ent.text.lstrip().rstrip() for ent in doc.ents if ent.label_ in appropriate_entities]
+    results = [ent.text.lstrip().rstrip()
+               for ent in doc.ents if ent.label_ in appropriate_entities]
     results = list(set(results))
     return filter_extra(query, results)
+
 
 def get_concepts(query):
     return []
@@ -142,6 +147,7 @@ def get_summary(title, query):
     doc = nlp(query)
 
     occurrences = {}
+
     def fill_occurrences(word):
         word_lemma = lemma(word)
         count = occurrences.get(word_lemma, 0)
@@ -159,12 +165,15 @@ def get_summary(title, query):
 """
 Summary Code
 """
+
+
 def each_word(words, func):
     for word in words:
         if word.pos_ is "PUNCT":
             continue
 
         func(word)
+
 
 def get_ranked(sentences, sentence_count, occurrences):
     # Maintain ranked sentences for easy output
@@ -192,7 +201,7 @@ def get_ranked(sentences, sentence_count, occurrences):
         if score > lowest_score:
             # Maintain chronological order
             for i in range(lowest, len(ranked) - 1):
-                ranked[i] = ranked[i+1]
+                ranked[i] = ranked[i + 1]
 
             ranked[len(ranked) - 1] = {'sentence': sent, 'score': score}
 
@@ -206,15 +215,20 @@ def get_ranked(sentences, sentence_count, occurrences):
 
     return ranked
 
+
 def lemma(word):
     return word.lemma_
 
+
 def get_score(occurrences, sentence):
     class Totaler:
+
         def __init__(self):
             self.score = 0
+
         def __call__(self, word):
             self.score += occurrences.get(lemma(word), 0)
+
         def total(self):
             # Should the score be divided by total words?
             return self.score

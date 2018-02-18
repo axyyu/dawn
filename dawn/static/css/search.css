@@ -230,6 +230,7 @@ nav#search-sidebar {
     margin: 0;
     margin-bottom: 10px;
     font-size: 1.0em;
+    line-height: 1.5;
     overflow-wrap: break-word;
 }
 

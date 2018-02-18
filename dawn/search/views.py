@@ -23,7 +23,7 @@ def index(request):
         question = question.replace('+', ' ')
         if question[-1] == ' ':
             question = question[:-1]
-        databases = ['Nature','ScienceDirect']
+        databases = ['Nature', 'ScienceDirect']
         req = {'question': question,
                'definition': helpers.get_definition(question),
                'related': analysis.get_related(question),
@@ -70,14 +70,18 @@ def get_data(question, dbs):
                         item = {}
                         item['title'] = i['title']
                         item['url'] = i['link']
-                        
-                        abstract = i['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:description']
 
-                        authors = i['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:creator']
-                        
+                        abstract = i['sru:recordData']['pam:message'][
+                            'pam:article']['xhtml:head']['dc:description']
+
+                        authors = i['sru:recordData']['pam:message'][
+                            'pam:article']['xhtml:head']['dc:creator']
+
                         if authors:
-                            authors = [ ( a[:a.rfind(" ")] , a[a.rfind(" "):] ) for a in authors ]
-                            item['authorString'] = ", ".join( [ "{} {}".format(a[0], a[1]) for a in authors] )
+                            authors = [(a[:a.rfind(" ")], a[a.rfind(" "):])
+                                       for a in authors]
+                            item['authorString'] = ", ".join(
+                                ["{} {}".format(a[0], a[1]) for a in authors])
                         else:
                             item['authorString'] = "No Authors"
 
@@ -98,17 +102,20 @@ def get_data(question, dbs):
 
                         item['keywords'] = analysis.get_entities(str(abstract))
 
-                        item['sentiment'] = analysis.get_sentiment(str(abstract))
-                        item['summary'] = analysis.get_summary(str(item['title']), str(abstract))
+                        item['sentiment'] = analysis.get_sentiment(
+                            str(abstract))
+                        item['summary'] = analysis.get_summary(
+                            str(item['title']), str(abstract))
 
                         entity_array.append(item)
         elif d == "ScienceDirect":
             body = databases.get_science_direct(question)
             if body:
-                if body.get('search-results') and body.get('search-results').get('entry'):
+                if body.get(
+                        'search-results') and body.get('search-results').get('entry'):
                     count = 0
                     for i in body['search-results']['entry']:
-                        count+=1
+                        count += 1
                         if count > threshold:
                             break
 
@@ -121,11 +128,14 @@ def get_data(question, dbs):
 
                         abstract = ""
                         try:
-                            abstract = article['full-text-retrieval-response']['coredata']['dc:description']
+                            abstract = article[
+                                'full-text-retrieval-response']['coredata']['dc:description']
                             abstract = helpers.filter_article(abstract)
-                            item['summary'] = analysis.get_summary(str(item['title']), str(abstract))
+                            item['summary'] = analysis.get_summary(
+                                str(item['title']), str(abstract))
                         except:
-                            abstract = helpers.filter_article( i['prism:teaser'] )
+                            abstract = helpers.filter_article(
+                                i['prism:teaser'])
                             item['summary'] = abstract
 
                         # if article and article.get('full-text-retrieval-response') and article.get('full-text-retrieval-response').get('coredata'):
@@ -136,9 +146,11 @@ def get_data(question, dbs):
                         #     abstract = helpers.filter_article( i['prism:teaser'] )
                         #     item['summary'] = abstract
 
-                        authors = [ (a['given-name'],a['surname']) for a in i['authors']['author'] ]
+                        authors = [(a['given-name'], a['surname'])
+                                   for a in i['authors']['author']]
 
-                        item['authorString'] = ", ".join( [ "{} {}".format(a[0], a[1]) for a in authors] )
+                        item['authorString'] = ", ".join(
+                            ["{} {}".format(a[0], a[1]) for a in authors])
 
                         item['publisher'] = i['prism:publicationName']
                         item['publicationDate'] = i['prism:coverDate'][0]['$']
@@ -153,7 +165,8 @@ def get_data(question, dbs):
                             'chicagob', item['title'], item['publisher'], pubdate[0:4], authors)
 
                         item['keywords'] = analysis.get_entities(str(abstract))
-                        item['sentiment'] = analysis.get_sentiment(str(abstract))
+                        item['sentiment'] = analysis.get_sentiment(
+                            str(abstract))
 
                         entity_array.append(item)
         elif d == "CORES":
