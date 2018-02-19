@@ -1,23 +1,26 @@
+/*
+SEARCH BAR
+*/
 input[type=text] {
-    text-align: left;
-    width: 500px;
-    border: 2px solid rgb(96, 174, 224);
-    box-shadow: none;
-    padding: 0 10px;
-    z-index: 1;
-}
+  text-align: left;
+  width: 500px;
+  border: 2px solid #01B3FF;
+  box-shadow: none;
+  padding: 0 10px;
+  z-index: 1;
+  background: #EFEFEF; }
 
 input[type=text]:focus {
-    background: rgb(232, 246, 255);
-}
+  background: rgba(1, 179, 255, 0.1); }
 
 input[type=submit] {
-    z-index: 1;
-    text-align: center;
-    padding: 0 20px;
-    background: rgb(96, 174, 224);
-    border: 2px solid rgb(96, 174, 224);
-    box-shadow: none !important;
-    font-size: 1em;
-    border-radius: 0;
-}
+  z-index: 1;
+  text-align: center;
+  padding: 0 20px;
+  background: #01B3FF;
+  border: 2px solid #01B3FF;
+  box-shadow: none !important;
+  font-size: 1em;
+  border-radius: 0; }
+
+/*# sourceMappingURL=../../../../../../../static/css/searchbar.css.map */

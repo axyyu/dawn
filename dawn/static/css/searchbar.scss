@@ -1,0 +1,30 @@
+/*
+SEARCH BAR
+*/
+
+@import "colors";
+
+input[type=text] {
+    text-align: left;
+    width: 500px;
+    border: 2px solid $secondary;
+    box-shadow: none;
+    padding: 0 10px;
+    z-index: 1;
+    background: $background;
+}
+
+input[type=text]:focus {
+    background: rgba($secondary, 0.1);
+}
+
+input[type=submit] {
+    z-index: 1;
+    text-align: center;
+    padding: 0 20px;
+    background: $secondary;
+    border: 2px solid $secondary;
+    box-shadow: none !important;
+    font-size: 1em;
+    border-radius: 0;
+}

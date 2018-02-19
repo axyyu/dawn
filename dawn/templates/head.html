@@ -1,10 +1,6 @@
 {% load static %}
+{% load sass_tags %}
     <meta charset="UTF-8">
     <link href="https://cdn.quilljs.com/1.2.4/quill.bubble.css" rel="stylesheet">
-    <!-- <link rel="icon" href={% static 'img/coresearchicon.png' %}> -->
-    <link rel="stylesheet" href={% static 'fonts/stylesheet.css' %}>
-    <link rel="stylesheet" href={% static 'css/style.css' %}>
-    <link rel="stylesheet" href={% static 'css/header.css' %}>
-	<link rel="stylesheet" href={% static 'css/font-awesome.css' %}>
-	<link rel="stylesheet" href={% static 'css/square-loading-pane.css' %}>
+    <link rel="stylesheet" href={% sass_src 'css/styles.scss' %}>
     <script type="text/javascript" src={% static 'js/jquery.js' %} defer></script>

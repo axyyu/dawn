@@ -1,0 +1,62 @@
+/*
+DEPENDENCIES
+*/
+
+@import "_font-awesome";
+@import "_stylesheet";
+@import "colors";
+@import "header";
+@import "footer";
+
+
+/*
+MIXINS
+*/
+
+@mixin placeholder {
+    ::-webkit-input-placeholder {@content;}
+    :-moz-placeholder           {@content;}
+    ::-moz-placeholder          {@content;}
+    :-ms-input-placeholder      {@content;}  
+}
+
+
+/*
+STYLE
+*/
+
+html,body{
+    margin: 0;
+}
+body {
+    width: 100vw;
+    height: 100vh;
+    color: $primary;
+    overflow-x: hidden;
+    background: $background;
+}
+
+h1, h2, h3, h4, h5 {
+    margin: 0; 
+}
+
+*{
+    transition: all 0.3s ease;
+    font-family: Roboto, 'Helvetica Neue', Helvetica, sans-serif;
+    font-size: 100%;
+}
+
+.click:hover {
+    cursor: pointer; 
+}
+
+@include placeholder {
+    color: #95989A;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}

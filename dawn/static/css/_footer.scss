@@ -1,0 +1,17 @@
+footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    position: relative;
+    width: 100%;
+}
+
+#information {
+    display: flex;
+}
+
+footer h4 {
+    font-weight: 400;
+    padding: 20px;
+}
+

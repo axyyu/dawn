@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'sass_processor',
 ]
 
 MIDDLEWARE = [
@@ -122,3 +123,5 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 LOGIN_REDIRECT_URL = '/'
+SASS_ROOT = os.path.join(BASE_DIR, 'static', 'scss')
+SASS_PROCESSOR_ROOT = os.path.join(BASE_DIR, 'static')

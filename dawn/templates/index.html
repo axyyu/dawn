@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 {% load static %}
+{% load sass_tags %}
 <head>
     <title>Coresearch</title>
     {% include 'head.html' %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/index.css' %}">
-    <link rel="stylesheet" href="{% static 'css/searchbar.css' %}">
+    <link rel="stylesheet" href="{% sass_src 'css/index.scss' %}">
+    <link rel="stylesheet" href="{% sass_src 'css/searchbar.scss' %}">
 </head>
 <body>
     {% include 'header.html' %}
