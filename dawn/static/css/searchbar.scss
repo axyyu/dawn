@@ -5,26 +5,32 @@ SEARCH BAR
 @import "colors";
 
 input[type=text] {
+    border: none;
+    outline: none;
     text-align: left;
     width: 500px;
-    border: 2px solid $secondary;
-    box-shadow: none;
+    box-shadow: 0 0 10px rgba($gray, $shadow-one);
     padding: 0 10px;
     z-index: 1;
-    background: $background;
 }
 
 input[type=text]:focus {
-    background: rgba($secondary, 0.1);
+    background: rgba($secondary, $shadow-two);
+    box-shadow: 0 0 10px rgba($gray, $shadow-two);
 }
 
 input[type=submit] {
+    outline: none;
+    border: none;
+    color: $primary;
     z-index: 1;
     text-align: center;
     padding: 0 20px;
     background: $secondary;
-    border: 2px solid $secondary;
-    box-shadow: none !important;
+    box-shadow: none;
     font-size: 1em;
     border-radius: 0;
+}
+input[type=submit]:hover {
+    box-shadow: 0 0 10px rgba($gray, $shadow-two);
 }

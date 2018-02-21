@@ -50,7 +50,7 @@ bibclose.onclick = function() {
     bibmodal.style.display = "none";
 }
 window.onclick = function(event) {
-    if (event.target == modal) {
+    if (event.target == bibmodal) {
         bibmodal.style.display = "none";
     }
 }

@@ -1,0 +1,253 @@
+/*
+Search Results
+*/
+@import "colors";
+@import "modal";
+
+form {
+    height: 50px;
+    margin: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#search-content {
+    margin: 2vh 4vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    #search-sidebar {
+        width:400px;
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        overflow: hidden;
+        box-shadow: 0 0 10px rgba($gray, $shadow-two);
+
+        #search-click {
+            position: relative;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: $secondary;
+
+            span {
+                padding: 0 5px;
+                font-size: 1.2em;
+                margin: auto;
+            }
+        }
+
+        #search-info {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            left: 0;
+            right: 0;
+            min-width: 200px;
+            border-left: none;
+            padding: 20px;
+
+            #search-term {
+                font-size: 1.2em;
+                padding-bottom: 10px;
+                border-bottom: 2px solid $teal;
+                margin-bottom: 10px;
+            }
+
+            .info{
+                margin: 10px 0;
+
+                h1{
+                    font-size: 1.2em;
+                }
+                p{
+                    margin: 5px 0;
+                    font-size: 1.0em;
+                }
+            }
+
+            #related-terms {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+
+                .related-term {
+                    display: flex;
+                    flex-direction: row;
+                    background: $secondary;
+                    margin: 5px 5px 5px 0;
+                    padding: 10px;
+                    font-size: 1.0em;
+
+                    h4{
+                        font-weight: 400;
+                    }
+                    .fa{
+                        margin-left: 10px;
+                    }
+                }
+            }
+        }
+    }
+
+    #search-results {
+        width: 100%;
+        height: inherit;
+        margin: 0 2vw 0 0;
+
+        #search-toolbar {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba($gray, $shadow-two);
+
+            #database-list {
+                height: 100%;
+                display: flex;
+                flex-direction: row;
+                font-size: 1.2em;
+
+                .database {
+                    width: 40px;
+                    height: 40px;
+                    text-align: center;
+                    margin: 0 5px;
+                    line-height: 40px;
+                    background: $secondary;
+
+                    .unselected {
+                        background: none;
+                    }
+                }
+                .database:hover {
+                    cursor: pointer;
+                }
+            }
+
+            #database-time {
+                height: 100%;
+                display: flex;
+                flex-direction: row;
+
+                h4 {
+                    line-height: 40px;
+                }
+                input {
+                    width: 50px;
+                    height: 40px;
+                    margin: 0 5px;
+                }
+            }
+
+            #database-sort {
+                height: 100%;
+                display: flex;
+                flex-direction: row;
+                margin: 0 5px;
+
+                span {
+                    margin: 0 5px;
+                    line-height: 40px;
+                    font-size: 1.2em;
+                }
+            }
+        }
+
+        #search-list {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            margin-top:2vh;
+
+            .search-entry {
+                margin: 1vh 0;
+                padding: 20px;
+                box-shadow: 0 0 10px rgba($gray, $shadow-two);
+
+                a {
+                    color: inherit;
+                    text-decoration: none;
+                }
+                .entry-title {
+                    display: flex;
+                    justify-content: space-between;
+                    margin-bottom: 20px;
+                    font-size: 1.2em;
+                    border-bottom: 2px solid $teal;
+
+                    h2 {
+                        overflow-wrap: break-word;
+                        padding-right: 5px;
+                        padding-bottom: 10px;
+                    }
+                    .journal {
+                        white-space: nowrap;
+                        padding-right: 5px;
+                        padding-bottom: 10px;
+                        margin-left:20px;
+                    }
+                }
+                .entry-info {
+                    margin-bottom: 10px;
+                    font-size: 1.0em;
+
+                    h3 {
+                        padding-right: 5px;
+                    }
+                    .date{
+                        width: 200px;
+                        margin-top:10px;
+                    }
+                }
+                .entry-summary {
+                    margin: 0;
+                    margin-bottom: 10px;
+                    font-size: 1.0em;
+                    line-height: 1.5;
+                    overflow-wrap: break-word;
+                }
+                .entry-action {
+                    display: flex;
+                    justify-content: space-between;
+
+                    .entry-terms {
+                        display: flex;
+                        flex-wrap: wrap;
+
+                        .entry-term {
+                            display: flex;
+                            font-size: 1.0em;
+                            background: $secondary;
+                            margin: 5px 5px 5px 0;
+                            padding: 10px;
+
+                            h4 {
+                                font-weight: 400;
+                            }
+                            .fa {
+                                margin-left: 10px;
+                            }
+                        }
+                    }
+
+                    .entry-icons {
+                        display: flex;
+                        font-size: 1.5em;
+
+                        .fa {
+                            line-height: 1.0em;
+                            padding: 10px 0;
+                            margin-left: 10px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

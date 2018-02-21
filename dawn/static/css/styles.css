@@ -2494,7 +2494,7 @@ body {
   height: 100vh;
   color: #000000;
   overflow-x: hidden;
-  background: #EFEFEF; }
+  background: #FEFEFE; }
 
 h1, h2, h3, h4, h5 {
   margin: 0; }
@@ -2508,16 +2508,16 @@ h1, h2, h3, h4, h5 {
   cursor: pointer; }
 
 ::-webkit-input-placeholder {
-  color: #95989A; }
+  color: rgba(48, 48, 54, 0.5); }
 
 :-moz-placeholder {
-  color: #95989A; }
+  color: rgba(48, 48, 54, 0.5); }
 
 ::-moz-placeholder {
-  color: #95989A; }
+  color: rgba(48, 48, 54, 0.5); }
 
 :-ms-input-placeholder {
-  color: #95989A; }
+  color: rgba(48, 48, 54, 0.5); }
 
 input:focus,
 select:focus,

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 {% load static %}
+{% load sass_tags %}
 <head>
     <title>Coresearch</title>
     {% include 'head.html' %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/searchbar.css' %}">
-    <link rel="stylesheet" href="{% static 'css/search.css' %}">
+    <link rel="stylesheet" href="{% sass_src 'css/search.scss' %}">
+    <link rel="stylesheet" href="{% sass_src 'css/searchbar.scss' %}">
 </head>
 <body>
     {% include 'header.html' %}
@@ -23,8 +23,8 @@
     <div id="bib-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
+                <h2>Bibliography</h2>
                 <span id="bib-close" class="close">&times;</span>
-                <h2>Citations</h2>
             </div>
             <div class="modal-body">
                 <p id="mla"></p>
@@ -90,7 +90,6 @@
                 {% endfor %}
             </div>
         </div>
-        <div class="space"></div>
         <nav id="search-sidebar">
             <div id="search-click" class="click">
                 <span class="fa fa-caret-right"></span>
