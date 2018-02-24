@@ -11,7 +11,7 @@ input[type=text] {
   z-index: 1; }
 
 input[type=text]:focus {
-  background: rgba(1, 179, 255, 0.1);
+  background: rgba(47, 180, 237, 0.1);
   box-shadow: 0 0 10px rgba(48, 48, 54, 0.1); }
 
 input[type=submit] {
@@ -21,8 +21,8 @@ input[type=submit] {
   z-index: 1;
   text-align: center;
   padding: 0 20px;
-  background: #01B3FF;
-  box-shadow: none;
+  background: #2fb4ed;
+  box-shadow: 0 0 10px rgba(48, 48, 54, 0.05);
   font-size: 1em;
   border-radius: 0; }
 

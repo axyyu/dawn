@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 {% load static %}
+{% load sass_tags %}
 <head>
     <title>About</title>
     {% include 'head.html' %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/about.css' %}">
+    <link rel="stylesheet" href="{% sass_src 'css/about.scss' %}">
 </head>
 <body>
     {% include 'header.html' %}
@@ -64,7 +64,7 @@
                 </div>
         </div>
     </section>
-    <section id="pricing">
+    {% comment %} <section id="pricing">
         <h2>Pricing</h2>
         <div class="panels">
             <div class="panel">
@@ -102,7 +102,7 @@
                 </a>
             </div>
         </div>
-    </section>
+    </section> {% endcomment %}
     <section>
         <h2>Team</h2>
         <div class="panels">

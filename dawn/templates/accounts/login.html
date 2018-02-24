@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 {% load static %}
+{% load sass_tags %}
 <head>
 	<title>Login</title>
     {% include 'head.html' %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <link rel="stylesheet" href="{% sass_src 'css/login.scss' %}">
 </head>
 <body>
     {% include 'header.html' %}

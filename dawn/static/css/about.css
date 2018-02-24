@@ -1,139 +1,124 @@
-h1{
-    text-align: center;
-    margin: 40px;
-    font-size: 2em;
-}
-h2{
-    font-size: 1.5em;
-    margin-bottom: 20px;
-}
-h3{
-    display: inline-block;
-    font-size: 1.2em;
-    font-weight: normal;
-    padding-bottom: 10px;
-    border-bottom: 4px solid rgb(0, 123, 204);
-    margin-bottom: 10px;
-}
-h4{
-    width: 50vw;
-    font-weight: 300;
-    font-size: 1.3em;
-    line-height: 1.3em;
-    margin: 40px auto;
-}
-a:hover{
-    cursor: pointer;
-}
-button{
-    height: 50px;
-    text-align: center;
-    padding: 0 20px;
-    background: rgb(96, 174, 224);
-    border: 2px solid rgb(96, 174, 224);
-    box-shadow: none !important;
-    font-size: 1em;
-    border-radius: 0;
-}
+/*
+ABOUT
+*/
+h1 {
+  text-align: center;
+  margin: 40px;
+  font-size: 2em; }
+
+h2 {
+  font-size: 1.5em;
+  margin-bottom: 20px; }
+
+h3 {
+  display: inline-block;
+  font-size: 1.2em;
+  font-weight: normal;
+  padding: 0 10px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #16BAC5;
+  margin-bottom: 10px; }
+
+h4 {
+  width: 50vw;
+  font-weight: 300;
+  font-size: 1.3em;
+  line-height: 1.3em;
+  margin: 40px auto; }
+
+a {
+  display: inline-block;
+  z-index: 1; }
+
+button:hover {
+  cursor: pointer; }
+
+button {
+  height: 50px;
+  text-align: center;
+  padding: 0 20px;
+  background: #2fb4ed;
+  border: 2px solid #2fb4ed;
+  box-shadow: none !important;
+  font-size: 1em;
+  border-radius: 0; }
 
 /*
 Section
 */
-section{
-    text-align: center;
-    /* width: 70vw; */
-    padding: 40px;
-}
+section {
+  text-align: center;
+  padding: 40px; }
+
 section:nth-child(odd) {
-    /* background: rgb(245, 245, 245); */
-}
-section:nth-child(even) {
-    background: rgb(250, 250, 250);
-    /* background :rgb(96, 174, 224); */
-    /* color:white; */
-}
+  background: #fbfbfb; }
 
 /*
 Panels
 */
-.panels{
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-.panel{
-    /* margin: 10px; */
+.panels {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center; }
+  .panels .panel {
     padding: 30px;
-    width: calc(30vw - 20px);
-    /* border: 1px solid rgb(0, 123, 204); */
-    /* box-shadow: 0px 0px 10px rgb(0, 123, 204); */
-}
+    width: calc(30vw - 20px); }
 
 /*
 Features
 */
-.feature-panel{
-    padding: 10px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-.graphic{
+.feature-panel {
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; }
+  .feature-panel .graphic {
     height: 100px;
-    width: 100px;
-    /* background: rgb(0, 123, 204); */
-}
-ul{
+    width: 100px; }
+  .feature-panel ul {
     margin: 0 10px;
     padding: 0 10px;
     list-style: none;
-    width: calc(100% - 120px);
-}
-li{
-    font-size:1em;
+    width: calc(100% - 120px); }
+  .feature-panel li {
+    font-size: 1em;
     font-weight: 300;
-    margin: 10px 0;
-}
+    margin: 10px 0; }
 
 /*
 Pricing
 */
-p{
-    margin:0;
-    font-size: 1em;
-    font-weight: 300;
-}
-#pricing h4{
-    width:auto;
-    margin: 0px;
-    margin-top: 20px;
-    font-size: 2em;
-    font-weight: normal;
-}
-a{
-    display: block;
-    margin: 20px 0;
-}
-#pricing .panel:nth-child(odd){
-    border-right: 1px solid rgb(0, 123, 204);
-}
-#pricing .panel:nth-child(3){
-    /* background: rgb(250, 250, 250); */
-}
-#pricing .panel:nth-child(1){
-    border-bottom: 1px solid rgb(0, 123, 204);
-}
-#pricing .panel:nth-child(2){
-    /* background: rgb(250, 250, 250); */
-    border-bottom: 1px solid rgb(0, 123, 204);
-}
+#pricing p {
+  margin: 0;
+  font-size: 1em;
+  font-weight: 300; }
 
-.team{
-    margin: 20px;
-    height: 200px;
-    width: 200px;
-    /* border-radius: 200px; */
-    background: rgb(0, 123, 204);
-}
+#pricing h4 {
+  width: auto;
+  margin: 0px;
+  margin-top: 20px;
+  font-size: 2em;
+  font-weight: normal; }
+
+#pricing a {
+  display: inline-block;
+  margin: 20px 0; }
+
+#pricing .panel:nth-child(odd) {
+  border-right: 1px solid #2fb4ed; }
+
+#pricing .panel:nth-child(1) {
+  border-bottom: 1px solid #2fb4ed; }
+
+#pricing .panel:nth-child(2) {
+  border-bottom: 1px solid #2fb4ed; }
+
+.team {
+  margin: 20px;
+  height: 200px;
+  width: 200px;
+  background: #2fb4ed; }
+
+/*# sourceMappingURL=../../../../../../../static/css/about.css.map */

@@ -27,7 +27,7 @@ input[type=submit] {
     text-align: center;
     padding: 0 20px;
     background: $secondary;
-    box-shadow: none;
+    box-shadow: 0 0 10px rgba($gray, $shadow-one);
     font-size: 1em;
     border-radius: 0;
 }

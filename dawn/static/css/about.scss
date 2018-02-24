@@ -1,0 +1,143 @@
+/*
+ABOUT
+*/
+
+@import "colors";
+
+h1{
+    text-align: center;
+    margin: 40px;
+    font-size: 2em;
+}
+h2{
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+h3{
+    display: inline-block;
+    font-size: 1.2em;
+    font-weight: normal;
+
+    padding: 0 10px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid $teal;
+    margin-bottom: 10px;
+}
+h4{
+    width: 50vw;
+    font-weight: 300;
+    font-size: 1.3em;
+    line-height: 1.3em;
+    margin: 40px auto;
+}
+
+a{
+    display: inline-block;
+    z-index: 1;
+}
+button:hover{
+    cursor: pointer;
+}
+button{
+    height: 50px;
+    text-align: center;
+    padding: 0 20px;
+    background: $secondary;
+    border: 2px solid $secondary;
+    box-shadow: none !important;
+    font-size: 1em;
+    border-radius: 0;
+}
+
+/*
+Section
+*/
+section{
+    text-align: center;
+    padding: 40px;
+}
+section:nth-child(odd) {
+    background: darken($background, 1%);
+}
+
+/*
+Panels
+*/
+.panels{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .panel{
+        padding: 30px;
+        width: calc(30vw - 20px);
+    }
+}
+
+/*
+Features
+*/
+.feature-panel{
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .graphic{
+        height: 100px;
+        width: 100px;
+    }
+    ul{
+        margin: 0 10px;
+        padding: 0 10px;
+        list-style: none;
+        width: calc(100% - 120px);
+    }
+    li{
+        font-size:1em;
+        font-weight: 300;
+        margin: 10px 0;
+    }
+}
+
+
+/*
+Pricing
+*/
+#pricing{
+    p{
+        margin:0;
+        font-size: 1em;
+        font-weight: 300;
+    }
+    h4{
+        width:auto;
+        margin: 0px;
+        margin-top: 20px;
+        font-size: 2em;
+        font-weight: normal;
+    }
+    a{
+        display: inline-block;
+        margin: 20px 0;
+    }
+
+    .panel:nth-child(odd){
+        border-right: 1px solid $secondary;
+    }
+    .panel:nth-child(1){
+        border-bottom: 1px solid $secondary;
+    }
+    .panel:nth-child(2){
+        border-bottom: 1px solid $secondary;
+    }
+}
+
+.team{
+    margin: 20px;
+    height: 200px;
+    width: 200px;
+    background: $secondary;
+}
