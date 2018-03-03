@@ -6,7 +6,7 @@ import requests
 import json
 import re
 
-from . import databases
+from . import sources
 from . import analysis
 from . import helpers
 from . import bibliography
@@ -23,12 +23,12 @@ def index(request):
         question = question.replace('+', ' ')
         if question[-1] == ' ':
             question = question[:-1]
-        databases = ['Nature', 'ScienceDirect']
+        sources = ['Nature', 'ScienceDirect']
         req = {}
         req['question'] = question
         req['definition'] = helpers.get_definition(question)
         req['related'] = analysis.get_related(question)
-        req['data'] = get_data(question, databases)
+        req['data'] = get_data(question, sources)
         return render(request, 'results.html', req)
         # return render(request, 'index.html')
     return render(request, 'index.html')
@@ -64,112 +64,12 @@ def get_data(question, dbs):
     threshold = 4
     for d in dbs:
         if d == "Nature":
-            body = databases.get_nature_journal(question, 3)
-            if body:
-                if body.get('feed') and body.get('feed').get('entry'):
-                    for i in body['feed']['entry']:
-                        item = {}
-                        item['title'] = i['title']
-                        item['url'] = i['link']
-
-                        abstract = i['sru:recordData']['pam:message'][
-                            'pam:article']['xhtml:head']['dc:description']
-
-                        authors = i['sru:recordData']['pam:message'][
-                            'pam:article']['xhtml:head']['dc:creator']
-
-                        if authors:
-                            authors = [(a[:a.rfind(" ")], a[a.rfind(" "):])
-                                       for a in authors]
-                            item['authorString'] = ", ".join(
-                                ["{} {}".format(a[0], a[1]) for a in authors])
-                        else:
-                            item['authorString'] = "No Authors"
-
-                        item['publisher'] = i['sru:recordData']['pam:message'][
-                            'pam:article']['xhtml:head']['dc:publisher']
-                        item['publicationDate'] = i['sru:recordData']['pam:message'][
-                            'pam:article']['xhtml:head']['prism:publicationDate']
-                        item['journal'] = 'Nature Journal'
-
-                        pubdate = item['publicationDate']
-                        item['mla'] = bibliography.get_easy_bib(
-                            'mla7', item['title'], item['publisher'], pubdate[0:4], authors)
-                        item['apa'] = bibliography.get_easy_bib(
-                            'apa', item['title'], item['publisher'], pubdate[0:4], authors)
-                        item['chicago'] = bibliography.get_easy_bib(
-                            'chicagob', item['title'], item['publisher'], pubdate[0:4], authors)
-                        abstract = helpers.filter_article(abstract)
-
-                        item['keywords'] = analysis.get_entities(str(abstract))
-
-                        item['sentiment'] = analysis.get_sentiment(
-                            str(abstract))
-                        item['summary'] = analysis.get_summary(
-                            str(item['title']), str(abstract))
-
-                        entity_array.append(item)
+            db = sources.NatureJournal(threshold)
         elif d == "ScienceDirect":
-            body = databases.get_science_direct(question)
-            if body:
-                if body.get(
-                        'search-results') and body.get('search-results').get('entry'):
-                    count = 0
-                    for i in body['search-results']['entry']:
-                        count += 1
-                        if count > threshold:
-                            break
-
-                        item = {}
-                        item['title'] = i['dc:title']
-                        item['url'] = i['link'][1]["@href"]
-
-                        pii = i['pii']
-                        article = databases.get_science_direct_article(pii)
-
-                        abstract = ""
-                        try:
-                            abstract = article[
-                                'full-text-retrieval-response']['coredata']['dc:description']
-                            abstract = helpers.filter_article(abstract)
-                            item['summary'] = analysis.get_summary(
-                                str(item['title']), str(abstract))
-                        except:
-                            abstract = helpers.filter_article(
-                                i['prism:teaser'])
-                            item['summary'] = abstract
-
-                        # if article and article.get('full-text-retrieval-response') and article.get('full-text-retrieval-response').get('coredata'):
-                        #     abstract = article['full-text-retrieval-response']['coredata']['dc:description']
-                        #     abstract = helpers.filter_article(abstract)
-                        #     item['summary'] = analysis.get_summary(str(item['title']), str(abstract))
-                        # else:
-                        #     abstract = helpers.filter_article( i['prism:teaser'] )
-                        #     item['summary'] = abstract
-
-                        authors = [(a['given-name'], a['surname'])
-                                   for a in i['authors']['author']]
-
-                        item['authorString'] = ", ".join(
-                            ["{} {}".format(a[0], a[1]) for a in authors])
-
-                        item['publisher'] = i['prism:publicationName']
-                        item['publicationDate'] = i['prism:coverDate'][0]['$']
-                        item['journal'] = 'Science Direct'
-
-                        pubdate = item['publicationDate']
-                        item['mla'] = bibliography.get_easy_bib(
-                            'mla7', item['title'], item['publisher'], pubdate[0:4], authors)
-                        item['apa'] = bibliography.get_easy_bib(
-                            'apa', item['title'], item['publisher'], pubdate[0:4], authors)
-                        item['chicago'] = bibliography.get_easy_bib(
-                            'chicagob', item['title'], item['publisher'], pubdate[0:4], authors)
-
-                        item['keywords'] = analysis.get_entities(str(abstract))
-                        item['sentiment'] = analysis.get_sentiment(
-                            str(abstract))
-
-                        entity_array.append(item)
-        elif d == "CORES":
-            pass
+            db = sources.ScienceDirect(threshold)
+        # elif d == "CORES":
+        #    pass
+        db.get_response(question)
+        db.parse_data()
+        entity_array.extend(db.data)
     return entity_array
