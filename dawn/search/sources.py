@@ -38,13 +38,10 @@ class NatureJournal(Source):
                 item = {}
                 item['title'] = i['title']
                 item['url'] = i['link']
-
                 abstract = i['sru:recordData']['pam:message'][
                     'pam:article']['xhtml:head']['dc:description']
-
                 authors = i['sru:recordData']['pam:message'][
                     'pam:article']['xhtml:head']['dc:creator']
-
                 if authors:
                     authors = [(a[:a.rfind(" ")], a[a.rfind(" "):])
                                for a in authors]
@@ -52,24 +49,20 @@ class NatureJournal(Source):
                         ["{} {}".format(a[0], a[1]) for a in authors])
                 else:
                     item['authorString'] = "No Authors"
-
                 item['publisher'] = i['sru:recordData']['pam:message'][
                     'pam:article']['xhtml:head']['dc:publisher']
                 item['publicationDate'] = i['sru:recordData']['pam:message'][
                     'pam:article']['xhtml:head']['prism:publicationDate']
                 item['journal'] = 'Nature Journal'
-
-                pubdate = item['publicationDate']
+                pubdate = item['publicationDate'][0:4]
                 item['mla'] = bibliography.get_easy_bib(
-                    'mla7', item['title'], item['publisher'], pubdate[0:4], authors)
+                    'mla7', item['title'], item['publisher'], pubdate, authors)
                 item['apa'] = bibliography.get_easy_bib(
-                    'apa', item['title'], item['publisher'], pubdate[0:4], authors)
+                    'apa', item['title'], item['publisher'], pubdate, authors)
                 item['chicago'] = bibliography.get_easy_bib(
-                    'chicagob', item['title'], item['publisher'], pubdate[0:4], authors)
+                    'chicagob', item['title'], item['publisher'], pubdate, authors)
                 abstract = helpers.filter_article(abstract)
-
                 item['keywords'] = analysis.get_entities(str(abstract))
-
                 item['sentiment'] = analysis.get_sentiment(
                     str(abstract))
                 item['summary'] = analysis.get_summary(
@@ -102,11 +95,9 @@ class ScienceDirect(Source):
                 count += 1
                 if count > self.threshold:
                     break
-
                 item = {}
                 item['title'] = i['dc:title']
                 item['url'] = i['link'][1]["@href"]
-
                 pii = i['pii']
                 article = self.get_article(pii)  # make async
                 abstract = ""
@@ -131,19 +122,16 @@ class ScienceDirect(Source):
 
                 authors = [(a['given-name'], a['surname'])
                            for a in i['authors']['author']]
-
                 item['authorString'] = ", ".join(
                     ["{} {}".format(a[0], a[1]) for a in authors])
-
                 item['publisher'] = i['prism:publicationName']
                 item['publicationDate'] = i['prism:coverDate'][0]['$']
                 item['journal'] = 'Science Direct'
-
-                pubdate = item['publicationDate']
+                pubdate = item['publicationDate'][0:4]
                 item['mla'] = bibliography.get_easy_bib(
-                    'mla7', item['title'], item['publisher'], pubdate[0:4], authors)
+                    'mla7', item['title'], item['publisher'], pubdate, authors)
                 item['apa'] = bibliography.get_easy_bib(
-                    'chicagob', item['title'], item['publisher'], pubdate[0:4], authors)
+                    'chicagob', item['title'], item['publisher'], pubdate, authors)
                 item['keywords'] = analysis.get_entities(str(abstract))
                 item['sentiment'] = analysis.get_sentiment(
                     str(abstract))
