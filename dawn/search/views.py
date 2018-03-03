@@ -83,7 +83,7 @@ def get_data(question, dbs):
             executor.submit(
                 build_data,
                 s,
-                question): s.data for s in source_array}
+                question): s for s in source_array}
         for future in concurrent.futures.as_completed(future_to_data):
-            entity_array.extend(future_to_data[future])
+            entity_array.extend(future.result())
     return entity_array
