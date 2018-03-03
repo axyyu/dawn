@@ -24,10 +24,11 @@ def index(request):
         if question[-1] == ' ':
             question = question[:-1]
         databases = ['Nature', 'ScienceDirect']
-        req = {'question': question,
-               'definition': helpers.get_definition(question),
-               'related': analysis.get_related(question),
-               'data': get_data(question, databases)}
+        req = {}
+        req['question'] = question
+        req['definition'] = helpers.get_definition(question)
+        req['related'] = analysis.get_related(question)
+        req['data'] = get_data(question, databases)
         return render(request, 'results.html', req)
         # return render(request, 'index.html')
     return render(request, 'index.html')
