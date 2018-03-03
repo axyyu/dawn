@@ -5,6 +5,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 import requests
 import json
 import re
+import concurrent.futures
 
 from . import sources
 from . import analysis
@@ -59,17 +60,30 @@ def related(request):
     return render(request, 'index.html')
 
 
+def build_data(source, question):
+    source.get_response(question)
+    source.parse_data()
+    return source.data
+
+
 def get_data(question, dbs):
     entity_array = []
     threshold = 4
+    source_array = []
     for d in dbs:
         if d == "Nature":
-            db = sources.NatureJournal(threshold)
+            source_array.append(sources.NatureJournal(threshold))
         elif d == "ScienceDirect":
-            db = sources.ScienceDirect(threshold)
+            source_array.append(sources.ScienceDirect(threshold))
         # elif d == "CORES":
         #    pass
-        db.get_response(question)
-        db.parse_data()
-        entity_array.extend(db.data)
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
+        future_to_data = {
+            executor.submit(
+                build_data,
+                s,
+                question): s.data for s in source_array}
+        for future in concurrent.futures.as_completed(future_to_data):
+            entity_array.extend(future_to_data[future])
     return entity_array

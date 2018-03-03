@@ -87,10 +87,13 @@ class ScienceDirect(Source):
             except:
                 print('Invalid response from Science Direct')
 
+    # async def get_articles(self):
+
     def parse_data(self):
         if self.response[
                 'search-results'] and self.response['search-results']['entry']:
             count = 0
+
             for i in self.response['search-results']['entry']:
                 count += 1
                 if count > self.threshold:
@@ -98,8 +101,9 @@ class ScienceDirect(Source):
                 item = {}
                 item['title'] = i['dc:title']
                 item['url'] = i['link'][1]["@href"]
+
                 pii = i['pii']
-                article = self.get_article(pii)  # make async
+                # article = self.get_article(pii)  # make async
                 abstract = ""
                 try:
                     abstract = article[
