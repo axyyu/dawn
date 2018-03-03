@@ -78,7 +78,7 @@ def get_data(question, dbs):
         # elif d == "CORES":
         #    pass
 
-    with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
         future_to_data = {
             executor.submit(
                 build_data,
