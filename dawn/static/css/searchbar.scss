@@ -4,33 +4,44 @@ SEARCH BAR
 
 @import "colors";
 
-input[type=text] {
-    border: none;
-    outline: none;
-    text-align: left;
-    width: 500px;
-    box-shadow: 0 0 10px rgba($gray, $shadow-one);
-    padding: 0 10px;
-    z-index: 1;
-}
-
-input[type=text]:focus {
-    background: rgba($secondary, $shadow-two);
+#search-bar-container{
+    display: flex;
+    justify-content: center;
+    margin: 20px auto;
+    height: 50px;
+    width: fit-content;
     box-shadow: 0 0 10px rgba($gray, $shadow-two);
-}
-
-input[type=submit] {
-    outline: none;
-    border: none;
-    color: $primary;
     z-index: 1;
-    text-align: center;
-    padding: 0 20px;
-    background: $secondary;
-    box-shadow: 0 0 10px rgba($gray, $shadow-one);
-    font-size: 1em;
-    border-radius: 0;
-}
-input[type=submit]:hover {
-    box-shadow: 0 0 10px rgba($gray, $shadow-two);
+
+    input[type=text] {
+        display: inline-block;
+        height: inherit;
+        border: none;
+        outline: none;
+        text-align: left;
+        width: 500px;
+        padding: 0 10px;
+        z-index: 1;
+    }
+
+    input[type=text]:focus {
+        background: rgba($secondary, $shadow-two);
+    }
+
+    input[type=submit] {
+        display: inline-block;
+        height: inherit;
+        outline: none;
+        border: none;
+        color: $primary;
+        text-align: center;
+        padding: 0 20px;
+        font-size: 1em;
+        border-radius: 0;
+        z-index: 1;
+    }
+    input[type=submit]:hover {
+        background: $secondary;
+        box-shadow: 0 0 10px rgba($gray, $shadow-two);
+    }
 }

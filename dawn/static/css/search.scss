@@ -4,14 +4,6 @@ Search Results
 @import "colors";
 @import "modal";
 
-form {
-    height: 50px;
-    margin: 20px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-}
-
 #search-content {
     margin: 2vh 4vw;
     display: flex;
@@ -142,6 +134,14 @@ form {
                     width: 50px;
                     height: 40px;
                     margin: 0 5px;
+                    display: inline-block;
+                    border: none;
+                    outline: none;
+                    text-align: left;
+                    padding: 0 10px;
+                    &:focus {
+                        background: rgba($secondary, $shadow-two);
+                    }
                 }
             }
 

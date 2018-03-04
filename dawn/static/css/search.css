@@ -58,14 +58,7 @@ Modal
     .modal .modal-content .modal-footer {
       font-size: 1.2em;
       padding: 20px;
-      background-color: #1B98E0; }
-
-form {
-  height: 50px;
-  margin: 20px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center; }
+      background-color: #2fb4ed; }
 
 #search-content {
   margin: 2vh 4vw;
@@ -85,7 +78,7 @@ form {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      background: #1B98E0; }
+      background: #2fb4ed; }
       #search-content #search-sidebar #search-click span {
         padding: 0 5px;
         font-size: 1.2em;
@@ -118,7 +111,7 @@ form {
         #search-content #search-sidebar #search-info #related-terms .related-term {
           display: flex;
           flex-direction: row;
-          background: #1B98E0;
+          background: #2fb4ed;
           margin: 5px 5px 5px 0;
           padding: 10px;
           font-size: 1.0em; }
@@ -148,7 +141,7 @@ form {
           text-align: center;
           margin: 0 5px;
           line-height: 40px;
-          background: #1B98E0; }
+          background: #2fb4ed; }
           #search-content #search-results #search-toolbar #database-list .database .unselected {
             background: none; }
         #search-content #search-results #search-toolbar #database-list .database:hover {
@@ -162,7 +155,14 @@ form {
         #search-content #search-results #search-toolbar #database-time input {
           width: 50px;
           height: 40px;
-          margin: 0 5px; }
+          margin: 0 5px;
+          display: inline-block;
+          border: none;
+          outline: none;
+          text-align: left;
+          padding: 0 10px; }
+          #search-content #search-results #search-toolbar #database-time input:focus {
+            background: rgba(47, 180, 237, 0.1); }
       #search-content #search-results #search-toolbar #database-sort {
         height: 100%;
         display: flex;
@@ -222,7 +222,7 @@ form {
             #search-content #search-results #search-list .search-entry .entry-action .entry-terms .entry-term {
               display: flex;
               font-size: 1.0em;
-              background: #1B98E0;
+              background: #2fb4ed;
               margin: 5px 5px 5px 0;
               padding: 10px; }
               #search-content #search-results #search-list .search-entry .entry-action .entry-terms .entry-term h4 {

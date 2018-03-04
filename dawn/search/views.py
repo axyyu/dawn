@@ -24,7 +24,7 @@ def index(request):
         question = question.replace('+', ' ')
         if question[-1] == ' ':
             question = question[:-1]
-        sources = ['Nature', 'ScienceDirect']
+        sources = ['Nature', 'ScienceDirect', 'Wikipedia', 'CORE']
         req = {}
         req['question'] = question
         req['definition'] = helpers.get_definition(question)
@@ -68,15 +68,17 @@ def build_data(source, question):
 
 def get_data(question, dbs):
     entity_array = []
-    threshold = 4
+    threshold = 1
     source_array = []
     for d in dbs:
         if d == "Nature":
             source_array.append(sources.NatureJournal(threshold))
         elif d == "ScienceDirect":
             source_array.append(sources.ScienceDirect(threshold))
-        # elif d == "CORES":
-        #    pass
+        elif d == "Wikipedia":
+            source_array.append(sources.Wikipedia(threshold))
+        elif d == "CORE":
+            source_array.append(sources.COREJournal(threshold))
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=len(source_array)) as executor:
         future_to_data = {

@@ -1,10 +1,7 @@
 import requests
 import json
 import re
-from PyDictionary import PyDictionary
-
-dictionary = PyDictionary()
-
+import wikipedia as wp
 
 def filter_article(string):
     if string is None:
@@ -12,13 +9,8 @@ def filter_article(string):
     string = re.sub(r'<(?:.|\n)*?>', '', string)
     return string
 
-
 def get_definition(query):
-    temp = ""
-    val = dictionary.meaning(query)
-    if val is None:
-        temp = "None"
-    else:
-        for k in val:
-            temp += k + ": " + val[k][0] + "\n"
-    return temp
+    try:
+        return wp.summary( wp.page(query), sentences=1)
+    except wp.exceptions.DisambiguationError as e:
+        return wp.summary( wp.page(e.options[0]), sentences=1)

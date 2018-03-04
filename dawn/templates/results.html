@@ -10,7 +10,7 @@
 </head>
 <body>
     {% include 'header.html' %}
-    <form action="/search" method="get">
+    <form id="search-bar-container" action="/search" method="get">
         <input id="search-bar" type="text" name="q" placeholder="What would you like to learn about today?" value="{{ question }}" required>
         <input type="submit" value="&#xf002" class="click fa fa-search">
     </form>
@@ -82,7 +82,7 @@
                                 {% endfor %}
                             </div>
                             <div class="entry-icons">
-                                <span class="fa fa-info-circle click" onclick="stats({{ v.sentiment }})"></span>
+                                {% comment %} <span class="fa fa-info-circle click" onclick="stats({{ v.sentiment }})"></span> {% endcomment %}
                                 <span class="fa fa-bookmark click" onclick="cite('{{ v.mla }}', '{{ v.apa }}', '{{ v.chicago }}')"></span>
                             </div>
                         </div>
@@ -106,7 +106,7 @@
                         {% for word in related %}
                             <div class="related-term">
                                 <h4>{{ word | safe }}</h4>
-                                <span class="fa fa-filter click" onclick="filter({{ word }})"></span>
+                                {% comment %} <span class="fa fa-filter click" onclick="filter({{ word }})"></span> {% endcomment %}
                                 <a href="/search?q={{ word.split | join:"+" }}">
                                     <span class="fa fa-search click" onclick="search({{ word }})"></span>
                                 </a>

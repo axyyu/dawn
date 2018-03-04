@@ -86,20 +86,6 @@ def callback(res, **context):
 
 # HELPER FUNCTIONS
 
-def filter_extra(query, array):
-    final = []
-    for phrase in array:
-        if len(final) > 5:
-            break
-        if len(phrase) > 1:
-            if query in phrase:
-                if len(phrase) > len(query) + 5:
-                    final.append(phrase)
-            else:
-                final.append(phrase)
-    return final
-
-
 """
 SPACY NLP
 """
@@ -118,10 +104,37 @@ appropriate_entities = [
     'LAW'
 ]
 
+def filter_extra(query, array):
+    # token = nlp(query)
 
-def get_sentiment(query):
-    doc = nlp(query)
-    return doc.sentiment
+    # query_filter = set()
+    # for a in array[:5]:
+    #     if len(a) > 1:
+    #         token2 = nlp(a)
+    #         sim = token.similarity(token2)
+    #         if sim < .7:
+    #             query_filter.add(a)
+
+    # results_filter = set()
+    # for a in query_filter:
+    #     for b in query_filter:
+    #         if a != b:
+    #             t1 = nlp(a)
+    #             t2 = nlp(b)
+    #             sim = t1.similarity(t2)
+    #             if sim > .8 and b not in results_filter:
+    #                 results_filter.add(a)
+
+    # return list(query_filter - results_filter)
+    while query in array: 
+        array.remove(query)
+    while '' in array:
+        array.remove('')
+    return array[:5]
+
+# def get_sentiment(query):
+#     sentiment = aylien_client.Sentiment({'text': query})
+#     return ("%.2f" % sentiment['polarity_confidence'])
 
 
 def get_related(query):
@@ -130,16 +143,12 @@ def get_related(query):
     return filter_extra(query, temp)
 
 
-def get_entities(query):
+def get_entities(term, query):
     doc = nlp(query)
     results = [ent.text.lstrip().rstrip()
                for ent in doc.ents if ent.label_ in appropriate_entities]
     results = list(set(results))
-    return filter_extra(query, results)
-
-
-def get_concepts(query):
-    return []
+    return filter_extra(term, results)
 
 
 def get_summary(title, query):
@@ -155,18 +164,12 @@ def get_summary(title, query):
         occurrences[word_lemma] = count
 
     each_word(doc, fill_occurrences)
-
-    # 4, 5, 6
     ranked = get_ranked(doc.sents, sentence_count, occurrences)
-
-    # 7
     return " ".join([x['sentence'].text for x in ranked])
 
 """
 Summary Code
 """
-
-
 def each_word(words, func):
     for word in words:
         if word.pos_ is "PUNCT":
@@ -215,10 +218,8 @@ def get_ranked(sentences, sentence_count, occurrences):
 
     return ranked
 
-
 def lemma(word):
     return word.lemma_
-
 
 def get_score(occurrences, sentence):
     class Totaler:
@@ -234,7 +235,5 @@ def get_score(occurrences, sentence):
             return self.score
 
     totaler = Totaler()
-
     each_word(sentence, totaler)
-
     return totaler.total()
