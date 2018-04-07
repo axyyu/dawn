@@ -24,14 +24,13 @@ def index(request):
         question = question.replace('+', ' ')
         if question[-1] == ' ':
             question = question[:-1]
-        sources = ['Nature', 'ScienceDirect', 'Wikipedia', 'CORE']
-        req = {}
+        sources = ['Nature', 'ScienceDirect', 'Wikipedia']
+        req = dict()
         req['question'] = question
         req['definition'] = helpers.get_definition(question)
         req['related'] = analysis.get_related(question)
         req['data'] = get_data(question, sources)
         return render(request, 'results.html', req)
-        # return render(request, 'index.html')
     return render(request, 'index.html')
 
 
@@ -75,7 +74,7 @@ def get_data(question, dbs):
             source_array.append(sources.NatureJournal(threshold))
         elif d == "ScienceDirect":
             source_array.append(sources.ScienceDirect(threshold))
-        elif d == "Wikipedia":
+        elif d == "Wikipedia"
             source_array.append(sources.Wikipedia(threshold))
         elif d == "CORE":
             source_array.append(sources.COREJournal(threshold))

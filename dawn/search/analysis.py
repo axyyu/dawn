@@ -138,8 +138,10 @@ def filter_extra(query, array):
 
 
 def get_related(query):
-    related = aylien_client.Related({"phrase": query})
-    temp = [a['phrase'] for a in related['related']]
+    #related = aylien_client.Related({"phrase": query})
+    #related = requests.get(
+    #temp = [a['phrase'] for a in related['related']]
+    temp = []
     return filter_extra(query, temp)
 
 
