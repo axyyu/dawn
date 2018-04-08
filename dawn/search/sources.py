@@ -73,21 +73,21 @@ class NatureJournal(Source):
         return item
 
     def parse_data(self):
-        if self.response is not None and self.response[
-                'feed'] and self.response['feed']['entry']:
-            entries = self.response['feed']['entry']
-            if len(entries) > self.threshold:
-                entries = entries[:self.threshold]
-            with concurrent.futures.ThreadPoolExecutor(max_workers=self.threshold) as executor:
-                future_to_items = {
-                    executor.submit(
-                        self.convert_result,
-                        result): result for result in entries}
-                for future in concurrent.futures.as_completed(future_to_items):
-                    try:
-                        self.data.append(future.result())
-                    except Exception as e:
-                        print('NatureJournal generated an exception: %s', e)
+        if self.response is not None and 'feed' in self.response:
+            if 'entry' in self.response['feed']:
+                entries = self.response['feed']['entry']
+                if len(entries) > self.threshold:
+                    entries = entries[:self.threshold]
+                with concurrent.futures.ThreadPoolExecutor(max_workers=self.threshold) as executor:
+                    future_to_items = {
+                        executor.submit(
+                            self.convert_result,
+                            result): result for result in entries}
+                    for future in concurrent.futures.as_completed(future_to_items):
+                        try:
+                            self.data.append(future.result())
+                        except Exception as e:
+                            print('NatureJournal generated an exception: %s', e)
 
 
 class ScienceDirect(Source):
@@ -113,6 +113,8 @@ class ScienceDirect(Source):
 
     def convert_result(self, result):
         item = {}
+        if result['error']:
+            return item
         item['title'] = result['dc:title'].replace('"', '').replace('\'', '')
         item['url'] = result['link'][1]["@href"]
         pii = result['pii']
@@ -200,13 +202,15 @@ class Wikipedia(Source):
         try:
             p = wp.page(question)
             results.append(self.process_page(p))
-        except wp.exceptions.DisambiguationError as e:
-            for op in e.options:
+        except wp.exceptions.DisambiguationError as de:
+            for op in de.options:
                 if op != question:
                     try:
                         results.append(self.process_page(wp.page(op)))
                     except:
                         pass
+        except wp.exceptions.PageError as pe:
+            pass
         self.response = results
 
     def process_page(self, page):

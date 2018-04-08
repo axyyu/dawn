@@ -5,9 +5,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 import requests
 import json
 import re
-import concurrent.futures
 
-from . import sources
 from . import analysis
 from . import helpers
 from . import bibliography
@@ -29,7 +27,7 @@ def index(request):
         req['question'] = question
         req['definition'] = helpers.get_definition(question)
         req['related'] = analysis.get_related(question)
-        req['data'] = get_data(question, sources)
+        req['data'] = helpers.get_data(question, sources)
         return render(request, 'results.html', req)
     return render(request, 'index.html')
 
@@ -44,6 +42,7 @@ def define(request):
         if question is None:
             return HttpResponseBadRequest
         question = question.replace('+', ' ')
+        print(question)
         output = json.dumps({'data': helpers.get_definition(question)})
         return HttpResponse(output, content_type='application/json')
 
@@ -58,33 +57,3 @@ def related(request):
         return HttpResponse(output, content_type='application/json')
     return render(request, 'index.html')
 
-
-def build_data(source, question):
-    source.get_response(question)
-    source.parse_data()
-    return source.data
-
-
-def get_data(question, dbs):
-    entity_array = []
-    threshold = 1
-    source_array = []
-    for d in dbs:
-        if d == "Nature":
-            source_array.append(sources.NatureJournal(threshold))
-        elif d == "ScienceDirect":
-            source_array.append(sources.ScienceDirect(threshold))
-        elif d == "Wikipedia"
-            source_array.append(sources.Wikipedia(threshold))
-        elif d == "CORE":
-            source_array.append(sources.COREJournal(threshold))
-
-    with concurrent.futures.ThreadPoolExecutor(max_workers=len(source_array)) as executor:
-        future_to_data = {
-            executor.submit(
-                build_data,
-                s,
-                question): s for s in source_array}
-        for future in concurrent.futures.as_completed(future_to_data):
-            entity_array.extend(future.result())
-    return entity_array
