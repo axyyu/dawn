@@ -113,8 +113,6 @@ class ScienceDirect(Source):
 
     def convert_result(self, result):
         item = {}
-        if result['error']:
-            return item
         item['title'] = result['dc:title'].replace('"', '').replace('\'', '')
         item['url'] = result['link'][1]["@href"]
         pii = result['pii']
@@ -154,6 +152,7 @@ class ScienceDirect(Source):
         item['keywords'] = analysis.get_entities(self.question, str(abstract))
         # item['sentiment'] = analysis.get_sentiment(
         #     str(abstract))
+        print(item)
         return item
 
     def parse_data(self):
