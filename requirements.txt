@@ -27,6 +27,7 @@ plac==0.9.6
 preshed==1.0.0
 psycopg2==2.7.3
 PyDictionary==1.5.2
+python-datamuse==1.1.0
 pytz==2017.2
 regex==2017.4.5
 requests==2.18.2
@@ -40,4 +41,5 @@ ujson==1.35
 urllib3==1.22
 wcwidth==0.1.7
 webencodings==0.5.1
+wikipedia==1.4.0
 wrapt==1.10.11
