@@ -27,7 +27,7 @@ def index(request):
         req['question'] = question
         req['definition'] = helpers.get_definition(question)
         req['related'] = analysis.get_related(question)
-        req['data'] = helpers.get_data(question, sources)
+        # req['data'] = helpers.get_data(question, sources)
         return render(request, 'results.html', req)
     return render(request, 'index.html')
 

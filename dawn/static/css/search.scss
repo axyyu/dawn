@@ -4,8 +4,13 @@ Search Results
 @import "colors";
 @import "modal";
 
+body{
+    min-height: calc(100vh - 20px);
+}
+
 #search-content {
     margin: 2vh 4vw;
+    min-height: calc(98vh - 150px);
     display: flex;
     flex-direction: row;
     justify-content: space-between;

@@ -2490,8 +2490,8 @@ html, body {
   margin: 0; }
 
 body {
-  width: 100vw;
-  height: 100vh;
+  min-width: 100vw;
+  min-height: 100vh;
   color: #000000;
   overflow-x: hidden;
   background: #FEFEFE; }
