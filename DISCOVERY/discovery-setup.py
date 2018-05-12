@@ -1,6 +1,7 @@
 from watson_developer_cloud import DiscoveryV1
 import json
 import requests
+import os
 
 topic_list = [
     ""
@@ -22,45 +23,50 @@ discovery = DiscoveryV1(
     password= credentials['password']
 )
 
-# question = "chicken"
-# threshold = 3
-# r = requests.get(
-#         'http://www.nature.com/opensearch/request?query=' +
-#         question +
-#         '&httpAccept=application/json&sortKeys=publicationDate,pam,0&maximumRecords=' +
-#         str(threshold)
-#     ).json()
-# if r is not None and 'feed' in r:
-#     if 'entry' in r['feed']:
-#         entries = r['feed']['entry']
-#         for result in entries:
-#             item = {}
-#             item['title'] = result['title'].replace('"', '').replace('\'', '')
-#             item['url'] = result['link']
-#             abstract = result['sru:recordData']['pam:message'][
-#                 'pam:article']['xhtml:head']['dc:description']
-#             authors = result['sru:recordData']['pam:message'][
-#                 'pam:article']['xhtml:head']['dc:creator']
-#             if authors:
-#                 authors = [(a[:a.rfind(" ")], a[a.rfind(" "):])
-#                         for a in authors]
-#                 item['authorString'] = ", ".join(
-#                     ["{} {}".format(a[0], a[1]) for a in authors])
-#             else:
-#                 item['authorString'] = "No Authors"
-#             item['publisher'] = result['sru:recordData']['pam:message'][
-#                 'pam:article']['xhtml:head']['dc:publisher']
-#             item['publicationDate'] = result['sru:recordData']['pam:message'][
-#                 'pam:article']['xhtml:head']['prism:publicationDate']
-#             item['journal'] = 'Nature Journal'
-#             pubdate = item['publicationDate'][0:4]
+question = "chicken"
+threshold = 50
+r = requests.get(
+        'http://www.nature.com/opensearch/request?query=' +
+        question +
+        '&httpAccept=application/json&sortKeys=publicationDate,pam,0&maximumRecords=' +
+        str(threshold)
+    ).json()
+if r is not None and 'feed' in r:
+    if 'entry' in r['feed']:
+        entries = r['feed']['entry']
+        for result in entries:
+            item = {}
+            item['title'] = result['title'].replace('"', '').replace('\'', '')
+            item['url'] = result['link']
+            abstract = result['sru:recordData']['pam:message'][
+                'pam:article']['xhtml:head']['dc:description']
+            authors = result['sru:recordData']['pam:message'][
+                'pam:article']['xhtml:head']['dc:creator']
+            if authors:
+                authors = [(a[:a.rfind(" ")], a[a.rfind(" "):])
+                        for a in authors]
+                item['authorString'] = ", ".join(
+                    ["{} {}".format(a[0], a[1]) for a in authors])
+            else:
+                item['authorString'] = "No Authors"
+            item['publisher'] = result['sru:recordData']['pam:message'][
+                'pam:article']['xhtml:head']['dc:publisher']
+            item['publicationDate'] = result['sru:recordData']['pam:message'][
+                'pam:article']['xhtml:head']['prism:publicationDate']
+            item['journal'] = 'Nature Journal'
+            pubdate = item['publicationDate'][0:4]
 
-#             with open("{}.json".format(item['title']),"w") as f:
-#                 f.write(json.dumps(item))
+            try:
+                with open("documents/{}.json".format(item['title']),"w+") as f:
+                    f.write(json.dumps(item))
 
-#             with open("{}.json".format(item['title']),"r") as f:
-#                 add_doc = discovery.add_document(credentials['environment_id'], credentials['collection_id'], file=f)
+                with open("documents/{}.json".format(item['title']),"r") as f:
+                    add_doc = discovery.add_document(credentials['environment_id'], credentials['collection_id'], file=f)
                 
+                os.remove("documents/{}.json".format(item['title']))
+            except Exception:
+                print(item['title'])
+                            
 
 
 # print(json.dumps(add_doc, indent=2))
