@@ -15,7 +15,7 @@ futures==3.1.1
 goslate==1.5.1
 havenondemand==2.0.1.post0
 html5lib==1.0.1
-httplib2==0.10.3
+httplib2==0.18.0
 idna==2.5
 libsass==0.13.2
 msgpack-numpy==0.4.1
