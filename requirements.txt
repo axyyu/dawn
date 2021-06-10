@@ -7,7 +7,7 @@ cymem==1.31.2
 cytoolz==0.8.2
 dawn==0.0.0
 dill==0.2.7.1
-Django==1.11.3
+Django==2.2.24
 django-sass-processor==0.5.4
 en-core-web-sm==2.0.0
 ftfy==4.4.3
